@@ -2,6 +2,10 @@ import { Layout } from "@/components/layout/Layout";
 import { CTASection } from "@/components/home/CTASection";
 import { Target, Eye, Heart, Lightbulb, Shield, Award, Users, CheckCircle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
+import teamWillian from "@/assets/team-willian-photo.jpg";
+import teamElisa from "@/assets/team-elisa-photo.jpg";
 
 const values = [
   { icon: Lightbulb, label: "Inovação", description: "Buscamos constantemente novas tecnologias e metodologias." },
@@ -16,13 +20,13 @@ const team = [
     name: "Willian Borecki",
     role: "CTO - Diretor Técnico",
     bio: "Graduado em Engenharia de Produção pela Univali e especialista em SQL Server pela DataCamp. Possui mais de 5 anos de experiência em Business Intelligence e Engenharia de Dados, tendo liderado projetos complexos de integração e análise para clientes em diversos setores.",
-    initials: "WB",
+    image: teamWillian,
   },
   {
     name: "Elisa Santin",
     role: "CCO - Diretora Comercial",
     bio: "Graduada em Direito pela PUC-PR e especialista em Business Intelligence pela ENG. Acumula mais de 5 anos de experiência em Business Intelligence e Jurimetria, desenvolvendo soluções que integram tecnologia e análise jurídica para otimização de processos e redução de riscos.",
-    initials: "ES",
+    image: teamElisa,
   },
 ];
 
@@ -45,25 +49,52 @@ const timeline = [
 ];
 
 const Sobre = () => {
+  const heroRef = useRef(null);
+  const valuesRef = useRef(null);
+  const teamRef = useRef(null);
+  const heroInView = useInView(heroRef, { once: true });
+  const valuesInView = useInView(valuesRef, { once: true, margin: "-100px" });
+  const teamInView = useInView(teamRef, { once: true, margin: "-100px" });
+
   return (
     <Layout>
       {/* Hero */}
-      <section className="pt-32 pb-16 bg-muted/30">
+      <section className="pt-32 pb-16 bg-muted/30" ref={heroRef}>
         <div className="container mx-auto px-4">
-          <div className="max-w-3xl">
-            <span className="inline-block px-4 py-1.5 rounded-full bg-accent/20 text-accent-foreground text-sm font-medium mb-4">
+          <motion.div 
+            className="max-w-3xl"
+            initial={{ opacity: 0, y: 40 }}
+            animate={heroInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
+          >
+            <motion.span 
+              className="inline-block px-4 py-1.5 rounded-full bg-accent/20 text-accent-foreground text-sm font-medium mb-4"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={heroInView ? { opacity: 1, scale: 1 } : {}}
+              transition={{ delay: 0.2 }}
+            >
               Sobre Nós
-            </span>
-            <h1 className="text-4xl md:text-5xl font-display font-bold text-foreground mb-6">
+            </motion.span>
+            <motion.h1 
+              className="text-4xl md:text-5xl font-display font-bold text-foreground mb-6"
+              initial={{ opacity: 0, y: 20 }}
+              animate={heroInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: 0.3 }}
+            >
               Transformando dados em{" "}
               <span className="text-gradient">decisões estratégicas</span>
-            </h1>
-            <p className="text-xl text-muted-foreground leading-relaxed">
+            </motion.h1>
+            <motion.p 
+              className="text-xl text-muted-foreground leading-relaxed"
+              initial={{ opacity: 0 }}
+              animate={heroInView ? { opacity: 1 } : {}}
+              transition={{ delay: 0.4 }}
+            >
               A Solutions in BI é uma empresa especializada em desenvolver soluções de 
               Business Intelligence, análise de dados e automação de processos para o 
               mercado jurídico e corporativo.
-            </p>
-          </div>
+            </motion.p>
+          </motion.div>
         </div>
       </section>
 
@@ -71,66 +102,98 @@ const Sobre = () => {
       <section className="py-24">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <Card className="border-0 shadow-lg">
-              <CardHeader>
-                <div className="w-12 h-12 rounded-xl bg-primary flex items-center justify-center mb-4">
-                  <Target className="w-6 h-6 text-white" />
-                </div>
-                <CardTitle className="text-2xl font-display">Missão</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground leading-relaxed">
-                  Apoiar advogados e empresas na tomada de decisões mais assertivas 
-                  por meio de ferramentas de análise e automação, contribuindo para 
-                  a excelência na gestão de informações.
-                </p>
-              </CardContent>
-            </Card>
+            <motion.div
+              initial={{ opacity: 0, x: -40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              <Card className="border-0 shadow-lg h-full">
+                <CardHeader>
+                  <motion.div 
+                    className="w-12 h-12 rounded-xl bg-primary flex items-center justify-center mb-4"
+                    whileHover={{ scale: 1.1, rotate: 5 }}
+                  >
+                    <Target className="w-6 h-6 text-white" />
+                  </motion.div>
+                  <CardTitle className="text-2xl font-display">Missão</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Apoiar advogados e empresas na tomada de decisões mais assertivas 
+                    por meio de ferramentas de análise e automação, contribuindo para 
+                    a excelência na gestão de informações.
+                  </p>
+                </CardContent>
+              </Card>
+            </motion.div>
 
-            <Card className="border-0 shadow-lg">
-              <CardHeader>
-                <div className="w-12 h-12 rounded-xl bg-brand-tiffany flex items-center justify-center mb-4">
-                  <Eye className="w-6 h-6 text-primary" />
-                </div>
-                <CardTitle className="text-2xl font-display">Visão</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground leading-relaxed">
-                  Ser referência em tecnologia e inteligência de dados para o 
-                  mercado jurídico e corporativo no Brasil, expandindo nossa 
-                  atuação para oferecer soluções inovadoras e personalizadas.
-                </p>
-              </CardContent>
-            </Card>
+            <motion.div
+              initial={{ opacity: 0, x: 40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              <Card className="border-0 shadow-lg h-full">
+                <CardHeader>
+                  <motion.div 
+                    className="w-12 h-12 rounded-xl bg-brand-tiffany flex items-center justify-center mb-4"
+                    whileHover={{ scale: 1.1, rotate: -5 }}
+                  >
+                    <Eye className="w-6 h-6 text-primary" />
+                  </motion.div>
+                  <CardTitle className="text-2xl font-display">Visão</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Ser referência em tecnologia e inteligência de dados para o 
+                    mercado jurídico e corporativo no Brasil, expandindo nossa 
+                    atuação para oferecer soluções inovadoras e personalizadas.
+                  </p>
+                </CardContent>
+              </Card>
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* Values */}
-      <section className="py-24 bg-muted/30">
+      <section className="py-24 bg-muted/30" ref={valuesRef}>
         <div className="container mx-auto px-4">
-          <div className="text-center max-w-3xl mx-auto mb-12">
+          <motion.div 
+            className="text-center max-w-3xl mx-auto mb-12"
+            initial={{ opacity: 0, y: 40 }}
+            animate={valuesInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
+          >
             <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-4">
               Nossos Valores
             </h2>
             <p className="text-lg text-muted-foreground">
               Os princípios que guiam nossas ações e relacionamentos.
             </p>
-          </div>
+          </motion.div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-6">
-            {values.map((value) => {
+            {values.map((value, index) => {
               const IconComponent = value.icon;
               return (
-                <div
+                <motion.div
                   key={value.label}
-                  className="text-center p-6 rounded-xl bg-background shadow-lg"
+                  className="text-center p-6 rounded-xl bg-background shadow-lg hover:shadow-xl transition-shadow"
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={valuesInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ delay: index * 0.1 }}
+                  whileHover={{ y: -5 }}
                 >
-                  <div className="w-14 h-14 mx-auto rounded-xl bg-accent/20 flex items-center justify-center mb-4">
+                  <motion.div 
+                    className="w-14 h-14 mx-auto rounded-xl bg-accent/20 flex items-center justify-center mb-4"
+                    whileHover={{ rotate: 10, scale: 1.1 }}
+                  >
                     <IconComponent className="w-7 h-7 text-brand-tiffany" />
-                  </div>
+                  </motion.div>
                   <h3 className="font-display font-semibold mb-2">{value.label}</h3>
                   <p className="text-sm text-muted-foreground">{value.description}</p>
-                </div>
+                </motion.div>
               );
             })}
           </div>
@@ -140,24 +203,45 @@ const Sobre = () => {
       {/* History */}
       <section className="py-24">
         <div className="container mx-auto px-4">
-          <div className="text-center max-w-3xl mx-auto mb-12">
+          <motion.div 
+            className="text-center max-w-3xl mx-auto mb-12"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
             <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-4">
               Nossa História
             </h2>
             <p className="text-lg text-muted-foreground">
               A trajetória da Solutions in BI na transformação digital.
             </p>
-          </div>
+          </motion.div>
 
           <div className="max-w-3xl mx-auto">
             {timeline.map((item, index) => (
-              <div key={item.year} className="flex gap-6 mb-12 last:mb-0">
+              <motion.div 
+                key={item.year} 
+                className="flex gap-6 mb-12 last:mb-0"
+                initial={{ opacity: 0, x: -40 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.2 }}
+              >
                 <div className="flex flex-col items-center">
-                  <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-display font-bold text-sm">
+                  <motion.div 
+                    className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-display font-bold text-sm"
+                    whileHover={{ scale: 1.1 }}
+                  >
                     {index + 1}
-                  </div>
+                  </motion.div>
                   {index < timeline.length - 1 && (
-                    <div className="w-0.5 h-full bg-border mt-2" />
+                    <motion.div 
+                      className="w-0.5 h-full bg-border mt-2"
+                      initial={{ scaleY: 0 }}
+                      whileInView={{ scaleY: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.5 + index * 0.2 }}
+                    />
                   )}
                 </div>
                 <div className="flex-1 pb-8">
@@ -165,44 +249,62 @@ const Sobre = () => {
                   <h3 className="text-xl font-display font-semibold mt-1 mb-2">{item.title}</h3>
                   <p className="text-muted-foreground">{item.description}</p>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
       {/* Team */}
-      <section className="py-24 bg-muted/30">
+      <section className="py-24 bg-muted/30" ref={teamRef}>
         <div className="container mx-auto px-4">
-          <div className="text-center max-w-3xl mx-auto mb-12">
+          <motion.div 
+            className="text-center max-w-3xl mx-auto mb-12"
+            initial={{ opacity: 0, y: 40 }}
+            animate={teamInView ? { opacity: 1, y: 0 } : {}}
+          >
             <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-4">
               Nossa Equipe
             </h2>
             <p className="text-lg text-muted-foreground">
               Profissionais com ampla experiência e visão de mercado.
             </p>
-          </div>
+          </motion.div>
 
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {team.map((member) => (
-              <Card key={member.name} className="border-0 shadow-lg overflow-hidden">
-                <div className="aspect-[3/2] bg-gradient-brand flex items-center justify-center">
-                  <div className="w-24 h-24 rounded-full bg-white/20 flex items-center justify-center">
-                    <span className="font-display font-bold text-3xl text-white">
-                      {member.initials}
-                    </span>
-                  </div>
-                </div>
-                <CardHeader>
-                  <CardTitle className="text-xl font-display">{member.name}</CardTitle>
-                  <span className="text-brand-tiffany font-medium">{member.role}</span>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
-                    {member.bio}
-                  </p>
-                </CardContent>
-              </Card>
+            {team.map((member, index) => (
+              <motion.div
+                key={member.name}
+                initial={{ opacity: 0, y: 60 }}
+                animate={teamInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: index * 0.2 }}
+              >
+                <Card className="border-0 shadow-lg overflow-hidden group">
+                  <motion.div 
+                    className="aspect-[3/2] overflow-hidden"
+                    whileHover={{ scale: 1.02 }}
+                  >
+                    <motion.img 
+                      src={member.image}
+                      alt={member.name}
+                      className="w-full h-full object-cover"
+                      whileHover={{ scale: 1.1 }}
+                      transition={{ duration: 0.6 }}
+                    />
+                  </motion.div>
+                  <CardHeader>
+                    <CardTitle className="text-xl font-display group-hover:text-brand-tiffany transition-colors">
+                      {member.name}
+                    </CardTitle>
+                    <span className="text-brand-tiffany font-medium">{member.role}</span>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground text-sm leading-relaxed">
+                      {member.bio}
+                    </p>
+                  </CardContent>
+                </Card>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -211,11 +313,16 @@ const Sobre = () => {
       {/* Differentials */}
       <section className="py-24">
         <div className="container mx-auto px-4">
-          <div className="text-center max-w-3xl mx-auto mb-12">
+          <motion.div 
+            className="text-center max-w-3xl mx-auto mb-12"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
             <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-4">
               Por que escolher a Solutions in BI?
             </h2>
-          </div>
+          </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {[
@@ -225,11 +332,19 @@ const Sobre = () => {
               "Tecnologia de ponta",
               "Resultados mensuráveis",
               "Parceria de longo prazo",
-            ].map((item) => (
-              <div key={item} className="flex items-center gap-3 p-4 rounded-lg bg-muted/50">
+            ].map((item, index) => (
+              <motion.div 
+                key={item} 
+                className="flex items-center gap-3 p-4 rounded-lg bg-muted/50"
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                whileHover={{ x: 5, backgroundColor: "hsl(172 30% 62% / 0.1)" }}
+              >
                 <CheckCircle className="w-5 h-5 text-brand-tiffany shrink-0" />
                 <span className="font-medium">{item}</span>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>

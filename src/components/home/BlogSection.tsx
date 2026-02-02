@@ -3,6 +3,8 @@ import { ArrowRight, Star, Clock } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 
 const featuredPosts = [
   {
@@ -37,83 +39,151 @@ const featuredPosts = [
   },
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+      ease: "easeOut" as const,
+    },
+  },
+};
+
 export function BlogSection() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
   return (
-    <section className="py-24 bg-background">
+    <section className="py-24 bg-background overflow-hidden" ref={ref}>
       <div className="container mx-auto px-4">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
+        <motion.div 
+          className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12"
+          initial={{ opacity: 0, y: 40 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+        >
           <div>
-            <span className="inline-block px-4 py-1.5 rounded-full bg-accent/20 text-accent-foreground text-sm font-medium mb-4">
+            <motion.span 
+              className="inline-block px-4 py-1.5 rounded-full bg-accent/20 text-accent-foreground text-sm font-medium mb-4"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={isInView ? { opacity: 1, scale: 1 } : {}}
+              transition={{ delay: 0.2 }}
+            >
               Blog
-            </span>
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">
+            </motion.span>
+            <motion.h2 
+              className="text-3xl md:text-4xl font-display font-bold text-foreground"
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: 0.3 }}
+            >
               Artigos e insights
-            </h2>
-            <p className="text-lg text-muted-foreground mt-2">
+            </motion.h2>
+            <motion.p 
+              className="text-lg text-muted-foreground mt-2"
+              initial={{ opacity: 0 }}
+              animate={isInView ? { opacity: 1 } : {}}
+              transition={{ delay: 0.4 }}
+            >
               Conteúdo especializado sobre BI, Jurimetria e tecnologia.
-            </p>
+            </motion.p>
           </div>
-          <Button asChild variant="outline">
-            <Link to="/blog">
-              Ver todos os artigos
-              <ArrowRight className="w-4 h-4 ml-2" />
-            </Link>
-          </Button>
-        </div>
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ delay: 0.5 }}
+          >
+            <Button asChild variant="outline">
+              <Link to="/blog">
+                Ver todos os artigos
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Link>
+            </Button>
+          </motion.div>
+        </motion.div>
 
         {/* Posts Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {featuredPosts.map((post, index) => (
-            <Card
-              key={post.id}
-              className="group overflow-hidden border hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
-            >
-              {/* Image placeholder */}
-              <div className="aspect-video bg-gradient-to-br from-primary/20 to-secondary/20 relative overflow-hidden">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center">
-                    <span className="font-display font-bold text-2xl text-primary">SBI</span>
+        <motion.div 
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+          variants={containerVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+        >
+          {featuredPosts.map((post) => (
+            <motion.div key={post.id} variants={itemVariants}>
+              <Card className="group overflow-hidden border hover:shadow-xl transition-all duration-500 h-full">
+                {/* Image placeholder */}
+                <motion.div 
+                  className="aspect-video bg-gradient-to-br from-primary/20 to-secondary/20 relative overflow-hidden"
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <motion.div 
+                      className="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center"
+                      whileHover={{ rotate: 5, scale: 1.1 }}
+                    >
+                      <span className="font-display font-bold text-2xl text-primary">SBI</span>
+                    </motion.div>
                   </div>
-                </div>
-                {post.featured && (
-                  <Badge className="absolute top-4 left-4 bg-brand-tiffany text-primary">
-                    <Star className="w-3 h-3 mr-1" />
-                    Destaque
-                  </Badge>
-                )}
-              </div>
+                  {post.featured && (
+                    <motion.div
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.3 }}
+                    >
+                      <Badge className="absolute top-4 left-4 bg-brand-tiffany text-primary">
+                        <Star className="w-3 h-3 mr-1" />
+                        Destaque
+                      </Badge>
+                    </motion.div>
+                  )}
+                </motion.div>
 
-              <CardHeader className="pb-2">
-                <div className="flex items-center gap-4 text-sm text-muted-foreground mb-2">
-                  <Badge variant="outline">{post.category}</Badge>
-                  <span className="flex items-center gap-1">
-                    <Clock className="w-3 h-3" />
-                    {post.readTime}
-                  </span>
-                </div>
-                <CardTitle className="text-lg font-display group-hover:text-brand-tiffany transition-colors line-clamp-2">
-                  <Link to={`/blog/${post.slug}`}>{post.title}</Link>
-                </CardTitle>
-              </CardHeader>
+                <CardHeader className="pb-2">
+                  <div className="flex items-center gap-4 text-sm text-muted-foreground mb-2">
+                    <Badge variant="outline">{post.category}</Badge>
+                    <span className="flex items-center gap-1">
+                      <Clock className="w-3 h-3" />
+                      {post.readTime}
+                    </span>
+                  </div>
+                  <CardTitle className="text-lg font-display group-hover:text-brand-tiffany transition-colors line-clamp-2">
+                    <Link to={`/blog/${post.slug}`}>{post.title}</Link>
+                  </CardTitle>
+                </CardHeader>
 
-              <CardContent>
-                <CardDescription className="line-clamp-2 mb-4">
-                  {post.excerpt}
-                </CardDescription>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">{post.date}</span>
-                  <Button asChild variant="ghost" size="sm" className="text-primary hover:text-brand-tiffany">
-                    <Link to={`/blog/${post.slug}`}>
-                      Ler mais
-                      <ArrowRight className="w-3 h-3 ml-1" />
-                    </Link>
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+                <CardContent>
+                  <CardDescription className="line-clamp-2 mb-4">
+                    {post.excerpt}
+                  </CardDescription>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-muted-foreground">{post.date}</span>
+                    <Button asChild variant="ghost" size="sm" className="text-primary hover:text-brand-tiffany">
+                      <Link to={`/blog/${post.slug}`}>
+                        Ler mais
+                        <ArrowRight className="w-3 h-3 ml-1 transition-transform group-hover:translate-x-1" />
+                      </Link>
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
