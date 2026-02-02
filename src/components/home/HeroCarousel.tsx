@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { ChevronLeft, ChevronRight, BarChart3, Bot, Scale } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
@@ -11,28 +11,25 @@ import heroJurimetria from "@/assets/hero-jurimetria.jpg";
 const slides = [
   {
     id: 1,
-    title: "Business Intelligence",
-    subtitle: "Dashboards e relatórios customizados",
+    title: "Business",
+    titleHighlight: "Intelligence",
     description: "Transforme dados em insights estratégicos com soluções de BI personalizadas para o seu negócio.",
-    icon: BarChart3,
     href: "/solucoes/business-intelligence",
     image: heroBi,
   },
   {
     id: 2,
-    title: "Robôs Jurídicos",
-    subtitle: "Automação inteligente",
+    title: "Robôs",
+    titleHighlight: "Jurídicos",
     description: "Automatize consultas em tribunais e processos repetitivos, liberando sua equipe para focar na estratégia.",
-    icon: Bot,
     href: "/solucoes/robos-juridicos",
     image: heroRobos,
   },
   {
     id: 3,
-    title: "Jurimetria",
-    subtitle: "Inteligência jurídica baseada em dados",
+    title: "Análise",
+    titleHighlight: "Jurimétrica",
     description: "Análise estatística de dados jurídicos para previsibilidade e tomada de decisões assertivas.",
-    icon: Scale,
     href: "/solucoes/jurimetria",
     image: heroJurimetria,
   },
@@ -63,188 +60,149 @@ export function HeroCarousel() {
   }, [isAutoPlaying, nextSlide]);
 
   const slide = slides[currentSlide];
-  const IconComponent = slide.icon;
 
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden bg-background pt-20">
-      {/* Background Image */}
+    <section className="relative h-screen flex items-center overflow-hidden">
+      {/* Background Image - Fullscreen */}
       <AnimatePresence mode="wait">
         <motion.div
           key={slide.id}
-          initial={{ opacity: 0, scale: 1.1 }}
+          initial={{ opacity: 0, scale: 1.05 }}
           animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.95 }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
           className="absolute inset-0"
         >
           <div 
-            className="absolute inset-0 bg-cover bg-center"
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{ backgroundImage: `url(${slide.image})` }}
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/90 to-background/40" />
+          {/* Dark overlay with gradient */}
+          <div className="absolute inset-0 bg-gradient-to-r from-primary/95 via-primary/80 to-primary/50" />
+          {/* Subtle pattern overlay */}
+          <div className="absolute inset-0 opacity-5" style={{
+            backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 0)`,
+            backgroundSize: '50px 50px'
+          }} />
         </motion.div>
       </AnimatePresence>
 
-      {/* Floating decoration */}
-      <motion.div 
-        className="absolute top-1/3 right-1/4 w-[300px] h-[300px] rounded-full bg-brand-tiffany/10 blur-3xl"
-        animate={{ 
-          y: [0, -30, 0],
-          opacity: [0.3, 0.5, 0.3]
-        }}
-        transition={{ 
-          duration: 6, 
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-      />
-
+      {/* Content */}
       <div className="container mx-auto px-4 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Content */}
-          <div className="space-y-8">
-            <AnimatePresence mode="wait">
-              <motion.div 
-                key={slide.id}
+        <div className="max-w-3xl">
+          <AnimatePresence mode="wait">
+            <motion.div 
+              key={slide.id}
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -40 }}
+              transition={{ duration: 0.6 }}
+              className="space-y-6"
+            >
+              {/* Title */}
+              <motion.h1
+                className="text-5xl md:text-6xl lg:text-7xl font-display font-bold leading-tight"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -30 }}
-                transition={{ duration: 0.5 }}
-                className="space-y-2"
+                transition={{ delay: 0.1 }}
               >
-                <motion.span 
-                  className="inline-block px-4 py-1.5 rounded-full bg-accent/20 text-accent-foreground text-sm font-medium backdrop-blur-sm"
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.1 }}
-                >
-                  {slide.subtitle}
-                </motion.span>
-                <motion.h1
-                  className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-foreground leading-tight"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 }}
-                >
-                  {slide.title}
-                </motion.h1>
-              </motion.div>
-            </AnimatePresence>
+                <span className="text-white">{slide.title} </span>
+                <span className="text-brand-tiffany">{slide.titleHighlight}</span>
+              </motion.h1>
 
-            <AnimatePresence mode="wait">
+              {/* Description */}
               <motion.p
-                key={`desc-${slide.id}`}
-                className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-lg"
+                className="text-lg md:text-xl text-white/80 leading-relaxed max-w-xl"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ delay: 0.3, duration: 0.5 }}
+                transition={{ delay: 0.2 }}
               >
                 {slide.description}
               </motion.p>
-            </AnimatePresence>
 
-            <motion.div
-              className="flex flex-wrap gap-4"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-            >
-              <Button asChild size="lg" className="bg-gradient-brand hover:opacity-90">
-                <Link to={slide.href}>Saiba Mais</Link>
-              </Button>
-              <Button asChild variant="outline" size="lg" className="backdrop-blur-sm">
-                <Link to="/contato">Fale Conosco</Link>
-              </Button>
-            </motion.div>
-
-            {/* Indicators */}
-            <motion.div 
-              className="flex items-center gap-6 pt-4"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
-            >
-              <div className="flex gap-2">
-                {slides.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => goToSlide(index)}
-                    className={cn(
-                      "h-2 rounded-full transition-all duration-300",
-                      index === currentSlide
-                        ? "w-8 bg-primary"
-                        : "w-2 bg-muted-foreground/30 hover:bg-muted-foreground/50"
-                    )}
-                    aria-label={`Ir para slide ${index + 1}`}
-                  />
-                ))}
-              </div>
-              <span className="text-sm text-muted-foreground">
-                {String(currentSlide + 1).padStart(2, "0")} / {String(slides.length).padStart(2, "0")}
-              </span>
-            </motion.div>
-          </div>
-
-          {/* Visual */}
-          <div className="relative lg:h-[500px] flex items-center justify-center">
-            <AnimatePresence mode="wait">
+              {/* Buttons */}
               <motion.div
-                key={slide.id}
-                initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
-                animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                exit={{ opacity: 0, scale: 0.8, rotate: 5 }}
-                transition={{ duration: 0.5, type: "spring", stiffness: 100 }}
-                className="relative w-64 h-64 md:w-80 md:h-80 rounded-3xl bg-gradient-brand shadow-2xl flex items-center justify-center overflow-hidden"
+                className="flex flex-wrap gap-4 pt-4"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
               >
-                <div className="absolute inset-0 bg-black/20" />
-                <IconComponent className="w-24 h-24 md:w-32 md:h-32 text-white/90 relative z-10" strokeWidth={1.5} />
-                
-                {/* Pulse ring */}
-                <motion.div
-                  className="absolute inset-0 rounded-3xl border-2 border-white/30"
-                  animate={{ scale: [1, 1.1, 1], opacity: [0.5, 0, 0.5] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                />
+                <Button 
+                  asChild 
+                  size="lg" 
+                  className="bg-brand-tiffany text-primary hover:bg-brand-tiffany/90 font-semibold px-8"
+                >
+                  <Link to={slide.href}>
+                    Saiba Mais
+                    <ChevronRight className="w-4 h-4 ml-2" />
+                  </Link>
+                </Button>
+                <Button 
+                  asChild 
+                  variant="outline" 
+                  size="lg" 
+                  className="border-white/30 text-white hover:bg-white/10 backdrop-blur-sm"
+                >
+                  <Link to="/contato">Fale Conosco</Link>
+                </Button>
               </motion.div>
-            </AnimatePresence>
-            
-            {/* Floating elements */}
-            <motion.div 
-              className="absolute -top-4 -right-4 w-16 h-16 rounded-2xl bg-background shadow-lg flex items-center justify-center"
-              animate={{ y: [0, -10, 0] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-            >
-              <BarChart3 className="w-8 h-8 text-brand-tiffany" />
             </motion.div>
-            <motion.div 
-              className="absolute -bottom-6 -left-6 w-20 h-20 rounded-2xl bg-background shadow-lg flex items-center justify-center"
-              animate={{ y: [0, 10, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-            >
-              <div className="text-center">
-                <div className="text-2xl font-display font-bold text-primary">+5</div>
-                <div className="text-xs text-muted-foreground">anos</div>
-              </div>
-            </motion.div>
-
-            {/* Navigation arrows */}
-            <button
-              onClick={prevSlide}
-              className="absolute left-0 lg:-left-4 p-3 rounded-full bg-background shadow-lg hover:shadow-xl transition-all hover:scale-110"
-              aria-label="Slide anterior"
-            >
-              <ChevronLeft className="w-6 h-6 text-foreground" />
-            </button>
-            <button
-              onClick={nextSlide}
-              className="absolute right-0 lg:-right-4 p-3 rounded-full bg-background shadow-lg hover:shadow-xl transition-all hover:scale-110"
-              aria-label="Próximo slide"
-            >
-              <ChevronRight className="w-6 h-6 text-foreground" />
-            </button>
-          </div>
+          </AnimatePresence>
         </div>
+      </div>
+
+      {/* Navigation Arrows */}
+      <div className="absolute left-4 right-4 top-1/2 -translate-y-1/2 flex justify-between z-20 pointer-events-none">
+        <motion.button
+          onClick={prevSlide}
+          className="p-3 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all pointer-events-auto"
+          aria-label="Slide anterior"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <ChevronLeft className="w-6 h-6 text-white" />
+        </motion.button>
+        <motion.button
+          onClick={nextSlide}
+          className="p-3 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all pointer-events-auto"
+          aria-label="Próximo slide"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <ChevronRight className="w-6 h-6 text-white" />
+        </motion.button>
+      </div>
+
+      {/* Indicators - Bottom center */}
+      <motion.div 
+        className="absolute bottom-12 left-1/2 -translate-x-1/2 flex gap-3 z-20"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.5 }}
+      >
+        {slides.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => goToSlide(index)}
+            className={cn(
+              "h-2 rounded-full transition-all duration-300",
+              index === currentSlide
+                ? "w-10 bg-brand-tiffany"
+                : "w-2 bg-white/40 hover:bg-white/60"
+            )}
+            aria-label={`Ir para slide ${index + 1}`}
+          />
+        ))}
+      </motion.div>
+
+      {/* Decorative line art - subtle like reference */}
+      <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1/3 h-1/2 pointer-events-none opacity-10">
+        <svg viewBox="0 0 200 200" className="w-full h-full" fill="none" stroke="white" strokeWidth="0.5">
+          <path d="M50,100 L100,50 L150,100 L100,150 Z" />
+          <path d="M70,100 L100,70 L130,100 L100,130 Z" />
+          <line x1="100" y1="0" x2="100" y2="200" />
+          <line x1="0" y1="100" x2="200" y2="100" />
+        </svg>
       </div>
     </section>
   );
