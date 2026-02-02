@@ -5,6 +5,9 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import blogBi from "@/assets/blog-bi.jpg";
+import blogJurimetria from "@/assets/blog-jurimetria.jpg";
+import blogAutomacao from "@/assets/blog-automacao.jpg";
 
 const featuredPosts = [
   {
@@ -16,6 +19,7 @@ const featuredPosts = [
     readTime: "5 min",
     featured: true,
     slug: "bi-escritorio-juridico",
+    image: blogBi,
   },
   {
     id: 2,
@@ -26,6 +30,7 @@ const featuredPosts = [
     readTime: "7 min",
     featured: true,
     slug: "jurimetria-futuro-advocacia",
+    image: blogJurimetria,
   },
   {
     id: 3,
@@ -36,6 +41,7 @@ const featuredPosts = [
     readTime: "4 min",
     featured: false,
     slug: "automacao-juridica-robos",
+    image: blogAutomacao,
   },
 ];
 
@@ -125,33 +131,23 @@ export function BlogSection() {
           {featuredPosts.map((post) => (
             <motion.div key={post.id} variants={itemVariants}>
               <Card className="group overflow-hidden border hover:shadow-xl transition-all duration-500 h-full">
-                {/* Image placeholder */}
-                <motion.div 
-                  className="aspect-video bg-gradient-to-br from-primary/20 to-secondary/20 relative overflow-hidden"
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <motion.div 
-                      className="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center"
-                      whileHover={{ rotate: 5, scale: 1.1 }}
-                    >
-                      <span className="font-display font-bold text-2xl text-primary">SBI</span>
-                    </motion.div>
-                  </div>
+                {/* Image */}
+                <div className="aspect-video relative overflow-hidden">
+                  <motion.img 
+                    src={post.image}
+                    alt={post.title}
+                    className="w-full h-full object-cover"
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.6 }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
                   {post.featured && (
-                    <motion.div
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.3 }}
-                    >
-                      <Badge className="absolute top-4 left-4 bg-brand-tiffany text-primary">
-                        <Star className="w-3 h-3 mr-1" />
-                        Destaque
-                      </Badge>
-                    </motion.div>
+                    <Badge className="absolute top-4 left-4 bg-brand-tiffany text-primary">
+                      <Star className="w-3 h-3 mr-1" />
+                      Destaque
+                    </Badge>
                   )}
-                </motion.div>
+                </div>
 
                 <CardHeader className="pb-2">
                   <div className="flex items-center gap-4 text-sm text-muted-foreground mb-2">
