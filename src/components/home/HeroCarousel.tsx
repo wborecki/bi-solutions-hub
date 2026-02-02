@@ -63,29 +63,21 @@ export function HeroCarousel() {
 
   return (
     <section className="relative h-screen flex items-center overflow-hidden">
-      {/* Background Image - Fullscreen */}
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={slide.id}
-          initial={{ opacity: 0, scale: 1.05 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="absolute inset-0"
+      {/* Background Images - All preloaded, visibility controlled */}
+      {slides.map((s, index) => (
+        <div
+          key={s.id}
+          className="absolute inset-0 transition-opacity duration-700 ease-in-out"
+          style={{ opacity: index === currentSlide ? 1 : 0 }}
         >
           <div 
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: `url(${slide.image})` }}
+            style={{ backgroundImage: `url(${s.image})` }}
           />
           {/* Dark overlay with gradient */}
-          <div className="absolute inset-0 bg-gradient-to-r from-primary/95 via-primary/80 to-primary/50" />
-          {/* Subtle pattern overlay */}
-          <div className="absolute inset-0 opacity-5" style={{
-            backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 0)`,
-            backgroundSize: '50px 50px'
-          }} />
-        </motion.div>
-      </AnimatePresence>
+          <div className="absolute inset-0 bg-gradient-to-r from-primary/95 via-primary/85 to-primary/60" />
+        </div>
+      ))}
 
       {/* Content */}
       <div className="container mx-auto px-4 relative z-10">
