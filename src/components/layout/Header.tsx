@@ -52,8 +52,8 @@ export function Header() {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         isScrolled
-          ? "glass border-b shadow-sm py-3"
-          : "bg-transparent py-5"
+          ? "bg-background/95 backdrop-blur-md border-b shadow-sm py-3"
+          : "bg-gradient-to-b from-primary/80 via-primary/40 to-transparent py-5"
       )}
     >
       <div className="container mx-auto px-4 flex items-center justify-between">
@@ -63,7 +63,10 @@ export function Header() {
             <span className="text-white font-display font-bold text-lg">SBI</span>
           </div>
           <div className="hidden sm:block">
-            <span className="font-display font-semibold text-lg text-foreground">
+            <span className={cn(
+              "font-display font-semibold text-lg transition-colors",
+              isScrolled ? "text-foreground" : "text-white"
+            )}>
               Solutions in BI
             </span>
           </div>
@@ -76,8 +79,10 @@ export function Header() {
             className={cn(
               "px-4 py-2 rounded-lg text-sm font-medium transition-colors",
               location.pathname === "/"
-                ? "bg-accent/20 text-foreground"
-                : "text-muted-foreground hover:text-foreground hover:bg-accent/10"
+                ? "bg-white/20 text-white"
+                : isScrolled 
+                  ? "text-muted-foreground hover:text-foreground hover:bg-accent/10"
+                  : "text-white/90 hover:text-white hover:bg-white/10"
             )}
           >
             Home
@@ -90,8 +95,10 @@ export function Header() {
                   className={cn(
                     "bg-transparent",
                     location.pathname.includes("/solucoes")
-                      ? "bg-accent/20 text-foreground"
-                      : "text-muted-foreground"
+                      ? "bg-white/20 text-white"
+                      : isScrolled 
+                        ? "text-muted-foreground"
+                        : "text-white/90 hover:text-white hover:bg-white/10"
                   )}
                 >
                   Soluções
@@ -136,8 +143,10 @@ export function Header() {
             className={cn(
               "px-4 py-2 rounded-lg text-sm font-medium transition-colors",
               location.pathname === "/sobre"
-                ? "bg-accent/20 text-foreground"
-                : "text-muted-foreground hover:text-foreground hover:bg-accent/10"
+                ? "bg-white/20 text-white"
+                : isScrolled 
+                  ? "text-muted-foreground hover:text-foreground hover:bg-accent/10"
+                  : "text-white/90 hover:text-white hover:bg-white/10"
             )}
           >
             Sobre
@@ -148,8 +157,10 @@ export function Header() {
             className={cn(
               "px-4 py-2 rounded-lg text-sm font-medium transition-colors",
               location.pathname.includes("/blog")
-                ? "bg-accent/20 text-foreground"
-                : "text-muted-foreground hover:text-foreground hover:bg-accent/10"
+                ? "bg-white/20 text-white"
+                : isScrolled 
+                  ? "text-muted-foreground hover:text-foreground hover:bg-accent/10"
+                  : "text-white/90 hover:text-white hover:bg-white/10"
             )}
           >
             Blog
@@ -160,8 +171,10 @@ export function Header() {
             className={cn(
               "px-4 py-2 rounded-lg text-sm font-medium transition-colors",
               location.pathname === "/contato"
-                ? "bg-accent/20 text-foreground"
-                : "text-muted-foreground hover:text-foreground hover:bg-accent/10"
+                ? "bg-white/20 text-white"
+                : isScrolled 
+                  ? "text-muted-foreground hover:text-foreground hover:bg-accent/10"
+                  : "text-white/90 hover:text-white hover:bg-white/10"
             )}
           >
             Contato
@@ -177,14 +190,17 @@ export function Header() {
 
         {/* Mobile Menu Button */}
         <button
-          className="lg:hidden p-2 rounded-lg hover:bg-accent/10 transition-colors"
+          className={cn(
+            "lg:hidden p-2 rounded-lg transition-colors",
+            isScrolled ? "hover:bg-accent/10" : "hover:bg-white/10 text-white"
+          )}
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           aria-label="Menu"
         >
           {isMobileMenuOpen ? (
-            <X className="w-6 h-6" />
+            <X className={cn("w-6 h-6", !isScrolled && "text-white")} />
           ) : (
-            <Menu className="w-6 h-6" />
+            <Menu className={cn("w-6 h-6", !isScrolled && "text-white")} />
           )}
         </button>
       </div>
