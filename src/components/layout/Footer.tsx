@@ -39,6 +39,16 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link to="/servicos" className="text-sm text-primary-foreground/70 hover:text-brand-tiffany transition-colors">
+                  Serviços
+                </Link>
+              </li>
+              <li>
+                <Link to="/casos-de-sucesso" className="text-sm text-primary-foreground/70 hover:text-brand-tiffany transition-colors">
+                  Cases de Sucesso
+                </Link>
+              </li>
+              <li>
                 <Link to="/sobre" className="text-sm text-primary-foreground/70 hover:text-brand-tiffany transition-colors">
                   Sobre
                 </Link>

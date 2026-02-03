@@ -139,6 +139,34 @@ export function Header() {
           </NavigationMenu>
 
           <Link
+            to="/servicos"
+            className={cn(
+              "px-4 py-2 rounded-lg text-sm font-medium transition-colors",
+              location.pathname === "/servicos"
+                ? "bg-white/20 text-white"
+                : isScrolled 
+                  ? "text-muted-foreground hover:text-foreground hover:bg-accent/10"
+                  : "text-white/90 hover:text-white hover:bg-white/10"
+            )}
+          >
+            Serviços
+          </Link>
+
+          <Link
+            to="/casos-de-sucesso"
+            className={cn(
+              "px-4 py-2 rounded-lg text-sm font-medium transition-colors",
+              location.pathname === "/casos-de-sucesso"
+                ? "bg-white/20 text-white"
+                : isScrolled 
+                  ? "text-muted-foreground hover:text-foreground hover:bg-accent/10"
+                  : "text-white/90 hover:text-white hover:bg-white/10"
+            )}
+          >
+            Cases
+          </Link>
+
+          <Link
             to="/sobre"
             className={cn(
               "px-4 py-2 rounded-lg text-sm font-medium transition-colors",
@@ -245,6 +273,30 @@ export function Header() {
               className="px-6 py-2 text-sm text-brand-tiffany font-medium"
             >
               Ver todas →
+            </Link>
+
+            <Link
+              to="/servicos"
+              className={cn(
+                "px-4 py-3 rounded-lg text-base font-medium transition-colors",
+                location.pathname === "/servicos"
+                  ? "bg-accent/20 text-foreground"
+                  : "text-muted-foreground"
+              )}
+            >
+              Serviços
+            </Link>
+
+            <Link
+              to="/casos-de-sucesso"
+              className={cn(
+                "px-4 py-3 rounded-lg text-base font-medium transition-colors",
+                location.pathname === "/casos-de-sucesso"
+                  ? "bg-accent/20 text-foreground"
+                  : "text-muted-foreground"
+              )}
+            >
+              Cases
             </Link>
 
             <Link
