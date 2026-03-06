@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { cn } from "@/lib/utils";
+import heroIllustration from "@/assets/hero-illustration.png";
 
 const solutions = [
   {
@@ -123,48 +124,54 @@ const Solucoes = () => {
   return (
     <Layout>
       {/* Hero */}
-      <section className="pt-32 pb-20 bg-gradient-to-b from-primary via-primary/95 to-background overflow-hidden relative">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-accent rounded-full blur-3xl" />
-          <div className="absolute bottom-10 right-10 w-96 h-96 bg-secondary rounded-full blur-3xl" />
-        </div>
-        <div className="max-w-6xl mx-auto px-4 relative">
-          <motion.div
-            className="max-w-3xl mx-auto text-center"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <span className="inline-block px-4 py-1.5 rounded-full bg-accent/20 text-accent-foreground text-sm font-medium mb-6">
-              Nossas Soluções
-            </span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-primary-foreground mb-6">
-              Tecnologia que transforma{" "}
-              <span className="text-accent">resultados</span>
-            </h1>
-            <p className="text-xl text-primary-foreground/80 leading-relaxed mb-8 max-w-2xl mx-auto">
-              Soluções completas de automação, inteligência artificial e Business Intelligence
-              para empresas que querem escalar com eficiência.
-            </p>
-            <div className="flex flex-wrap gap-4 justify-center">
-              <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90">
-                <Link to="/contato">
-                  Solicitar Diagnóstico Gratuito
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-              </Button>
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10"
-              >
-                <a href="https://wa.me/551151920925" target="_blank" rel="noopener noreferrer">
-                  Falar no WhatsApp
-                </a>
-              </Button>
-            </div>
-          </motion.div>
+      <section className="pt-28 pb-16 md:pt-32 md:pb-20">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <motion.div
+              className="space-y-6"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-semibold">
+                Nossas Soluções
+              </span>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold leading-tight text-foreground">
+                Tecnologia que transforma{" "}
+                <span className="text-gradient">resultados</span>
+              </h1>
+              <p className="text-lg text-muted-foreground leading-relaxed max-w-lg">
+                Soluções completas de automação, inteligência artificial e Business Intelligence
+                para empresas que querem escalar com eficiência.
+              </p>
+              <div className="flex flex-wrap gap-3 pt-2">
+                <Button asChild size="lg">
+                  <Link to="/contato">
+                    Solicitar Diagnóstico Gratuito
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+                <Button asChild size="lg" variant="outline">
+                  <a href="https://wa.me/551151920925" target="_blank" rel="noopener noreferrer">
+                    Falar no WhatsApp
+                  </a>
+                </Button>
+              </div>
+            </motion.div>
+
+            <motion.div
+              className="hidden lg:flex items-center justify-center"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+            >
+              <img
+                src={heroIllustration}
+                alt="Ilustração de soluções em Business Intelligence e automação"
+                className="w-[480px] h-auto object-contain"
+              />
+            </motion.div>
+          </div>
         </div>
       </section>
 
