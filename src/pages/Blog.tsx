@@ -111,7 +111,7 @@ const Blog = () => {
             <span className="inline-block px-4 py-1.5 rounded-full bg-accent/20 text-accent-foreground text-sm font-medium mb-4">
               Blog
             </span>
-            <h1 className="text-4xl md:text-5xl font-display font-bold text-foreground mb-6">
+            <h1 className="text-4xl md:text-5xl font-display font-bold text-primary-dark mb-6">
               Artigos e{" "}
               <span className="text-gradient">insights</span>
             </h1>

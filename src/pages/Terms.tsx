@@ -4,7 +4,7 @@ const Terms = () => (
   <Layout>
     <section className="pt-28 md:pt-36 pb-16">
       <div className="max-w-3xl mx-auto px-4">
-        <h1 className="text-4xl font-display font-bold mb-6">Termos de Uso</h1>
+        <h1 className="text-4xl font-display font-bold mb-6 text-primary-dark">Termos de Uso</h1>
         <div className="prose prose-sm text-muted-foreground space-y-4">
           <p>Última atualização: Março de 2026</p>
           <h2 className="text-xl font-display font-bold text-foreground mt-8">1. Aceitação</h2>

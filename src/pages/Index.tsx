@@ -92,7 +92,7 @@ const Index = () => {
                   <Sparkles className="h-3 w-3" /> Inovador
                 </span>
               </div>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold leading-tight text-foreground">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold leading-tight text-primary-dark">
                 Transformamos dados em{" "}
                 <span className="text-gradient">decisões inteligentes</span>
               </h1>
