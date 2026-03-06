@@ -55,9 +55,12 @@ const itemVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" as const } },
 };
 
-function Section({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return <section className={`py-16 md:py-24 ${className}`}>{children}</section>;
-}
+const Section = React.forwardRef<HTMLElement, { children: React.ReactNode; className?: string }>(
+  ({ children, className = "" }, ref) => (
+    <section ref={ref} className={`py-16 md:py-24 ${className}`}>{children}</section>
+  )
+);
+Section.displayName = "Section";
 
 const Index = () => {
   const solutionsRef = useRef(null);
