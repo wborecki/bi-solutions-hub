@@ -200,22 +200,11 @@ const SolucaoDetalhe = () => {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.7, delay: 0.2 }}
             >
-              <div className="relative w-80 h-80">
-                {/* Geometric decoration */}
-                <div className="absolute inset-0 rounded-3xl bg-muted border border-border" />
-                <div className="absolute inset-0 rounded-3xl opacity-[0.04]" style={{
-                  backgroundImage: `linear-gradient(hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)`,
-                  backgroundSize: '24px 24px'
-                }} />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-24 h-24 rounded-2xl bg-primary/10 flex items-center justify-center">
-                    <IconComponent className="w-12 h-12 text-primary" strokeWidth={1.5} />
-                  </div>
-                </div>
-                {/* Corner accents */}
-                <div className="absolute top-4 left-4 w-8 h-8 border-t-2 border-l-2 border-primary/20 rounded-tl-lg" />
-                <div className="absolute bottom-4 right-4 w-8 h-8 border-b-2 border-r-2 border-primary/20 rounded-br-lg" />
-              </div>
+              <img
+                src={solution.illustration}
+                alt={`Ilustração ${solution.title}`}
+                className="w-96 h-96 object-contain"
+              />
             </motion.div>
           </div>
         </div>
