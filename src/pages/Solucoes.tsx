@@ -4,6 +4,7 @@ import {
   MessageSquare, Lightbulb, LayoutDashboard, Zap, Shield, Users,
 } from "lucide-react";
 import { Layout } from "@/components/layout/Layout";
+import { SEO } from "@/components/SEO";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { motion, useInView } from "framer-motion";
@@ -123,6 +124,11 @@ const Solucoes = () => {
 
   return (
     <Layout>
+      <SEO
+        title="Soluções em BI, Automação e Jurimetria"
+        description="Conheça nossas soluções em Business Intelligence, automação de processos, jurimetria e integrações para o mercado jurídico e corporativo."
+        canonical="/solucoes"
+      />
       {/* Hero */}
       <section className="pt-28 pb-16 md:pt-32 md:pb-20">
         <div className="max-w-6xl mx-auto px-4">

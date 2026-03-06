@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
+import { SEO } from "@/components/SEO";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { ArrowRight, Clock, Search } from "lucide-react";
@@ -143,6 +144,11 @@ const Blog = () => {
 
   return (
     <Layout>
+      <SEO
+        title="Blog - Artigos sobre BI, Jurimetria e Automação"
+        description="Leia artigos e insights sobre Business Intelligence, jurimetria, automação de processos e tendências do mercado jurídico."
+        canonical="/blog"
+      />
       {/* Hero */}
       <section className="pt-28 md:pt-36 pb-16 bg-background relative overflow-hidden">
         <div className="absolute inset-0 opacity-[0.03]">

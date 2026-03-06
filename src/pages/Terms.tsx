@@ -1,7 +1,9 @@
 import { Layout } from "@/components/layout/Layout";
+import { SEO } from "@/components/SEO";
 
 const Terms = () => (
   <Layout>
+    <SEO title="Termos de Uso" description="Termos de Uso do site Solutions in BI. Leia as condições de uso dos nossos serviços e plataforma." canonical="/terms" />
     <section className="pt-28 md:pt-36 pb-16">
       <div className="max-w-3xl mx-auto px-4">
         <h1 className="text-4xl font-display font-bold mb-6 text-primary-dark">Termos de Uso</h1>

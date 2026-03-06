@@ -1,7 +1,9 @@
 import { Layout } from "@/components/layout/Layout";
+import { SEO } from "@/components/SEO";
 
 const Privacy = () => (
   <Layout>
+    <SEO title="Política de Privacidade" description="Política de Privacidade da Solutions in BI. Saiba como coletamos, usamos e protegemos seus dados." canonical="/privacy" />
     <section className="pt-28 md:pt-36 pb-16">
       <div className="max-w-3xl mx-auto px-4">
         <h1 className="text-4xl font-display font-bold mb-6 text-primary-dark">Política de Privacidade</h1>
