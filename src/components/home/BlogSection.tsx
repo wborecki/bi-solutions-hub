@@ -142,7 +142,7 @@ export function BlogSection() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
                   {post.featured && (
-                    <Badge className="absolute top-4 left-4 bg-brand-tiffany text-primary">
+                    <Badge className="absolute top-4 left-4 bg-accent text-accent-foreground">
                       <Star className="w-3 h-3 mr-1" />
                       Destaque
                     </Badge>
@@ -157,7 +157,7 @@ export function BlogSection() {
                       {post.readTime}
                     </span>
                   </div>
-                  <CardTitle className="text-lg font-display group-hover:text-brand-tiffany transition-colors line-clamp-2">
+                  <CardTitle className="text-lg font-display group-hover:text-accent transition-colors line-clamp-2">
                     <Link to={`/blog/${post.slug}`}>{post.title}</Link>
                   </CardTitle>
                 </CardHeader>
@@ -168,7 +168,7 @@ export function BlogSection() {
                   </CardDescription>
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-muted-foreground">{post.date}</span>
-                    <Button asChild variant="ghost" size="sm" className="text-primary hover:text-brand-tiffany">
+                    <Button asChild variant="ghost" size="sm" className="text-primary hover:text-accent">
                       <Link to={`/blog/${post.slug}`}>
                         Ler mais
                         <ArrowRight className="w-3 h-3 ml-1 transition-transform group-hover:translate-x-1" />
