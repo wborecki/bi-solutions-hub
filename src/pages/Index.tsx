@@ -75,6 +75,11 @@ const Index = () => {
 
   return (
     <Layout>
+      <SEO
+        title="Business Intelligence, Automação e Jurimetria"
+        description="Soluções em BI, Jurimetria, Automação e IA para o mercado jurídico e corporativo. Transformamos dados em decisões estratégicas."
+        canonical="/"
+      />
       {/* Hero */}
       <Section className="pt-28 md:pt-36">
         <div className="max-w-6xl mx-auto px-4">

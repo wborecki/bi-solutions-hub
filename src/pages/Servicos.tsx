@@ -143,6 +143,11 @@ export default function Servicos() {
 
   return (
     <Layout>
+      <SEO
+        title="Serviços de Consultoria e Implementação"
+        description="Serviços especializados em consultoria, implementação de BI, automação de processos e treinamentos para empresas jurídicas e corporativas."
+        canonical="/servicos"
+      />
       {/* Hero */}
       <section className="relative pt-32 pb-20 bg-gradient-to-b from-primary via-primary/95 to-background overflow-hidden">
         <div className="absolute inset-0 opacity-10">

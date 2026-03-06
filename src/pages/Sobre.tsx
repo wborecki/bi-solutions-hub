@@ -50,6 +50,11 @@ const Sobre = () => {
 
   return (
     <Layout>
+      <SEO
+        title="Sobre Nós - Especialistas em Inteligência de Dados"
+        description="Conheça a Solutions in BI: equipe, valores e missão. Especialistas em Business Intelligence, automação e jurimetria para o mercado jurídico."
+        canonical="/sobre"
+      />
       {/* Hero - limpo, só texto */}
       <section className="pt-28 md:pt-36 pb-20 bg-background relative overflow-hidden">
         <div className="absolute inset-0 opacity-[0.03]">

@@ -43,6 +43,11 @@ const Contato = () => {
 
   return (
     <Layout>
+      <SEO
+        title="Contato - Fale com Nossos Especialistas"
+        description="Entre em contato com a Solutions in BI. Solicite um diagnóstico gratuito e descubra como transformar dados em resultados para sua empresa."
+        canonical="/contato"
+      />
       {/* Hero */}
       <section className="pt-28 md:pt-36 pb-16 bg-background relative overflow-hidden">
         <div className="absolute inset-0 opacity-[0.03]">
