@@ -1,4 +1,5 @@
 import { Layout } from "@/components/layout/Layout";
+import { SEO } from "@/components/SEO";
 import { CTASection } from "@/components/home/CTASection";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
