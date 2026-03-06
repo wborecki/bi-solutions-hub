@@ -241,19 +241,13 @@ const Index = () => {
                   </li>
                 ))}
               </ul>
-              <Button asChild variant="outline">
-                <a href="https://bia.solutionsinbi.com" target="_blank" rel="noopener noreferrer">
-                  Conhecer a Bia <ExternalLink className="h-4 w-4 ml-2" />
-                </a>
+              <Button disabled className="opacity-60 cursor-not-allowed">
+                <Clock className="h-4 w-4 mr-2" /> Em Breve
               </Button>
             </div>
             <div className="flex items-center justify-center">
-              <div className="w-64 h-64 rounded-3xl bg-accent/10 flex items-center justify-center border border-accent/20">
-                <div className="text-center space-y-2">
-                  <MessageSquare className="h-16 w-16 text-accent mx-auto" />
-                  <p className="font-display font-bold text-2xl">Bia</p>
-                  <p className="text-xs text-muted-foreground">Secretária IA</p>
-                </div>
+              <div className="w-64 h-64 rounded-3xl flex items-center justify-center">
+                <img src={biaRobot} alt="Bia - Assistente IA" className="w-56 h-56 object-contain" />
               </div>
             </div>
           </motion.div>
