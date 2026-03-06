@@ -1,11 +1,19 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ChevronDown, Bot, BarChart3, LayoutDashboard, Plug, MessageSquare, Lightbulb } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
+const solutionItems = [
+  { icon: Bot, label: "Automação IA", href: "/solucoes" },
+  { icon: BarChart3, label: "Business Intelligence", href: "/solucoes" },
+  { icon: LayoutDashboard, label: "Dashboards", href: "/solucoes" },
+  { icon: Plug, label: "Integrações", href: "/solucoes" },
+  { icon: MessageSquare, label: "Chatbots", href: "/solucoes" },
+  { icon: Lightbulb, label: "Consultoria", href: "/solucoes" },
+];
+
 const navLinks = [
-  { label: "Soluções", href: "/solucoes" },
   { label: "Sobre", href: "/sobre" },
   { label: "Cases", href: "/casos-de-sucesso" },
   { label: "Blog", href: "/blog" },
@@ -47,6 +55,49 @@ export function Header() {
         </Link>
 
         <nav className="hidden md:flex items-center gap-1">
+          {/* Soluções dropdown */}
+          <div
+            className="relative group"
+            onMouseEnter={() => setDropdownOpen(true)}
+            onMouseLeave={() => setDropdownOpen(false)}
+          >
+            <Link
+              to="/solucoes"
+              className={cn(
+                "relative px-4 py-2 rounded-lg text-sm font-bold transition-colors inline-flex items-center gap-1",
+                "after:content-[''] after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:bg-primary after:rounded-full",
+                "after:scale-x-0 after:origin-left after:transition-transform after:duration-300",
+                "hover:after:scale-x-100",
+                location.pathname === "/solucoes" || location.pathname.startsWith("/solucoes/")
+                  ? "text-primary after:scale-x-100"
+                  : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              Soluções
+              <ChevronDown className={cn("h-3.5 w-3.5 transition-transform duration-200", dropdownOpen && "rotate-180")} />
+            </Link>
+
+            {dropdownOpen && (
+              <div className="absolute top-full left-0 pt-2 z-50">
+                <div className="bg-background/95 backdrop-blur-md border rounded-xl shadow-lg p-2 min-w-[220px]">
+                  {solutionItems.map((item) => {
+                    const Icon = item.icon;
+                    return (
+                      <Link
+                        key={item.label}
+                        to={item.href}
+                        className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+                      >
+                        <Icon className="h-4 w-4 text-primary" />
+                        {item.label}
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
+
           {navLinks.map((link) => (
             <Link
               key={link.href}
