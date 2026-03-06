@@ -53,7 +53,7 @@ export function Header() {
               to={link.href}
               className={cn(
                 "relative px-4 py-2 rounded-lg text-sm font-bold transition-colors",
-                "after:content-[''] after:absolute after:top-0 after:left-2 after:right-2 after:h-0.5 after:bg-primary after:rounded-full",
+                "after:content-[''] after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:bg-primary after:rounded-full",
                 "after:scale-x-0 after:origin-left after:transition-transform after:duration-300",
                 "hover:after:scale-x-100",
                 location.pathname === link.href || location.pathname.startsWith(link.href + "/")
