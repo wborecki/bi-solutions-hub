@@ -23,7 +23,7 @@ export function Footer() {
               {[
                 { label: "Soluções", href: "/solucoes" },
                 { label: "Sobre", href: "/sobre" },
-                { label: "Cases", href: "/casos-de-sucesso" },
+                
                 { label: "Blog", href: "/blog" },
                 { label: "Contato", href: "/contato" },
               ].map((link) => (
