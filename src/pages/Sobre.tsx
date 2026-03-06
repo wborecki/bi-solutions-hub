@@ -7,11 +7,11 @@ import teamWillian from "@/assets/team-willian-photo.jpg";
 import teamElisa from "@/assets/team-elisa-photo.jpg";
 
 const values = [
-  { icon: Lightbulb, label: "Inovação", description: "Buscamos constantemente novas tecnologias e abordagens para entregar soluções de ponta." },
-  { icon: Shield, label: "Transparência", description: "Comunicação clara e honesta em cada etapa do processo com nossos clientes." },
-  { icon: Heart, label: "Compromisso", description: "Dedicação total ao sucesso dos projetos e à satisfação dos nossos parceiros." },
-  { icon: Award, label: "Excelência", description: "Padrão elevado de qualidade em tudo que desenvolvemos e entregamos." },
-  { icon: Users, label: "Foco no Cliente", description: "Cada solução é desenhada sob medida para as necessidades reais do negócio." },
+  { icon: Lightbulb, label: "Inovação" },
+  { icon: Shield, label: "Transparência" },
+  { icon: Heart, label: "Compromisso" },
+  { icon: Award, label: "Excelência" },
+  { icon: Users, label: "Foco no Cliente" },
 ];
 
 const team = [
@@ -39,16 +39,18 @@ const diferenciais = [
 ];
 
 const Sobre = () => {
+  const missionRef = useRef(null);
   const valuesRef = useRef(null);
   const teamRef = useRef(null);
   const diffRef = useRef(null);
+  const missionInView = useInView(missionRef, { once: true, margin: "-80px" });
   const valuesInView = useInView(valuesRef, { once: true, margin: "-80px" });
   const teamInView = useInView(teamRef, { once: true, margin: "-80px" });
   const diffInView = useInView(diffRef, { once: true, margin: "-80px" });
 
   return (
     <Layout>
-      {/* Hero */}
+      {/* Hero - limpo, só texto */}
       <section className="pt-28 md:pt-36 pb-20 bg-background relative overflow-hidden">
         <div className="absolute inset-0 opacity-[0.03]">
           <div className="absolute inset-0" style={{
@@ -57,64 +59,64 @@ const Sobre = () => {
           }} />
         </div>
         <div className="container mx-auto px-4 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <motion.div
-              className="max-w-lg"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
-                Sobre Nós
-              </span>
-              <h1 className="text-4xl md:text-5xl font-display font-bold text-primary-dark mb-6 leading-tight">
-                Especialistas em{" "}
-                <span className="text-gradient">inteligência de dados</span>
-              </h1>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                A Solutions in BI desenvolve soluções de automação, Business Intelligence e
-                Inteligência Artificial para o mercado jurídico e corporativo, transformando
-                dados em decisões estratégicas.
-              </p>
-            </motion.div>
+          <motion.div
+            className="max-w-2xl mx-auto text-center"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
+              Sobre Nós
+            </span>
+            <h1 className="text-4xl md:text-5xl font-display font-bold text-primary-dark mb-6 leading-tight">
+              Especialistas em{" "}
+              <span className="text-gradient">inteligência de dados</span>
+            </h1>
+            <p className="text-lg text-muted-foreground leading-relaxed">
+              A Solutions in BI desenvolve soluções de automação, Business Intelligence e
+              Inteligência Artificial para o mercado jurídico e corporativo, transformando
+              dados em decisões estratégicas.
+            </p>
+          </motion.div>
+        </div>
+      </section>
 
-            {/* Missão e Visão - ao lado do hero */}
-            <motion.div
-              className="space-y-4"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              {[
-                { icon: Target, title: "Missão", text: "Apoiar empresas na tomada de decisões assertivas por meio de análise de dados e automação inteligente." },
-                { icon: Eye, title: "Visão", text: "Ser referência em tecnologia e inteligência de dados para o mercado jurídico e corporativo no Brasil." },
-              ].map((item) => {
-                const Icon = item.icon;
-                return (
-                  <div
-                    key={item.title}
-                    className="rounded-2xl border border-border bg-card p-6 flex gap-5 items-start"
-                  >
-                    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
-                      <Icon className="h-6 w-6 text-primary" />
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-display font-bold text-foreground mb-1">{item.title}</h3>
-                      <p className="text-sm text-muted-foreground leading-relaxed">{item.text}</p>
-                    </div>
+      {/* Missão e Visão - seção própria */}
+      <section className="py-16 bg-muted/30" ref={missionRef}>
+        <div className="container mx-auto px-4">
+          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            {[
+              { icon: Target, title: "Missão", text: "Apoiar empresas na tomada de decisões assertivas por meio de análise de dados e automação inteligente." },
+              { icon: Eye, title: "Visão", text: "Ser referência em tecnologia e inteligência de dados para o mercado jurídico e corporativo no Brasil." },
+            ].map((item, i) => {
+              const Icon = item.icon;
+              return (
+                <motion.div
+                  key={item.title}
+                  className="rounded-2xl border border-border bg-card p-8 flex gap-5 items-start"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={missionInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.4, delay: i * 0.1 }}
+                >
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+                    <Icon className="h-6 w-6 text-primary" />
                   </div>
-                );
-              })}
-            </motion.div>
+                  <div>
+                    <h3 className="text-lg font-display font-bold text-foreground mb-1">{item.title}</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{item.text}</p>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* Valores */}
-      <section className="py-24 bg-muted/30" ref={valuesRef}>
+      {/* Valores - linha única com 5 items */}
+      <section className="py-24" ref={valuesRef}>
         <div className="container mx-auto px-4">
           <motion.div
-            className="text-center mb-16"
+            className="text-center mb-14"
             initial={{ opacity: 0, y: 20 }}
             animate={valuesInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5 }}
@@ -127,22 +129,21 @@ const Sobre = () => {
             </p>
           </motion.div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          <div className="flex flex-wrap justify-center gap-4 max-w-4xl mx-auto">
             {values.map((v, index) => {
               const Icon = v.icon;
               return (
                 <motion.div
                   key={v.label}
-                  className="rounded-2xl border border-border bg-card p-6 hover:shadow-md transition-all duration-300"
-                  initial={{ opacity: 0, y: 20 }}
+                  className="flex items-center gap-3 px-6 py-4 rounded-2xl border border-border bg-card hover:shadow-md transition-all duration-300"
+                  initial={{ opacity: 0, y: 15 }}
                   animate={valuesInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.4, delay: index * 0.08 }}
+                  transition={{ duration: 0.3, delay: index * 0.06 }}
                 >
-                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                    <Icon className="h-5 w-5 text-primary" />
+                  <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                    <Icon className="h-4 w-4 text-primary" />
                   </div>
-                  <h3 className="font-display font-semibold text-foreground mb-2">{v.label}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{v.description}</p>
+                  <span className="font-medium text-foreground text-sm">{v.label}</span>
                 </motion.div>
               );
             })}
@@ -151,7 +152,7 @@ const Sobre = () => {
       </section>
 
       {/* Equipe */}
-      <section className="py-24" ref={teamRef}>
+      <section className="py-24 bg-muted/30" ref={teamRef}>
         <div className="container mx-auto px-4">
           <motion.div
             className="text-center mb-16"
@@ -195,7 +196,7 @@ const Sobre = () => {
       </section>
 
       {/* Diferenciais */}
-      <section className="py-24 bg-muted/30" ref={diffRef}>
+      <section className="py-24" ref={diffRef}>
         <div className="container mx-auto px-4">
           <motion.div
             className="text-center mb-16"
