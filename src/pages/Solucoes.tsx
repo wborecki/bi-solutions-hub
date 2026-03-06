@@ -271,7 +271,7 @@ const Solucoes = () => {
               const Icon = d.icon;
               return (
                 <motion.div key={d.label} variants={itemVariants}>
-                  <div className="text-center p-6 rounded-2xl bg-card border hover:shadow-md transition-shadow">
+                  <div className="text-center p-6 rounded-2xl bg-card border hover:shadow-md transition-shadow h-full">
                     <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
                       <Icon className="h-7 w-7 text-primary" />
                     </div>
@@ -286,7 +286,7 @@ const Solucoes = () => {
       </section>
 
       {/* CTA */}
-      <section className="py-20 bg-primary text-primary-foreground">
+      <section className="py-20 bg-primary-dark text-primary-foreground">
         <div className="max-w-6xl mx-auto px-4 text-center">
           <motion.div
             className="max-w-2xl mx-auto space-y-6"

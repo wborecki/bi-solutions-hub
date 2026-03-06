@@ -42,7 +42,7 @@ export function TestimonialsSection() {
   };
 
   return (
-    <section className="py-24 bg-primary text-primary-foreground overflow-hidden" ref={ref}>
+    <section className="py-24 bg-primary-dark text-primary-foreground overflow-hidden" ref={ref}>
       <div className="container mx-auto px-4">
         {/* Header */}
         <motion.div 

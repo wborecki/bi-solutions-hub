@@ -10,7 +10,7 @@ export function CTASection() {
 
   return (
     <section className="py-24 relative overflow-hidden" ref={ref}>
-      <div className="absolute inset-0 bg-gradient-brand" />
+      <div className="absolute inset-0 bg-primary-dark" />
       
       <motion.div 
         className="absolute top-0 left-0 w-96 h-96 rounded-full bg-accent/10 blur-3xl"
