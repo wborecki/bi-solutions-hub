@@ -5,12 +5,12 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const solutionItems = [
-  { icon: Bot, label: "Automação IA", href: "/solucoes/automacao-ia" },
-  { icon: BarChart3, label: "Business Intelligence", href: "/solucoes/business-intelligence" },
-  { icon: LayoutDashboard, label: "Dashboards", href: "/solucoes/dashboards" },
-  { icon: Plug, label: "Integrações", href: "/solucoes/integracoes" },
-  { icon: MessageSquare, label: "Chatbots", href: "/solucoes/chatbots" },
-  { icon: Lightbulb, label: "Consultoria", href: "/solucoes/consultoria" },
+  { icon: Bot, label: "Automação IA", desc: "Automatize tarefas com IA", href: "/solucoes/automacao-ia" },
+  { icon: BarChart3, label: "Business Intelligence", desc: "Dados estratégicos em tempo real", href: "/solucoes/business-intelligence" },
+  { icon: LayoutDashboard, label: "Dashboards", desc: "Painéis visuais e interativos", href: "/solucoes/dashboards" },
+  { icon: Plug, label: "Integrações", desc: "Conecte seus sistemas", href: "/solucoes/integracoes" },
+  { icon: MessageSquare, label: "Chatbots", desc: "Atendimento inteligente 24/7", href: "/solucoes/chatbots" },
+  { icon: Lightbulb, label: "Consultoria", desc: "Orientação para transformação digital", href: "/solucoes/consultoria" },
 ];
 
 const navLinks = [
@@ -80,17 +80,20 @@ export function Header() {
 
             {dropdownOpen && (
               <div className="absolute top-full left-0 pt-2 z-50">
-                <div className="bg-background/95 backdrop-blur-md border rounded-xl shadow-lg p-2 min-w-[220px]">
+                <div className="bg-background/95 backdrop-blur-md border rounded-xl shadow-lg p-2 min-w-[280px]">
                   {solutionItems.map((item) => {
                     const Icon = item.icon;
                     return (
                       <Link
                         key={item.label}
                         to={item.href}
-                        className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+                        className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm hover:bg-muted transition-colors group"
                       >
-                        <Icon className="h-4 w-4 text-primary" />
-                        {item.label}
+                        <Icon className="h-4 w-4 text-primary shrink-0" />
+                        <div>
+                          <p className="font-semibold text-foreground">{item.label}</p>
+                          <p className="text-xs text-muted-foreground">{item.desc}</p>
+                        </div>
                       </Link>
                     );
                   })}
