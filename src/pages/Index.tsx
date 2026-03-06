@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import heroIllustration from "@/assets/hero-illustration.png";
 import biaRobot from "@/assets/bia-robot.png";
+import { StatsSection } from "@/components/home/StatsSection";
 
 const solutions = [
   { icon: Bot, title: "Automação IA", description: "Automatize processos repetitivos com inteligência artificial avançada." },
@@ -134,6 +135,8 @@ const Index = () => {
           </div>
         </div>
       </Section>
+
+      <StatsSection />
 
       {/* Como funciona */}
       <Section className="bg-muted/50" ref={stepsRef}>

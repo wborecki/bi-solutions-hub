@@ -135,6 +135,37 @@ export function Header() {
       {isMobileMenuOpen && (
         <div className="md:hidden absolute top-full left-0 right-0 bg-background/95 backdrop-blur-md border-b shadow-lg">
           <nav className="max-w-6xl mx-auto px-4 py-6 flex flex-col gap-1">
+            <Link
+              to="/solucoes"
+              className={cn(
+                "px-4 py-3 rounded-lg text-base font-medium transition-colors",
+                location.pathname === "/solucoes" || location.pathname.startsWith("/solucoes/")
+                  ? "bg-primary/10 text-primary"
+                  : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              Soluções
+            </Link>
+            <div className="pl-4 flex flex-col gap-0.5">
+              {solutionItems.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <Link
+                    key={item.label}
+                    to={item.href}
+                    className={cn(
+                      "flex items-center gap-2 px-4 py-2 rounded-lg text-sm transition-colors",
+                      location.pathname === item.href
+                        ? "text-primary bg-primary/5"
+                        : "text-muted-foreground hover:text-foreground"
+                    )}
+                  >
+                    <Icon className="h-3.5 w-3.5" />
+                    {item.label}
+                  </Link>
+                );
+              })}
+            </div>
             {navLinks.map((link) => (
               <Link
                 key={link.href}
