@@ -8,9 +8,10 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import {
   Shield, Sparkles, ArrowRight, Bot, BarChart3, LayoutDashboard,
-  Plug, MessageSquare, Lightbulb, Search, Cpu, Rocket, Quote, ExternalLink,
+  Plug, MessageSquare, Lightbulb, Search, Cpu, Rocket, Quote, Clock,
 } from "lucide-react";
 import heroIllustration from "@/assets/hero-illustration.png";
+import biaRobot from "@/assets/bia-robot.png";
 
 const solutions = [
   { icon: Bot, title: "Automação IA", description: "Automatize processos repetitivos com inteligência artificial avançada." },
