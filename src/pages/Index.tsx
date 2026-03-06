@@ -298,7 +298,7 @@ const Index = () => {
       </Section>
 
       {/* CTA */}
-      <Section className="bg-primary text-primary-foreground">
+      <Section className="bg-primary-dark text-primary-foreground">
         <div className="max-w-6xl mx-auto px-4 text-center">
           <motion.div
             className="max-w-2xl mx-auto space-y-6"
