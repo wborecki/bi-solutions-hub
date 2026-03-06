@@ -5,12 +5,12 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const solutionItems = [
-  { icon: Bot, label: "Automação IA", href: "/solucoes" },
-  { icon: BarChart3, label: "Business Intelligence", href: "/solucoes" },
-  { icon: LayoutDashboard, label: "Dashboards", href: "/solucoes" },
-  { icon: Plug, label: "Integrações", href: "/solucoes" },
-  { icon: MessageSquare, label: "Chatbots", href: "/solucoes" },
-  { icon: Lightbulb, label: "Consultoria", href: "/solucoes" },
+  { icon: Bot, label: "Automação IA", href: "/solucoes/robos-juridicos" },
+  { icon: BarChart3, label: "Business Intelligence", href: "/solucoes/business-intelligence" },
+  { icon: LayoutDashboard, label: "Dashboards", href: "/solucoes/business-intelligence" },
+  { icon: Plug, label: "Integrações", href: "/solucoes/robos-juridicos" },
+  { icon: MessageSquare, label: "Chatbots", href: "/solucoes/robos-juridicos" },
+  { icon: Lightbulb, label: "Consultoria", href: "/solucoes/jurimetria" },
 ];
 
 const navLinks = [
