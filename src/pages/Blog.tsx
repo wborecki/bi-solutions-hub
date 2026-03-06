@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
+import { SEO } from "@/components/SEO";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { ArrowRight, Clock, Search } from "lucide-react";
