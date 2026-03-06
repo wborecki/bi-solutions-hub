@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ChevronDown, Bot, BarChart3, LayoutDashboard, Plug, MessageSquare, Lightbulb } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import logoSbi from "@/assets/logo-sbi.png";
 
 const solutionItems = [
   { icon: Bot, label: "Automação IA", desc: "Automatize tarefas com IA", href: "/solucoes/automacao-ia" },
@@ -46,13 +47,8 @@ export function Header() {
       )}
     >
       <div className="max-w-6xl mx-auto px-4 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-2">
-          <div className="w-9 h-9 rounded-lg bg-primary flex items-center justify-center">
-            <span className="text-primary-foreground font-display font-bold text-sm">SBI</span>
-          </div>
-          <span className="font-display font-semibold text-lg text-foreground">
-            Solutions in BI
-          </span>
+        <Link to="/" className="flex items-center">
+          <img src={logoSbi} alt="Solutions in BI" className="h-10 w-auto object-contain" />
         </Link>
 
         <nav className="hidden md:flex items-center gap-1">

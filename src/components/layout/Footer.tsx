@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import logoSbi from "@/assets/logo-sbi.png";
 
 export function Footer() {
   return (
@@ -6,12 +7,7 @@ export function Footer() {
       <div className="max-w-6xl mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="space-y-3">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-                <span className="text-primary-foreground font-display font-bold text-xs">SBI</span>
-              </div>
-              <span className="font-display font-semibold">Solutions in BI</span>
-            </div>
+            <img src={logoSbi} alt="Solutions in BI" className="h-10 w-auto object-contain" />
             <p className="text-sm text-muted-foreground">
               Transformamos dados em decisões inteligentes com automação e IA.
             </p>
