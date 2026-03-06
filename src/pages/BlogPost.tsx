@@ -22,7 +22,7 @@ const postsData: Record<string, {
     readTime: "5 min",
     content: [
       "O mercado jurídico está em constante evolução, e a adoção de tecnologias de Business Intelligence (BI) tem se mostrado um diferencial competitivo crucial para escritórios que buscam excelência operacional.",
-      "Os dashboards interativos permitem que gestores visualizem em tempo real métricas importantes como: volume de processos, taxa de sucesso, tempo médio de tramitação e produtividade da equipe. Essa visibilidade é fundamental para identificar gargalos e oportunidades de melhoria.",
+      "Os dashboards interativos permitem que gestores visualizem métricas importantes como: volume de processos, taxa de sucesso, tempo médio de tramitação e produtividade da equipe. Essa visibilidade é fundamental para identificar gargalos e oportunidades de melhoria.",
       "Além da visualização de dados, o BI possibilita a automatização de relatórios periódicos, eliminando horas de trabalho manual e garantindo que informações críticas cheguem aos tomadores de decisão no momento certo.",
       "A integração de dados de diferentes fontes — sistemas de gestão processual, financeiro e de relacionamento — cria uma visão unificada do negócio, permitindo análises mais completas e estratégicas.",
       "Escritórios que já implementaram soluções de BI reportam melhorias significativas na eficiência operacional, com reduções de até 40% no tempo gasto em tarefas administrativas e aumento na satisfação dos clientes.",
