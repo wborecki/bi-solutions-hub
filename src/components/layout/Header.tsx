@@ -5,12 +5,12 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const solutionItems = [
-  { icon: Bot, label: "Automação IA", href: "/solucoes/automacao-ia" },
-  { icon: BarChart3, label: "Business Intelligence", href: "/solucoes/business-intelligence" },
-  { icon: LayoutDashboard, label: "Dashboards", href: "/solucoes/dashboards" },
-  { icon: Plug, label: "Integrações", href: "/solucoes/integracoes" },
-  { icon: MessageSquare, label: "Chatbots", href: "/solucoes/chatbots" },
-  { icon: Lightbulb, label: "Consultoria", href: "/solucoes/consultoria" },
+  { icon: Bot, label: "Automação IA", desc: "Automatize tarefas com IA", href: "/solucoes/automacao-ia" },
+  { icon: BarChart3, label: "Business Intelligence", desc: "Dados estratégicos em tempo real", href: "/solucoes/business-intelligence" },
+  { icon: LayoutDashboard, label: "Dashboards", desc: "Painéis visuais e interativos", href: "/solucoes/dashboards" },
+  { icon: Plug, label: "Integrações", desc: "Conecte seus sistemas", href: "/solucoes/integracoes" },
+  { icon: MessageSquare, label: "Chatbots", desc: "Atendimento inteligente 24/7", href: "/solucoes/chatbots" },
+  { icon: Lightbulb, label: "Consultoria", desc: "Orientação para transformação digital", href: "/solucoes/consultoria" },
 ];
 
 const navLinks = [
