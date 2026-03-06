@@ -2,37 +2,31 @@ import { useParams, Link } from "react-router-dom";
 import { ArrowLeft, ArrowRight, CheckCircle, BarChart3, Bot, Scale } from "lucide-react";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CTASection } from "@/components/home/CTASection";
 import { cn } from "@/lib/utils";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 
 const solutionsData = {
   "business-intelligence": {
     icon: BarChart3,
     title: "Business Intelligence",
     subtitle: "Dashboards e Relatórios Customizados",
-    description: "Desenvolvimento de dashboards e relatórios customizados para análise de dados estratégicos, permitindo decisões mais assertivas nos âmbitos jurídico e corporativo.",
-    longDescription: `A Solutions in BI oferece soluções completas de Business Intelligence, 
-    transformando dados brutos em insights estratégicos para seu negócio. Nossa equipe especializada 
-    desenvolve dashboards personalizados que permitem visualizar KPIs críticos, identificar tendências 
-    e tomar decisões baseadas em dados confiáveis.`,
+    description: "Desenvolvimento de dashboards e relatórios customizados para análise de dados estratégicos.",
+    longDescription: `A Solutions in BI oferece soluções completas de Business Intelligence, transformando dados brutos em insights estratégicos para seu negócio. Nossa equipe especializada desenvolve dashboards personalizados que permitem visualizar KPIs críticos, identificar tendências e tomar decisões baseadas em dados confiáveis.`,
     features: [
-      {
-        title: "Dashboards Interativos",
-        description: "Criação de painéis visuais em Power BI com dados em tempo real e navegação intuitiva.",
-      },
-      {
-        title: "Relatórios Automatizados",
-        description: "Geração automática de relatórios personalizados com distribuição programada.",
-      },
-      {
-        title: "ETL e Integração",
-        description: "Extração, transformação e carga de dados de múltiplas fontes em um data warehouse unificado.",
-      },
-      {
-        title: "KPIs Personalizados",
-        description: "Definição e monitoramento de indicadores-chave de performance específicos para seu negócio.",
-      },
+      { title: "Dashboards Interativos", description: "Criação de painéis visuais em Power BI com dados em tempo real e navegação intuitiva." },
+      { title: "Relatórios Automatizados", description: "Geração automática de relatórios personalizados com distribuição programada." },
+      { title: "ETL e Integração", description: "Extração, transformação e carga de dados de múltiplas fontes em um data warehouse unificado." },
+      { title: "KPIs Personalizados", description: "Definição e monitoramento de indicadores-chave de performance específicos para seu negócio." },
     ],
     benefits: [
       "Tomada de decisões mais rápida e assertiva",
@@ -42,35 +36,18 @@ const solutionsData = {
       "Consolidação de dados dispersos",
       "Democratização do acesso à informação",
     ],
-    color: "bg-primary",
-    gradient: "from-primary to-secondary",
   },
   "robos-juridicos": {
     icon: Bot,
     title: "Robôs Jurídicos",
     subtitle: "Automação de Consultas e Processos",
-    description: "Implementação de robôs para consultas automáticas em tribunais, agilizando a busca por informações processuais e reduzindo o tempo em tarefas repetitivas.",
-    longDescription: `Nossa solução de automação jurídica elimina o trabalho manual e repetitivo 
-    das equipes, permitindo que advogados e gestores foquem em atividades estratégicas. Os robôs 
-    realizam consultas em tribunais, monitoram processos e extraem informações de forma contínua 
-    e confiável.`,
+    description: "Implementação de robôs para consultas automáticas em tribunais.",
+    longDescription: `Nossa solução de automação jurídica elimina o trabalho manual e repetitivo das equipes, permitindo que advogados e gestores foquem em atividades estratégicas. Os robôs realizam consultas em tribunais, monitoram processos e extraem informações de forma contínua e confiável.`,
     features: [
-      {
-        title: "Consultas Automáticas",
-        description: "Robôs que consultam automaticamente sistemas de tribunais e órgãos públicos.",
-      },
-      {
-        title: "Monitoramento Contínuo",
-        description: "Acompanhamento 24/7 de processos com alertas de movimentações importantes.",
-      },
-      {
-        title: "Extração de Dados",
-        description: "Captura automatizada de informações de documentos e sistemas jurídicos.",
-      },
-      {
-        title: "Integração com Sistemas",
-        description: "Conexão com ERPs e sistemas de gestão jurídica existentes.",
-      },
+      { title: "Consultas Automáticas", description: "Robôs que consultam automaticamente sistemas de tribunais e órgãos públicos." },
+      { title: "Monitoramento Contínuo", description: "Acompanhamento 24/7 de processos com alertas de movimentações importantes." },
+      { title: "Extração de Dados", description: "Captura automatizada de informações de documentos e sistemas jurídicos." },
+      { title: "Integração com Sistemas", description: "Conexão com ERPs e sistemas de gestão jurídica existentes." },
     ],
     benefits: [
       "Redução de até 80% do tempo em tarefas manuais",
@@ -80,35 +57,18 @@ const solutionsData = {
       "Redução de riscos operacionais",
       "Escalabilidade sem aumento de custos",
     ],
-    color: "bg-secondary",
-    gradient: "from-secondary to-accent",
   },
   "jurimetria": {
     icon: Scale,
     title: "Jurimetria",
     subtitle: "Inteligência Jurídica Baseada em Dados",
-    description: "Análise estatística de dados jurídicos para previsibilidade processual, gestão de riscos e insights estratégicos baseados em dados reais.",
-    longDescription: `A Jurimetria transforma a prática jurídica ao aplicar métodos estatísticos 
-    e científicos para análise de processos judiciais. Com nossa solução, escritórios e empresas 
-    podem prever resultados, calcular probabilidades e desenvolver estratégias mais eficazes 
-    baseadas em evidências concretas.`,
+    description: "Análise estatística de dados jurídicos para previsibilidade processual.",
+    longDescription: `A Jurimetria transforma a prática jurídica ao aplicar métodos estatísticos e científicos para análise de processos judiciais. Com nossa solução, escritórios e empresas podem prever resultados, calcular probabilidades e desenvolver estratégias mais eficazes baseadas em evidências concretas.`,
     features: [
-      {
-        title: "Análise Preditiva",
-        description: "Modelos estatísticos que preveem resultados processuais com base em dados históricos.",
-      },
-      {
-        title: "Pareceres Jurimétricos",
-        description: "Relatórios detalhados com análise estatística de jurisprudência e tendências.",
-      },
-      {
-        title: "Gestão de Riscos",
-        description: "Avaliação quantitativa de riscos processuais para tomada de decisão estratégica.",
-      },
-      {
-        title: "Análise de Tendências",
-        description: "Identificação de padrões em decisões por tribunal, relator e matéria.",
-      },
+      { title: "Análise Preditiva", description: "Modelos estatísticos que preveem resultados processuais com base em dados históricos." },
+      { title: "Pareceres Jurimétricos", description: "Relatórios detalhados com análise estatística de jurisprudência e tendências." },
+      { title: "Gestão de Riscos", description: "Avaliação quantitativa de riscos processuais para tomada de decisão estratégica." },
+      { title: "Análise de Tendências", description: "Identificação de padrões em decisões por tribunal, relator e matéria." },
     ],
     benefits: [
       "Previsibilidade de resultados processuais",
@@ -118,14 +78,16 @@ const solutionsData = {
       "Identificação de padrões judiciais",
       "Diferencial competitivo no mercado",
     ],
-    color: "bg-accent",
-    gradient: "from-accent to-primary",
   },
 };
 
 const SolucaoDetalhe = () => {
   const { slug } = useParams<{ slug: string }>();
   const solution = solutionsData[slug as keyof typeof solutionsData];
+  const featuresRef = useRef(null);
+  const benefitsRef = useRef(null);
+  const featuresInView = useInView(featuresRef, { once: true, margin: "-80px" });
+  const benefitsInView = useInView(benefitsRef, { once: true, margin: "-80px" });
 
   if (!solution) {
     return (
@@ -151,120 +113,214 @@ const SolucaoDetalhe = () => {
   return (
     <Layout>
       {/* Hero */}
-      <section className="pt-32 pb-16 bg-muted/30 overflow-hidden relative">
-        <div className="absolute inset-0">
-          <div className={cn("absolute -top-1/2 -right-1/4 w-[600px] h-[600px] rounded-full blur-3xl opacity-20 bg-gradient-to-br", solution.gradient)} />
+      <section className="pt-28 pb-20 bg-background relative overflow-hidden">
+        {/* Subtle dot pattern */}
+        <div className="absolute inset-0 opacity-[0.03]">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `radial-gradient(circle at 1px 1px, hsl(var(--foreground)) 1px, transparent 0)`,
+            backgroundSize: '32px 32px'
+          }} />
         </div>
-        <div className="container mx-auto px-4 relative z-10">
-          <Link
-            to="/solucoes"
-            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-6 transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Voltar para Soluções
-          </Link>
 
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <div className={cn(
-                "w-16 h-16 rounded-2xl flex items-center justify-center mb-6",
-                solution.color,
-                "text-white"
-              )}>
-                <IconComponent className="w-8 h-8" />
-              </div>
-              <span className="inline-block px-4 py-1.5 rounded-full bg-accent/20 text-accent-foreground text-sm font-medium mb-4">
+        <div className="container mx-auto px-4 relative z-10">
+          {/* Breadcrumb */}
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+          >
+            <Breadcrumb className="mb-10">
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbLink asChild>
+                    <Link to="/">Home</Link>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbLink asChild>
+                    <Link to="/solucoes">Soluções</Link>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>{solution.title}</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+          </motion.div>
+
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
                 {solution.subtitle}
               </span>
-              <h1 className="text-4xl md:text-5xl font-display font-bold text-foreground mb-6">
-                {solution.title}
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-foreground mb-6 leading-tight">
+                <span className="text-gradient">{solution.title}</span>
               </h1>
-              <p className="text-xl text-muted-foreground leading-relaxed">
+              <p className="text-lg text-muted-foreground leading-relaxed mb-8 max-w-lg">
                 {solution.longDescription}
               </p>
-            </div>
-
-            <div className="hidden lg:block">
-              <div className={cn(
-                "aspect-square max-w-md mx-auto rounded-3xl bg-gradient-to-br p-8 flex items-center justify-center",
-                solution.gradient
-              )}>
-                <IconComponent className="w-40 h-40 text-white/80" strokeWidth={0.75} />
+              <div className="flex flex-wrap gap-4">
+                <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
+                  <Button asChild size="lg" className="font-semibold">
+                    <Link to="/contato">
+                      Fale Conosco
+                      <ArrowRight className="w-4 h-4 ml-2" />
+                    </Link>
+                  </Button>
+                </motion.div>
+                <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
+                  <Button asChild size="lg" variant="outline">
+                    <a
+                      href="https://wa.me/551151920925?text=Olá! Gostaria de saber mais sobre a solução de ${solution.title}."
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      WhatsApp
+                    </a>
+                  </Button>
+                </motion.div>
               </div>
-            </div>
+            </motion.div>
+
+            <motion.div
+              className="hidden lg:flex items-center justify-center"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+            >
+              <div className="relative w-80 h-80">
+                {/* Geometric decoration */}
+                <div className="absolute inset-0 rounded-3xl bg-muted border border-border" />
+                <div className="absolute inset-0 rounded-3xl opacity-[0.04]" style={{
+                  backgroundImage: `linear-gradient(hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)`,
+                  backgroundSize: '24px 24px'
+                }} />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-24 h-24 rounded-2xl bg-primary/10 flex items-center justify-center">
+                    <IconComponent className="w-12 h-12 text-primary" strokeWidth={1.5} />
+                  </div>
+                </div>
+                {/* Corner accents */}
+                <div className="absolute top-4 left-4 w-8 h-8 border-t-2 border-l-2 border-primary/20 rounded-tl-lg" />
+                <div className="absolute bottom-4 right-4 w-8 h-8 border-b-2 border-r-2 border-primary/20 rounded-br-lg" />
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* Features */}
-      <section className="py-24">
+      <section className="py-24 bg-muted/30" ref={featuresRef}>
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-display font-bold text-foreground text-center mb-12">
-            Recursos e Funcionalidades
-          </h2>
-          <div className="grid md:grid-cols-2 gap-8">
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            animate={featuresInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-4">
+              Recursos e Funcionalidades
+            </h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              Conheça os recursos que tornam o {solution.title} uma solução completa.
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
             {solution.features.map((feature, index) => (
-              <Card key={feature.title} className="border-0 shadow-lg">
-                <CardHeader>
-                  <div className={cn(
-                    "w-10 h-10 rounded-lg flex items-center justify-center mb-4",
-                    solution.color,
-                    "text-white text-lg font-bold"
-                  )}>
-                    {index + 1}
-                  </div>
-                  <CardTitle className="font-display">{feature.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground">{feature.description}</p>
-                </CardContent>
-              </Card>
+              <motion.div
+                key={feature.title}
+                className="rounded-2xl border border-border bg-card p-8 hover:shadow-md transition-all duration-300"
+                initial={{ opacity: 0, y: 20 }}
+                animate={featuresInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+              >
+                <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-5 text-sm font-bold">
+                  {String(index + 1).padStart(2, '0')}
+                </div>
+                <h3 className="text-lg font-display font-semibold text-foreground mb-2">
+                  {feature.title}
+                </h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  {feature.description}
+                </p>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
       {/* Benefits */}
-      <section className="py-24 bg-muted/30">
+      <section className="py-24" ref={benefitsRef}>
         <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center mb-12">
-            <h2 className="text-3xl font-display font-bold text-foreground mb-4">
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            animate={benefitsInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-4">
               Benefícios
             </h2>
-            <p className="text-lg text-muted-foreground">
+            <p className="text-muted-foreground text-lg">
               Veja como o {solution.title} pode transformar seu negócio.
             </p>
-          </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            {solution.benefits.map((benefit) => (
-              <div key={benefit} className="flex items-start gap-3 p-4 rounded-lg bg-background">
-                <CheckCircle className="w-5 h-5 text-accent shrink-0 mt-0.5" />
-                <span className="text-foreground">{benefit}</span>
-              </div>
+          </motion.div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl mx-auto">
+            {solution.benefits.map((benefit, index) => (
+              <motion.div
+                key={benefit}
+                className="flex items-start gap-3 p-5 rounded-xl border border-border bg-card hover:shadow-sm transition-all duration-300"
+                initial={{ opacity: 0, y: 15 }}
+                animate={benefitsInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.3, delay: index * 0.08 }}
+              >
+                <CheckCircle className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+                <span className="text-sm text-foreground">{benefit}</span>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
       {/* Navigation */}
-      <section className="py-12 border-t">
+      <section className="py-12 border-t border-border">
         <div className="container mx-auto px-4">
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-stretch gap-4">
             {prevSolution ? (
-              <Button asChild variant="ghost">
-                <Link to={`/solucoes/${prevSolution}`}>
-                  <ArrowLeft className="w-4 h-4 mr-2" />
-                  {solutionsData[prevSolution as keyof typeof solutionsData].title}
-                </Link>
-              </Button>
+              <Link
+                to={`/solucoes/${prevSolution}`}
+                className="group flex items-center gap-3 p-5 rounded-xl border border-border bg-card hover:shadow-md transition-all duration-300 flex-1 max-w-xs"
+              >
+                <ArrowLeft className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors shrink-0" />
+                <div className="text-left">
+                  <span className="text-xs text-muted-foreground">Anterior</span>
+                  <p className="text-sm font-semibold text-foreground">
+                    {solutionsData[prevSolution as keyof typeof solutionsData].title}
+                  </p>
+                </div>
+              </Link>
             ) : <div />}
             {nextSolution ? (
-              <Button asChild variant="ghost">
-                <Link to={`/solucoes/${nextSolution}`}>
-                  {solutionsData[nextSolution as keyof typeof solutionsData].title}
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </Link>
-              </Button>
+              <Link
+                to={`/solucoes/${nextSolution}`}
+                className="group flex items-center gap-3 p-5 rounded-xl border border-border bg-card hover:shadow-md transition-all duration-300 flex-1 max-w-xs ml-auto text-right"
+              >
+                <div className="flex-1">
+                  <span className="text-xs text-muted-foreground">Próximo</span>
+                  <p className="text-sm font-semibold text-foreground">
+                    {solutionsData[nextSolution as keyof typeof solutionsData].title}
+                  </p>
+                </div>
+                <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors shrink-0" />
+              </Link>
             ) : <div />}
           </div>
         </div>
