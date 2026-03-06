@@ -85,9 +85,8 @@ export function CTASection() {
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button 
                 asChild 
-                size="lg" 
-                variant="outline"
-                className="border-2 border-white/40 bg-white/10 text-white hover:bg-white/20 backdrop-blur-sm font-semibold"
+                size="lg"
+                className="bg-primary-foreground text-primary-dark hover:bg-primary-foreground/90 border border-primary-foreground/30 font-semibold shadow-lg"
               >
                 <a 
                   href="https://wa.me/551151920925?text=Olá! Gostaria de saber mais sobre as soluções da Solutions in BI." 
