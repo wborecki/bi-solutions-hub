@@ -52,8 +52,8 @@ const solutions = [
       "Suporte à estratégia jurídica",
     ],
     href: "/solucoes/jurimetria",
-    color: "bg-brand-tiffany",
-    gradient: "from-brand-tiffany to-primary",
+    color: "bg-accent",
+    gradient: "from-accent to-primary",
   },
 ];
 
@@ -114,13 +114,13 @@ const Solucoes = () => {
                     <div className="grid sm:grid-cols-2 gap-4 mb-8">
                       {solution.features.map((feature) => (
                         <div key={feature} className="flex items-start gap-3">
-                          <CheckCircle className="w-5 h-5 text-brand-tiffany shrink-0 mt-0.5" />
+                          <CheckCircle className="w-5 h-5 text-accent shrink-0 mt-0.5" />
                           <span className="text-sm text-foreground">{feature}</span>
                         </div>
                       ))}
                     </div>
 
-                    <Button asChild className="bg-gradient-brand hover:opacity-90">
+                    <Button asChild className="bg-primary hover:bg-primary/90">
                       <Link to={solution.href}>
                         Saiba Mais
                         <ArrowRight className="w-4 h-4 ml-2" />
