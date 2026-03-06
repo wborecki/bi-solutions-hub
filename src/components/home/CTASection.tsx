@@ -86,7 +86,8 @@ export function CTASection() {
               <Button 
                 asChild 
                 size="lg" 
-                className="border border-white/30 bg-transparent text-white hover:bg-white/10 backdrop-blur-sm"
+                variant="outline"
+                className="border-2 border-white/40 bg-white/10 text-white hover:bg-white/20 backdrop-blur-sm font-semibold"
               >
                 <a 
                   href="https://wa.me/551151920925?text=Olá! Gostaria de saber mais sobre as soluções da Solutions in BI." 
