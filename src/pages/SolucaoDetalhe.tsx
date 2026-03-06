@@ -1,5 +1,5 @@
 import { useParams, Link } from "react-router-dom";
-import { ArrowRight, CheckCircle, BarChart3, Bot, Scale, Cpu, LayoutDashboard, Plug, MessageSquare, Lightbulb } from "lucide-react";
+import { ArrowRight, CheckCircle, BarChart3, Bot, Scale, Cpu, LayoutDashboard, Plug, Lightbulb, GraduationCap } from "lucide-react";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { CTASection } from "@/components/home/CTASection";
@@ -11,7 +11,6 @@ import illustrationJurimetria from "@/assets/illustration-jurimetria.png";
 import illustrationAutomacao from "@/assets/illustration-automacao.png";
 import illustrationDashboards from "@/assets/illustration-dashboards.png";
 import illustrationIntegracoes from "@/assets/illustration-integracoes.png";
-import illustrationChatbots from "@/assets/illustration-chatbots.png";
 import illustrationConsultoria from "@/assets/illustration-consultoria.png";
 
 const solutionsData = {
@@ -22,7 +21,7 @@ const solutionsData = {
     subtitle: "Dashboards e Relatórios Customizados",
     longDescription: `A Solutions in BI oferece soluções completas de Business Intelligence, transformando dados brutos em insights estratégicos para seu negócio. Nossa equipe especializada desenvolve dashboards personalizados que permitem visualizar KPIs críticos, identificar tendências e tomar decisões baseadas em dados confiáveis.`,
     features: [
-      { title: "Dashboards Interativos", description: "Criação de painéis visuais em Power BI com dados em tempo real e navegação intuitiva." },
+      { title: "Dashboards Interativos", description: "Criação de painéis visuais em Power BI com navegação intuitiva e dados atualizados." },
       { title: "Relatórios Automatizados", description: "Geração automática de relatórios personalizados com distribuição programada." },
       { title: "ETL e Integração", description: "Extração, transformação e carga de dados de múltiplas fontes em um data warehouse unificado." },
       { title: "KPIs Personalizados", description: "Definição e monitoramento de indicadores-chave de performance específicos para seu negócio." },
@@ -51,7 +50,7 @@ const solutionsData = {
     benefits: [
       "Redução de até 80% do tempo em tarefas manuais",
       "Eliminação de erros humanos",
-      "Monitoramento em tempo real",
+      "Monitoramento automatizado",
       "Maior produtividade da equipe",
       "Redução de riscos operacionais",
       "Escalabilidade sem aumento de custos",
@@ -141,25 +140,25 @@ const solutionsData = {
       "Escalabilidade da infraestrutura",
     ],
   },
-  "chatbots": {
-    illustration: illustrationChatbots,
-    icon: MessageSquare,
-    title: "Chatbots",
-    subtitle: "Atendimento Inteligente e Automatizado",
-    longDescription: `Desenvolvemos chatbots inteligentes que utilizam processamento de linguagem natural para oferecer atendimento automatizado de alta qualidade. Nossos bots são treinados com dados específicos do seu negócio para responder dúvidas, qualificar leads e automatizar processos de atendimento.`,
+  "mentoria-power-bi": {
+    illustration: illustrationDashboards,
+    icon: GraduationCap,
+    title: "Mentoria de Power BI",
+    subtitle: "Aprenda com Especialistas",
+    longDescription: `Nossa mentoria de Power BI é um programa personalizado para profissionais que desejam dominar a criação de dashboards, relatórios e análises de dados. Com acompanhamento individual e projetos práticos, você aprende a transformar dados em insights estratégicos para seu negócio.`,
     features: [
-      { title: "IA Conversacional", description: "Chatbots com compreensão de linguagem natural para diálogos humanizados." },
-      { title: "Multicanal", description: "Atendimento integrado via WhatsApp, site, e-mail e redes sociais." },
-      { title: "Base de Conhecimento", description: "Treinamento com dados específicos da empresa para respostas precisas." },
-      { title: "Escalonamento Inteligente", description: "Transferência automática para atendentes humanos quando necessário." },
+      { title: "Aulas Práticas", description: "Sessões hands-on com dados reais do seu negócio para aprendizado aplicado." },
+      { title: "Acompanhamento Individual", description: "Mentor dedicado para tirar dúvidas e orientar seu desenvolvimento." },
+      { title: "Projetos Reais", description: "Construa dashboards e relatórios aplicáveis ao seu dia a dia profissional." },
+      { title: "Material Exclusivo", description: "Acesso a templates, guias e materiais de referência atualizados." },
     ],
     benefits: [
-      "Atendimento 24/7 sem custos extras",
-      "Redução de tempo de resposta",
-      "Qualificação automática de leads",
-      "Satisfação do cliente elevada",
-      "Redução de custos com suporte",
-      "Dados e insights de atendimento",
+      "Domínio completo do Power BI",
+      "Autonomia na criação de dashboards",
+      "Análises mais assertivas",
+      "Certificado de conclusão",
+      "Suporte pós-mentoria",
+      "Networking com outros profissionais",
     ],
   },
   "consultoria": {

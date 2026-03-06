@@ -59,7 +59,7 @@ export function Footer() {
                 { label: "Automação IA", href: "/solucoes/automacao-ia" },
                 { label: "Business Intelligence", href: "/solucoes/business-intelligence" },
                 { label: "Dashboards", href: "/solucoes/dashboards" },
-                { label: "Chatbots", href: "/solucoes/chatbots" },
+                { label: "Mentoria Power BI", href: "/solucoes/mentoria-power-bi" },
               ].map((link) => (
                 <li key={link.label}>
                   <Link to={link.href} className="text-sm text-muted-foreground hover:text-primary transition-colors">

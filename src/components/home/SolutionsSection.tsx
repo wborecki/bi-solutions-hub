@@ -33,7 +33,7 @@ const solutions = [
     icon: Scale,
     title: "Jurimetria",
     description: "Análise estatística de dados jurídicos para previsibilidade processual, gestão de riscos e insights estratégicos baseados em dados.",
-    features: ["Análise preditiva", "Pareceres jurimétricos", "Gestão de riscos", "Tendências jurisprudenciais"],
+    features: ["Análise estatística", "Pareceres jurimétricos", "Gestão de riscos", "Tendências jurisprudenciais"],
     href: "/solucoes/jurimetria",
     color: "bg-accent",
     image: solutionJurimetria,
