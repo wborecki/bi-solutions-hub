@@ -15,6 +15,7 @@ const solutionItems = [
 ];
 
 const navLinks = [
+  { label: "Home", href: "/" },
   { label: "Sobre", href: "/sobre" },
   
   { label: "Blog", href: "/blog" },
