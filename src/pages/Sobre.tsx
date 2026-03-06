@@ -46,7 +46,7 @@ const Sobre = () => {
         <div className="max-w-6xl mx-auto px-4">
           <motion.div className="max-w-3xl" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
             <span className="bg-primary text-primary-foreground text-xs font-semibold px-3 py-1 rounded-full">Sobre Nós</span>
-            <h1 className="text-4xl md:text-5xl font-display font-bold mt-4 mb-4">
+            <h1 className="text-4xl md:text-5xl font-display font-bold mt-4 mb-4 text-primary-dark">
               Especialistas em <span className="text-gradient">inteligência de dados</span>
             </h1>
             <p className="text-lg text-muted-foreground leading-relaxed">

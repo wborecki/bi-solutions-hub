@@ -140,7 +140,7 @@ const SolucaoDetalhe = () => {
               <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
                 {solution.subtitle}
               </span>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-foreground mb-6 leading-tight">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-primary-dark mb-6 leading-tight">
                 <span className="text-gradient">{solution.title}</span>
               </h1>
               <p className="text-lg text-muted-foreground leading-relaxed mb-8 max-w-lg">
