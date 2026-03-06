@@ -6,6 +6,9 @@ import { CTASection } from "@/components/home/CTASection";
 import { cn } from "@/lib/utils";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import illustrationBI from "@/assets/illustration-bi.png";
+import illustrationRobos from "@/assets/illustration-robos.png";
+import illustrationJurimetria from "@/assets/illustration-jurimetria.png";
 import {
   Breadcrumb,
   BreadcrumbItem,
