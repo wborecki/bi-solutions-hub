@@ -136,7 +136,7 @@ const Solucoes = () => {
               <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-semibold">
                 Nossas Soluções
               </span>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold leading-tight text-foreground">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold leading-tight text-primary-dark">
                 Tecnologia que transforma{" "}
                 <span className="text-gradient">resultados</span>
               </h1>
