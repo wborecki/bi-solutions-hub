@@ -80,10 +80,10 @@ const postsData: Record<string, {
     content: [
       "O ano de 2025 promete ser marcante para o Business Intelligence, com avanços significativos em inteligência artificial transformando a forma como analisamos dados.",
       "A democratização do BI continua em ritmo acelerado, com ferramentas cada vez mais acessíveis permitindo que profissionais sem background técnico criem suas próprias análises.",
-      "A integração de IA generativa com plataformas de BI permite consultas em linguagem natural, tornando a análise de dados mais intuitiva.",
-      "No setor jurídico, a combinação de Jurimetria com modelos de machine learning promete previsões ainda mais precisas sobre resultados processuais.",
+      "A integração de IA com plataformas de BI permite consultas mais intuitivas, tornando a análise de dados acessível para todos.",
+      "No setor jurídico, a combinação de Jurimetria com inteligência artificial promete análises ainda mais precisas sobre resultados processuais.",
       "A segurança de dados ganha protagonismo, com regulamentações mais rígidas exigindo controles robustos sobre informações sensíveis.",
-      "Real-time analytics se torna padrão, com dashboards que atualizam instantaneamente.",
+      "Dashboards com atualização automática se tornam padrão, entregando dados sempre atualizados.",
     ],
   },
   "etl-o-que-e": {
