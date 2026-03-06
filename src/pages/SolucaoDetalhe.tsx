@@ -20,7 +20,6 @@ const solutionsData = {
     icon: BarChart3,
     title: "Business Intelligence",
     subtitle: "Dashboards e Relatórios Customizados",
-    description: "Desenvolvimento de dashboards e relatórios customizados para análise de dados estratégicos.",
     longDescription: `A Solutions in BI oferece soluções completas de Business Intelligence, transformando dados brutos em insights estratégicos para seu negócio. Nossa equipe especializada desenvolve dashboards personalizados que permitem visualizar KPIs críticos, identificar tendências e tomar decisões baseadas em dados confiáveis.`,
     features: [
       { title: "Dashboards Interativos", description: "Criação de painéis visuais em Power BI com dados em tempo real e navegação intuitiva." },
@@ -42,7 +41,6 @@ const solutionsData = {
     icon: Bot,
     title: "Robôs Jurídicos",
     subtitle: "Automação de Consultas e Processos",
-    description: "Implementação de robôs para consultas automáticas em tribunais.",
     longDescription: `Nossa solução de automação jurídica elimina o trabalho manual e repetitivo das equipes, permitindo que advogados e gestores foquem em atividades estratégicas. Os robôs realizam consultas em tribunais, monitoram processos e extraem informações de forma contínua e confiável.`,
     features: [
       { title: "Consultas Automáticas", description: "Robôs que consultam automaticamente sistemas de tribunais e órgãos públicos." },
@@ -64,7 +62,6 @@ const solutionsData = {
     icon: Scale,
     title: "Jurimetria",
     subtitle: "Inteligência Jurídica Baseada em Dados",
-    description: "Análise estatística de dados jurídicos para previsibilidade processual.",
     longDescription: `A Jurimetria transforma a prática jurídica ao aplicar métodos estatísticos e científicos para análise de processos judiciais. Com nossa solução, escritórios e empresas podem prever resultados, calcular probabilidades e desenvolver estratégias mais eficazes baseadas em evidências concretas.`,
     features: [
       { title: "Análise Preditiva", description: "Modelos estatísticos que preveem resultados processuais com base em dados históricos." },
@@ -86,7 +83,6 @@ const solutionsData = {
     icon: Cpu,
     title: "Automação IA",
     subtitle: "Inteligência Artificial Aplicada",
-    description: "Automação inteligente de processos com IA.",
     longDescription: `Implementamos soluções de Inteligência Artificial para automatizar processos complexos, desde a análise de documentos até a tomada de decisões assistida por algoritmos. Nossa abordagem combina machine learning, processamento de linguagem natural e automação robótica para otimizar fluxos de trabalho.`,
     features: [
       { title: "Processamento de Linguagem Natural", description: "Análise e extração automática de informações de documentos jurídicos e corporativos." },
@@ -108,7 +104,6 @@ const solutionsData = {
     icon: LayoutDashboard,
     title: "Dashboards",
     subtitle: "Visualização de Dados em Tempo Real",
-    description: "Dashboards interativos para monitoramento e análise.",
     longDescription: `Criamos dashboards interativos e responsivos que transformam dados complexos em visualizações claras e acionáveis. Nossos painéis são projetados para diferentes perfis de usuário, desde analistas até executivos, garantindo que cada stakeholder tenha acesso às informações relevantes.`,
     features: [
       { title: "Painéis Executivos", description: "Visão consolidada dos principais indicadores para tomada de decisão rápida." },
@@ -130,7 +125,6 @@ const solutionsData = {
     icon: Plug,
     title: "Integrações",
     subtitle: "Conexão entre Sistemas e Plataformas",
-    description: "Integração de sistemas para fluxo de dados unificado.",
     longDescription: `Conectamos seus sistemas, bancos de dados e plataformas em um ecossistema integrado e eficiente. Eliminamos silos de informação e criamos fluxos de dados automatizados entre ERPs, CRMs, sistemas jurídicos e ferramentas de BI.`,
     features: [
       { title: "APIs e Conectores", description: "Desenvolvimento de APIs customizadas e conectores para sistemas legados." },
@@ -152,7 +146,6 @@ const solutionsData = {
     icon: MessageSquare,
     title: "Chatbots",
     subtitle: "Atendimento Inteligente e Automatizado",
-    description: "Chatbots com IA para atendimento e suporte.",
     longDescription: `Desenvolvemos chatbots inteligentes que utilizam processamento de linguagem natural para oferecer atendimento automatizado de alta qualidade. Nossos bots são treinados com dados específicos do seu negócio para responder dúvidas, qualificar leads e automatizar processos de atendimento.`,
     features: [
       { title: "IA Conversacional", description: "Chatbots com compreensão de linguagem natural para diálogos humanizados." },
@@ -174,7 +167,6 @@ const solutionsData = {
     icon: Lightbulb,
     title: "Consultoria",
     subtitle: "Estratégia e Transformação Digital",
-    description: "Consultoria especializada em transformação digital.",
     longDescription: `Nossa consultoria combina expertise técnica com visão estratégica para guiar sua empresa na jornada de transformação digital. Analisamos processos, identificamos oportunidades e desenhamos roadmaps personalizados para maximizar o retorno dos investimentos em tecnologia.`,
     features: [
       { title: "Diagnóstico Digital", description: "Avaliação completa da maturidade digital e identificação de gaps." },
@@ -216,17 +208,10 @@ const SolucaoDetalhe = () => {
     );
   }
 
-  const IconComponent = solution.icon;
-  const allSlugs = Object.keys(solutionsData);
-  const currentIndex = allSlugs.indexOf(slug!);
-  const prevSolution = currentIndex > 0 ? allSlugs[currentIndex - 1] : null;
-  const nextSolution = currentIndex < allSlugs.length - 1 ? allSlugs[currentIndex + 1] : null;
-
   return (
     <Layout>
       {/* Hero */}
       <section className="pt-28 pb-20 bg-background relative overflow-hidden">
-        {/* Subtle dot pattern */}
         <div className="absolute inset-0 opacity-[0.03]">
           <div className="absolute inset-0" style={{
             backgroundImage: `radial-gradient(circle at 1px 1px, hsl(var(--foreground)) 1px, transparent 0)`,
@@ -235,8 +220,6 @@ const SolucaoDetalhe = () => {
         </div>
 
         <div className="container mx-auto px-4 relative z-10">
-};
-
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -264,7 +247,7 @@ const SolucaoDetalhe = () => {
                 <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
                   <Button asChild size="lg" variant="outline">
                     <a
-                      href="https://wa.me/551151920925?text=Olá! Gostaria de saber mais sobre a solução de ${solution.title}."
+                      href={`https://wa.me/551151920925?text=Olá! Gostaria de saber mais sobre a solução de ${solution.title}.`}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -365,8 +348,6 @@ const SolucaoDetalhe = () => {
           </div>
         </div>
       </section>
-
-
 
       <CTASection />
     </Layout>
