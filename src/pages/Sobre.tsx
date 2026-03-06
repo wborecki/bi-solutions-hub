@@ -4,8 +4,7 @@ import { CTASection } from "@/components/home/CTASection";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Target, Eye, Lightbulb, Shield, Heart, Award, Users, CheckCircle } from "lucide-react";
-import teamWillian from "@/assets/team-willian-photo.jpg";
-import teamElisa from "@/assets/team-elisa-photo.jpg";
+import logoSbi from "@/assets/logo-sbi.png";
 
 const values = [
   { icon: Lightbulb, label: "Inovação" },
@@ -13,21 +12,6 @@ const values = [
   { icon: Heart, label: "Compromisso" },
   { icon: Award, label: "Excelência" },
   { icon: Users, label: "Foco no Cliente" },
-];
-
-const team = [
-  {
-    name: "Willian Borecki",
-    role: "CTO - Diretor Técnico",
-    bio: "Engenheiro de Produção com +5 anos em BI e Engenharia de Dados. Lidera a arquitetura técnica e inovação das soluções.",
-    image: teamWillian,
-  },
-  {
-    name: "Elisa Santin",
-    role: "CCO - Diretora Comercial",
-    bio: "Advogada e especialista em BI com +5 anos em Jurimetria. Responsável pela estratégia comercial e relacionamento com clientes.",
-    image: teamElisa,
-  },
 ];
 
 const diferenciais = [
@@ -42,21 +26,21 @@ const diferenciais = [
 const Sobre = () => {
   const missionRef = useRef(null);
   const valuesRef = useRef(null);
-  const teamRef = useRef(null);
+  const aboutRef = useRef(null);
   const diffRef = useRef(null);
   const missionInView = useInView(missionRef, { once: true, margin: "-80px" });
   const valuesInView = useInView(valuesRef, { once: true, margin: "-80px" });
-  const teamInView = useInView(teamRef, { once: true, margin: "-80px" });
+  const aboutInView = useInView(aboutRef, { once: true, margin: "-80px" });
   const diffInView = useInView(diffRef, { once: true, margin: "-80px" });
 
   return (
     <Layout>
       <SEO
         title="Sobre Nós - Especialistas em Inteligência de Dados"
-        description="Conheça a Solutions in BI: equipe, valores e missão. Especialistas em Business Intelligence, automação e jurimetria para o mercado jurídico."
+        description="Conheça a Solutions in BI: valores e missão. Especialistas em Business Intelligence, automação e jurimetria para o mercado jurídico."
         canonical="/sobre"
       />
-      {/* Hero - limpo, só texto */}
+      {/* Hero */}
       <section className="pt-28 md:pt-36 pb-20 bg-background relative overflow-hidden">
         <div className="absolute inset-0 opacity-[0.03]">
           <div className="absolute inset-0" style={{
@@ -87,8 +71,40 @@ const Sobre = () => {
         </div>
       </section>
 
-      {/* Missão e Visão - seção própria */}
-      <section className="py-16 bg-muted/30" ref={missionRef}>
+      {/* Sobre a Empresa com Logo */}
+      <section className="py-20 bg-muted/30" ref={aboutRef}>
+        <div className="container mx-auto px-4">
+          <div className="grid md:grid-cols-[auto_1fr] gap-12 max-w-4xl mx-auto items-center">
+            <motion.div
+              className="flex justify-center"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={aboutInView ? { opacity: 1, scale: 1 } : {}}
+              transition={{ duration: 0.5 }}
+            >
+              <img src={logoSbi} alt="Solutions in BI" className="w-48 md:w-56 h-auto object-contain" />
+            </motion.div>
+            <motion.div
+              className="space-y-4"
+              initial={{ opacity: 0, x: 20 }}
+              animate={aboutInView ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.5, delay: 0.15 }}
+            >
+              <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground">
+                Quem somos
+              </h2>
+              <p className="text-muted-foreground leading-relaxed">
+                A Solutions in BI nasceu da vontade de levar inteligência de dados para empresas que buscam eficiência e resultados concretos. Atuamos no mercado jurídico e corporativo oferecendo soluções de automação, dashboards, implantação de sistemas e consultoria estratégica.
+              </p>
+              <p className="text-muted-foreground leading-relaxed">
+                Nosso compromisso é entregar tecnologia de forma simples e acessível, com atendimento próximo e foco total nos resultados do cliente. Cada projeto é tratado como único, com soluções sob medida para as necessidades de cada negócio.
+              </p>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Missão e Visão */}
+      <section className="py-16" ref={missionRef}>
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
             {[
@@ -118,8 +134,8 @@ const Sobre = () => {
         </div>
       </section>
 
-      {/* Valores - linha única com 5 items */}
-      <section className="py-24" ref={valuesRef}>
+      {/* Valores */}
+      <section className="py-24 bg-muted/30" ref={valuesRef}>
         <div className="container mx-auto px-4">
           <motion.div
             className="text-center mb-14"
@@ -153,50 +169,6 @@ const Sobre = () => {
                 </motion.div>
               );
             })}
-          </div>
-        </div>
-      </section>
-
-      {/* Equipe */}
-      <section className="py-24 bg-muted/30" ref={teamRef}>
-        <div className="container mx-auto px-4">
-          <motion.div
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 20 }}
-            animate={teamInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5 }}
-          >
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-4">
-              Nossa Equipe
-            </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Profissionais especializados em tecnologia e inteligência de dados.
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
-            {team.map((member, i) => (
-              <motion.div
-                key={member.name}
-                className="rounded-2xl border border-border bg-card overflow-hidden hover:shadow-md transition-all duration-300"
-                initial={{ opacity: 0, y: 20 }}
-                animate={teamInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.4, delay: i * 0.15 }}
-              >
-                <div className="aspect-[4/3] overflow-hidden">
-                  <img
-                    src={member.image}
-                    alt={member.name}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-                <div className="p-6 space-y-2">
-                  <h3 className="text-lg font-display font-bold text-foreground">{member.name}</h3>
-                  <p className="text-sm text-primary font-semibold">{member.role}</p>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{member.bio}</p>
-                </div>
-              </motion.div>
-            ))}
           </div>
         </div>
       </section>
