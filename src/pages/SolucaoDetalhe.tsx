@@ -290,41 +290,7 @@ const SolucaoDetalhe = () => {
         </div>
       </section>
 
-      {/* Navigation */}
-      <section className="py-12 border-t border-border">
-        <div className="container mx-auto px-4">
-          <div className="flex justify-between items-stretch gap-4">
-            {prevSolution ? (
-              <Link
-                to={`/solucoes/${prevSolution}`}
-                className="group flex items-center gap-3 p-5 rounded-xl border border-border bg-card hover:shadow-md transition-all duration-300 flex-1 max-w-xs"
-              >
-                <ArrowLeft className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors shrink-0" />
-                <div className="text-left">
-                  <span className="text-xs text-muted-foreground">Anterior</span>
-                  <p className="text-sm font-semibold text-foreground">
-                    {solutionsData[prevSolution as keyof typeof solutionsData].title}
-                  </p>
-                </div>
-              </Link>
-            ) : <div />}
-            {nextSolution ? (
-              <Link
-                to={`/solucoes/${nextSolution}`}
-                className="group flex items-center gap-3 p-5 rounded-xl border border-border bg-card hover:shadow-md transition-all duration-300 flex-1 max-w-xs ml-auto text-right"
-              >
-                <div className="flex-1">
-                  <span className="text-xs text-muted-foreground">Próximo</span>
-                  <p className="text-sm font-semibold text-foreground">
-                    {solutionsData[nextSolution as keyof typeof solutionsData].title}
-                  </p>
-                </div>
-                <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors shrink-0" />
-              </Link>
-            ) : <div />}
-          </div>
-        </div>
-      </section>
+
 
       <CTASection />
     </Layout>
