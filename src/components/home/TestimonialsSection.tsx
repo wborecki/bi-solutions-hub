@@ -52,7 +52,7 @@ export function TestimonialsSection() {
           transition={{ duration: 0.6 }}
         >
           <motion.span 
-            className="inline-block px-4 py-1.5 rounded-full bg-brand-tiffany/20 text-brand-tiffany text-sm font-medium mb-4"
+            className="inline-block px-4 py-1.5 rounded-full bg-accent/20 text-accent-foreground text-sm font-medium mb-4"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ delay: 0.2 }}
@@ -90,7 +90,7 @@ export function TestimonialsSection() {
               animate={isInView ? { scale: 1 } : {}}
               transition={{ delay: 0.6, type: "spring" }}
             >
-              <Quote className="w-12 h-12 text-brand-tiffany mx-auto mb-8 opacity-50" />
+              <Quote className="w-12 h-12 text-accent mx-auto mb-8 opacity-50" />
             </motion.div>
             
             <AnimatePresence mode="wait">
@@ -115,11 +115,11 @@ export function TestimonialsSection() {
                 transition={{ duration: 0.4, delay: 0.1 }}
               >
                 <motion.div 
-                  className="w-16 h-16 mx-auto mb-4 rounded-full bg-brand-tiffany/20 flex items-center justify-center"
+                  className="w-16 h-16 mx-auto mb-4 rounded-full bg-accent/20 flex items-center justify-center"
                   whileHover={{ scale: 1.1 }}
                   transition={{ type: "spring", stiffness: 300 }}
                 >
-                  <span className="font-display font-bold text-xl text-brand-tiffany">
+                  <span className="font-display font-bold text-xl text-accent">
                     {testimonials[currentIndex].name.split(" ").map(n => n[0]).join("")}
                   </span>
                 </motion.div>
@@ -158,7 +158,7 @@ export function TestimonialsSection() {
                   className={cn(
                     "h-2 rounded-full transition-all",
                     index === currentIndex
-                      ? "w-8 bg-brand-tiffany"
+                      ? "w-8 bg-accent"
                       : "w-2 bg-primary-foreground/30 hover:bg-primary-foreground/50"
                   )}
                   aria-label={`Ir para depoimento ${index + 1}`}

@@ -99,7 +99,7 @@ export function HeroCarousel() {
                 transition={{ delay: 0.1 }}
               >
                 <span className="text-white">{slide.title} </span>
-                <span className="text-brand-tiffany">{slide.titleHighlight}</span>
+                <span className="text-accent">{slide.titleHighlight}</span>
               </motion.h1>
 
               {/* Description */}
@@ -122,7 +122,7 @@ export function HeroCarousel() {
                 <Button 
                   asChild 
                   size="lg" 
-                  className="bg-brand-tiffany text-primary hover:bg-brand-tiffany/90 font-semibold px-8"
+                  className="bg-accent text-accent-foreground hover:bg-accent/90 font-semibold px-8"
                 >
                   <Link to={slide.href}>
                     Saiba Mais
@@ -179,7 +179,7 @@ export function HeroCarousel() {
             className={cn(
               "h-2 rounded-full transition-all duration-300",
               index === currentSlide
-                ? "w-10 bg-brand-tiffany"
+                ? "w-10 bg-accent"
                 : "w-2 bg-white/40 hover:bg-white/60"
             )}
             aria-label={`Ir para slide ${index + 1}`}

@@ -165,7 +165,7 @@ const Blog = () => {
         <section className="py-12">
           <div className="container mx-auto px-4">
             <div className="flex items-center gap-2 mb-8">
-              <Star className="w-5 h-5 text-brand-tiffany" />
+              <Star className="w-5 h-5 text-accent" />
               <h2 className="text-xl font-display font-semibold">Destaques</h2>
             </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -186,7 +186,7 @@ const Blog = () => {
                         transition={{ duration: 0.6 }}
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
-                      <Badge className="absolute top-4 left-4 bg-brand-tiffany text-primary">
+                      <Badge className="absolute top-4 left-4 bg-accent text-accent-foreground">
                         <Star className="w-3 h-3 mr-1" />
                         Destaque
                       </Badge>
@@ -200,7 +200,7 @@ const Blog = () => {
                           {post.readTime}
                         </span>
                       </div>
-                      <CardTitle className="text-lg font-display group-hover:text-brand-tiffany transition-colors line-clamp-2">
+                      <CardTitle className="text-lg font-display group-hover:text-accent transition-colors line-clamp-2">
                         <Link to={`/blog/${post.slug}`}>{post.title}</Link>
                       </CardTitle>
                     </CardHeader>
@@ -211,7 +211,7 @@ const Blog = () => {
                       </CardDescription>
                       <div className="flex items-center justify-between">
                         <span className="text-sm text-muted-foreground">{post.date}</span>
-                        <Button asChild variant="ghost" size="sm" className="text-primary hover:text-brand-tiffany">
+                        <Button asChild variant="ghost" size="sm" className="text-primary hover:text-accent">
                           <Link to={`/blog/${post.slug}`}>
                             Ler mais
                             <ArrowRight className="w-3 h-3 ml-1" />
@@ -261,7 +261,7 @@ const Blog = () => {
                             {post.readTime}
                           </span>
                         </div>
-                        <CardTitle className="text-lg font-display group-hover:text-brand-tiffany transition-colors line-clamp-2">
+                        <CardTitle className="text-lg font-display group-hover:text-accent transition-colors line-clamp-2">
                           <Link to={`/blog/${post.slug}`}>{post.title}</Link>
                         </CardTitle>
                       </CardHeader>
@@ -272,7 +272,7 @@ const Blog = () => {
                         </CardDescription>
                         <div className="flex items-center justify-between">
                           <span className="text-sm text-muted-foreground">{post.date}</span>
-                          <Button asChild variant="ghost" size="sm" className="text-primary hover:text-brand-tiffany">
+                          <Button asChild variant="ghost" size="sm" className="text-primary hover:text-accent">
                             <Link to={`/blog/${post.slug}`}>
                               Ler mais
                               <ArrowRight className="w-3 h-3 ml-1" />

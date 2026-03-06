@@ -35,7 +35,7 @@ const solutions = [
     description: "Análise estatística de dados jurídicos para previsibilidade processual, gestão de riscos e insights estratégicos baseados em dados.",
     features: ["Análise preditiva", "Pareceres jurimétricos", "Gestão de riscos", "Tendências jurisprudenciais"],
     href: "/solucoes/jurimetria",
-    color: "bg-brand-tiffany",
+    color: "bg-accent",
     image: solutionJurimetria,
   },
 ];
@@ -136,7 +136,7 @@ export function SolutionsSection() {
                   </div>
                   
                   <CardHeader className="pb-4 relative">
-                    <CardTitle className="text-xl font-display group-hover:text-brand-tiffany transition-colors">
+                    <CardTitle className="text-xl font-display group-hover:text-accent transition-colors">
                       {solution.title}
                     </CardTitle>
                     <CardDescription className="text-base">
@@ -154,13 +154,13 @@ export function SolutionsSection() {
                           animate={isInView ? { opacity: 1, x: 0 } : {}}
                           transition={{ delay: 0.5 + (index * 0.1) + (i * 0.05) }}
                         >
-                          <div className="w-1.5 h-1.5 rounded-full bg-brand-tiffany" />
+                          <div className="w-1.5 h-1.5 rounded-full bg-accent" />
                           {feature}
                         </motion.li>
                       ))}
                     </ul>
                     
-                    <Button asChild variant="ghost" className="group/btn p-0 h-auto font-medium text-primary hover:text-brand-tiffany">
+                    <Button asChild variant="ghost" className="group/btn p-0 h-auto font-medium text-primary hover:text-accent">
                       <Link to={solution.href}>
                         Saiba mais
                         <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover/btn:translate-x-1" />
@@ -170,7 +170,7 @@ export function SolutionsSection() {
 
                   {/* Hover overlay */}
                   <motion.div 
-                    className="absolute inset-0 border-2 border-brand-tiffany/0 rounded-lg pointer-events-none"
+                    className="absolute inset-0 border-2 border-accent/0 rounded-lg pointer-events-none"
                     whileHover={{ borderColor: "hsl(172 30% 62% / 0.5)" }}
                     transition={{ duration: 0.3 }}
                   />
@@ -187,7 +187,7 @@ export function SolutionsSection() {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.8 }}
         >
-          <Button asChild size="lg" className="bg-gradient-brand hover:opacity-90">
+          <Button asChild size="lg" className="bg-primary hover:bg-primary/90">
             <Link to="/solucoes">Ver Todas as Soluções</Link>
           </Button>
         </motion.div>

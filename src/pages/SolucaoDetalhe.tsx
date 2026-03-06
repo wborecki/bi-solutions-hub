@@ -81,7 +81,7 @@ const solutionsData = {
       "Escalabilidade sem aumento de custos",
     ],
     color: "bg-secondary",
-    gradient: "from-secondary to-brand-tiffany",
+    gradient: "from-secondary to-accent",
   },
   "jurimetria": {
     icon: Scale,
@@ -118,8 +118,8 @@ const solutionsData = {
       "Identificação de padrões judiciais",
       "Diferencial competitivo no mercado",
     ],
-    color: "bg-brand-tiffany",
-    gradient: "from-brand-tiffany to-primary",
+    color: "bg-accent",
+    gradient: "from-accent to-primary",
   },
 };
 
@@ -238,7 +238,7 @@ const SolucaoDetalhe = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
             {solution.benefits.map((benefit) => (
               <div key={benefit} className="flex items-start gap-3 p-4 rounded-lg bg-background">
-                <CheckCircle className="w-5 h-5 text-brand-tiffany shrink-0 mt-0.5" />
+                <CheckCircle className="w-5 h-5 text-accent shrink-0 mt-0.5" />
                 <span className="text-foreground">{benefit}</span>
               </div>
             ))}
