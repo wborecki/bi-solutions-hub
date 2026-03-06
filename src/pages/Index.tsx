@@ -8,6 +8,7 @@ import { useRef } from "react";
 import {
   Shield, Sparkles, ArrowRight, Bot, BarChart3, LayoutDashboard,
   Plug, MessageSquare, Lightbulb, Search, Cpu, Rocket, Quote, ExternalLink,
+  Brain, Database, Zap, TrendingUp,
 } from "lucide-react";
 
 const solutions = [
@@ -116,12 +117,56 @@ const Index = () => {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.7, delay: 0.2 }}
             >
-              <div className="w-80 h-80 rounded-full bg-primary/10 flex items-center justify-center">
-                <div className="w-56 h-56 rounded-full bg-primary/20 flex items-center justify-center">
-                  <div className="w-32 h-32 rounded-full bg-primary flex items-center justify-center">
-                    <span className="text-primary-foreground font-display font-bold text-3xl">SBI</span>
+              <div className="relative w-80 h-80">
+                {/* Central glass card */}
+                <div className="absolute inset-8 rounded-2xl bg-card/60 backdrop-blur-xl border border-border/50 shadow-2xl flex flex-col items-center justify-center gap-3 z-10">
+                  <div className="flex gap-2">
+                    <div className="w-8 h-20 rounded bg-primary/70" />
+                    <div className="w-8 h-16 rounded bg-accent/70 mt-4" />
+                    <div className="w-8 h-24 rounded bg-primary/50 -mt-4" />
+                    <div className="w-8 h-14 rounded bg-accent/50 mt-6" />
                   </div>
+                  <div className="w-32 h-1.5 rounded-full bg-muted" />
+                  <div className="w-24 h-1.5 rounded-full bg-muted" />
                 </div>
+
+                {/* Floating icons */}
+                <motion.div
+                  className="absolute top-0 left-6 w-12 h-12 rounded-xl bg-primary/15 border border-primary/20 flex items-center justify-center z-20"
+                  animate={{ y: [0, -6, 0] }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  <Brain className="h-6 w-6 text-primary" />
+                </motion.div>
+                <motion.div
+                  className="absolute top-4 right-2 w-11 h-11 rounded-xl bg-accent/15 border border-accent/20 flex items-center justify-center z-20"
+                  animate={{ y: [0, 6, 0] }}
+                  transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+                >
+                  <Database className="h-5 w-5 text-accent" />
+                </motion.div>
+                <motion.div
+                  className="absolute bottom-4 left-2 w-11 h-11 rounded-xl bg-accent/15 border border-accent/20 flex items-center justify-center z-20"
+                  animate={{ y: [0, -5, 0] }}
+                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                >
+                  <TrendingUp className="h-5 w-5 text-accent" />
+                </motion.div>
+                <motion.div
+                  className="absolute bottom-0 right-6 w-12 h-12 rounded-xl bg-primary/15 border border-primary/20 flex items-center justify-center z-20"
+                  animate={{ y: [0, 5, 0] }}
+                  transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
+                >
+                  <Zap className="h-6 w-6 text-primary" />
+                </motion.div>
+
+                {/* Subtle connecting lines */}
+                <svg className="absolute inset-0 w-full h-full z-0 opacity-20" viewBox="0 0 320 320">
+                  <line x1="50" y1="30" x2="100" y2="100" stroke="hsl(var(--primary))" strokeWidth="1" strokeDasharray="4 4" />
+                  <line x1="280" y1="40" x2="220" y2="100" stroke="hsl(var(--accent))" strokeWidth="1" strokeDasharray="4 4" />
+                  <line x1="40" y1="280" x2="100" y2="220" stroke="hsl(var(--accent))" strokeWidth="1" strokeDasharray="4 4" />
+                  <line x1="270" y1="290" x2="220" y2="220" stroke="hsl(var(--primary))" strokeWidth="1" strokeDasharray="4 4" />
+                </svg>
               </div>
               {/* Floating badges */}
               <motion.div
