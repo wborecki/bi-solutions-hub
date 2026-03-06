@@ -181,7 +181,7 @@ export default function Servicos() {
                 </Link>
               </Button>
               <Button asChild size="lg" variant="outline" className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10">
-                <Link to="/casos-de-sucesso">Ver Cases de Sucesso</Link>
+                <Link to="/solucoes">Ver Soluções</Link>
               </Button>
             </div>
           </motion.div>

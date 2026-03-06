@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Linkedin, Instagram } from "lucide-react";
 import logoSbi from "@/assets/logo-sbi.png";
 
 export function Footer() {
@@ -11,6 +12,26 @@ export function Footer() {
             <p className="text-sm text-muted-foreground">
               Transformamos dados em decisões inteligentes com automação e IA.
             </p>
+            <div className="flex gap-3 pt-1">
+              <a
+                href="https://www.linkedin.com/company/solutionsinbi"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn da Solutions in BI"
+                className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors"
+              >
+                <Linkedin className="h-4 w-4" />
+              </a>
+              <a
+                href="https://www.instagram.com/solutionsinbi"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram da Solutions in BI"
+                className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors"
+              >
+                <Instagram className="h-4 w-4" />
+              </a>
+            </div>
           </div>
 
           <div>
@@ -19,7 +40,6 @@ export function Footer() {
               {[
                 { label: "Soluções", href: "/solucoes" },
                 { label: "Sobre", href: "/sobre" },
-                
                 { label: "Blog", href: "/blog" },
                 { label: "Contato", href: "/contato" },
               ].map((link) => (
@@ -36,10 +56,10 @@ export function Footer() {
             <h4 className="font-display font-semibold mb-3">Soluções</h4>
             <ul className="space-y-2">
               {[
-                { label: "Automação IA", href: "/solucoes" },
-                { label: "Business Intelligence", href: "/solucoes" },
-                { label: "Dashboards", href: "/solucoes" },
-                { label: "Chatbots", href: "/solucoes" },
+                { label: "Automação IA", href: "/solucoes/automacao-ia" },
+                { label: "Business Intelligence", href: "/solucoes/business-intelligence" },
+                { label: "Dashboards", href: "/solucoes/dashboards" },
+                { label: "Chatbots", href: "/solucoes/chatbots" },
               ].map((link) => (
                 <li key={link.label}>
                   <Link to={link.href} className="text-sm text-muted-foreground hover:text-primary transition-colors">
