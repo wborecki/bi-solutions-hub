@@ -1,22 +1,18 @@
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, ArrowRight, CheckCircle, BarChart3, Bot, Scale } from "lucide-react";
+import { ArrowRight, CheckCircle, BarChart3, Bot, Scale, Cpu, LayoutDashboard, Plug, MessageSquare, Lightbulb } from "lucide-react";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { CTASection } from "@/components/home/CTASection";
-import { cn } from "@/lib/utils";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import illustrationBI from "@/assets/illustration-bi.png";
 import illustrationRobos from "@/assets/illustration-robos.png";
 import illustrationJurimetria from "@/assets/illustration-jurimetria.png";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
+import illustrationAutomacao from "@/assets/illustration-automacao.png";
+import illustrationDashboards from "@/assets/illustration-dashboards.png";
+import illustrationIntegracoes from "@/assets/illustration-integracoes.png";
+import illustrationChatbots from "@/assets/illustration-chatbots.png";
+import illustrationConsultoria from "@/assets/illustration-consultoria.png";
 
 const solutionsData = {
   "business-intelligence": {
