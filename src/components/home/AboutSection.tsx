@@ -72,7 +72,7 @@ export function AboutSection() {
                 whileHover={{ scale: 1.02 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
-                <Target className="w-8 h-8 text-brand-tiffany mb-3" />
+                <Target className="w-8 h-8 text-accent mb-3" />
                 <h3 className="font-display font-semibold text-lg mb-2">Missão</h3>
                 <p className="text-sm text-muted-foreground">
                   Apoiar advogados e empresas na tomada de decisões mais assertivas 
@@ -84,7 +84,7 @@ export function AboutSection() {
                 whileHover={{ scale: 1.02 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
-                <Eye className="w-8 h-8 text-brand-tiffany mb-3" />
+                <Eye className="w-8 h-8 text-accent mb-3" />
                 <h3 className="font-display font-semibold text-lg mb-2">Visão</h3>
                 <p className="text-sm text-muted-foreground">
                   Ser referência em tecnologia e inteligência de dados para o 
@@ -112,7 +112,7 @@ export function AboutSection() {
                       transition={{ delay: 0.7 + index * 0.1 }}
                       whileHover={{ scale: 1.05 }}
                     >
-                      <IconComponent className="w-4 h-4 text-brand-tiffany" />
+                      <IconComponent className="w-4 h-4 text-accent" />
                       {value.label}
                     </motion.div>
                   );
@@ -186,7 +186,7 @@ export function AboutSection() {
 
               {/* Decorative rings */}
               <motion.div 
-                className="absolute inset-4 rounded-full border-2 border-dashed border-brand-tiffany/20"
+                className="absolute inset-4 rounded-full border-2 border-dashed border-accent/20"
                 animate={{ rotate: -360 }}
                 transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
               />
