@@ -1,7 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
+import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Clock, Calendar, Share2, Linkedin, Twitter, Facebook } from "lucide-react";
 import { CTASection } from "@/components/home/CTASection";
 import { motion } from "framer-motion";
@@ -126,6 +126,20 @@ const BlogPost = () => {
 
   return (
     <Layout>
+      <SEO
+        title={post.title}
+        description={post.excerpt}
+        canonical={`/blog/${slug}`}
+        type="article"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "headline": post.title,
+          "description": post.excerpt,
+          "datePublished": post.date,
+          "publisher": { "@type": "Organization", "name": "Solutions in BI" },
+        }}
+      />
       {/* Header */}
       <section className="pt-28 md:pt-36 pb-12 bg-background">
         <div className="container mx-auto px-4">
@@ -144,9 +158,9 @@ const BlogPost = () => {
               </Link>
 
               <div className="flex items-center gap-3 mb-6">
-                <Badge variant="outline" className="text-xs">
+                <span className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold text-foreground">
                   {post.category}
-                </Badge>
+                </span>
                 <span className="flex items-center gap-1 text-sm text-muted-foreground">
                   <Calendar className="w-3.5 h-3.5" />
                   {post.date}
