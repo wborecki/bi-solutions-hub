@@ -191,6 +191,7 @@ const solutionsData = {
       "Inovação contínua",
     ],
   },
+};
 
 const SolucaoDetalhe = () => {
   const { slug } = useParams<{ slug: string }>();
