@@ -80,17 +80,20 @@ export function Header() {
 
             {dropdownOpen && (
               <div className="absolute top-full left-0 pt-2 z-50">
-                <div className="bg-background/95 backdrop-blur-md border rounded-xl shadow-lg p-2 min-w-[220px]">
+                <div className="bg-background/95 backdrop-blur-md border rounded-xl shadow-lg p-2 min-w-[280px]">
                   {solutionItems.map((item) => {
                     const Icon = item.icon;
                     return (
                       <Link
                         key={item.label}
                         to={item.href}
-                        className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+                        className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm hover:bg-muted transition-colors group"
                       >
-                        <Icon className="h-4 w-4 text-primary" />
-                        {item.label}
+                        <Icon className="h-4 w-4 text-primary shrink-0" />
+                        <div>
+                          <p className="font-semibold text-foreground">{item.label}</p>
+                          <p className="text-xs text-muted-foreground">{item.desc}</p>
+                        </div>
                       </Link>
                     );
                   })}
