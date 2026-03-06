@@ -8,7 +8,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import {
   Shield, Sparkles, ArrowRight, Bot, BarChart3, LayoutDashboard,
-  Plug, MessageSquare, Lightbulb, Search, Cpu, Rocket, Quote, Clock,
+  Plug, Lightbulb, Search, Cpu, Rocket, Quote, Clock, GraduationCap,
 } from "lucide-react";
 import heroIllustration from "@/assets/hero-illustration.png";
 import biaRobot from "@/assets/bia-robot.png";
@@ -18,9 +18,9 @@ import { BiaAnaliseSection } from "@/components/home/BiaAnaliseSection";
 const solutions = [
   { icon: Bot, title: "Automação IA", description: "Automatize processos repetitivos com inteligência artificial avançada." },
   { icon: BarChart3, title: "Business Intelligence", description: "Relatórios e análises estratégicas para decisões baseadas em dados." },
-  { icon: LayoutDashboard, title: "Dashboards", description: "Painéis interativos e customizados para visualização em tempo real." },
+  { icon: LayoutDashboard, title: "Dashboards", description: "Painéis interativos e customizados para visualização de dados." },
   { icon: Plug, title: "Integrações", description: "Conecte seus sistemas e centralize informações automaticamente." },
-  { icon: MessageSquare, title: "Chatbots", description: "Atendimento inteligente 24/7 com IA conversacional." },
+  { icon: GraduationCap, title: "Mentoria Power BI", description: "Aprenda Power BI com especialistas e domine a análise de dados." },
   { icon: Lightbulb, title: "Consultoria", description: "Orientação especializada para transformação digital do seu negócio." },
 ];
 

@@ -37,7 +37,7 @@ const cases = [
       { metric: "100%", label: "Visibilidade da carteira", icon: Target }
     ],
     testimonial: {
-      quote: "A Solutions in BI transformou completamente nossa gestão. Hoje temos dados em tempo real e tomamos decisões muito mais assertivas.",
+      quote: "A Solutions in BI transformou completamente nossa gestão. Hoje temos dados atualizados e tomamos decisões muito mais assertivas.",
       author: "Diretor de Operações",
       role: "Escritório de Advocacia Corporativa"
     },
@@ -83,7 +83,7 @@ const cases = [
       author: "Sócio-Fundador",
       role: "Escritório Trabalhista"
     },
-    tags: ["Análise Preditiva", "Gestão de Riscos", "Provisões", "Jurisprudência"]
+    tags: ["Análise Estatística", "Gestão de Riscos", "Provisões", "Jurisprudência"]
   }
 ];
 

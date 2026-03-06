@@ -1,16 +1,16 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, ChevronDown, Bot, BarChart3, LayoutDashboard, Plug, MessageSquare, Lightbulb } from "lucide-react";
+import { Menu, X, ChevronDown, Bot, BarChart3, LayoutDashboard, Plug, Lightbulb, GraduationCap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import logoSbi from "@/assets/logo-sbi.png";
 
 const solutionItems = [
   { icon: Bot, label: "Automação IA", desc: "Automatize tarefas com IA", href: "/solucoes/automacao-ia" },
-  { icon: BarChart3, label: "Business Intelligence", desc: "Dados estratégicos em tempo real", href: "/solucoes/business-intelligence" },
+  { icon: BarChart3, label: "Business Intelligence", desc: "Dados estratégicos para decisões", href: "/solucoes/business-intelligence" },
   { icon: LayoutDashboard, label: "Dashboards", desc: "Painéis visuais e interativos", href: "/solucoes/dashboards" },
   { icon: Plug, label: "Integrações", desc: "Conecte seus sistemas", href: "/solucoes/integracoes" },
-  { icon: MessageSquare, label: "Chatbots", desc: "Atendimento inteligente 24/7", href: "/solucoes/chatbots" },
+  { icon: GraduationCap, label: "Mentoria Power BI", desc: "Aprenda com especialistas", href: "/solucoes/mentoria-power-bi" },
   { icon: Lightbulb, label: "Consultoria", desc: "Orientação para transformação digital", href: "/solucoes/consultoria" },
 ];
 

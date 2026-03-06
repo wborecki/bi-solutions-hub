@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import {
   ArrowRight, BarChart3, Bot, Scale, CheckCircle, Plug,
-  MessageSquare, Lightbulb, LayoutDashboard, Zap, Shield, Users,
+  Lightbulb, LayoutDashboard, Zap, Shield, Users, GraduationCap,
 } from "lucide-react";
 import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
@@ -22,7 +22,7 @@ const solutions = [
       "Robôs para consultas automáticas",
       "Processamento inteligente de documentos",
       "Fluxos de trabalho automatizados",
-      "Monitoramento e alertas em tempo real",
+      "Monitoramento e alertas automatizados",
     ],
     href: "/solucoes/robos-juridicos",
     accent: "primary",
@@ -47,7 +47,7 @@ const solutions = [
     description:
       "Análise estatística de dados jurídicos para previsibilidade processual, gestão de riscos e estratégia baseada em evidências.",
     features: [
-      "Análise preditiva de resultados",
+      "Análise estatística de resultados",
       "Pareceres jurimétricos detalhados",
       "Tendências jurisprudenciais",
       "Estatísticas por tribunal e relator",
@@ -59,10 +59,10 @@ const solutions = [
     icon: LayoutDashboard,
     title: "Dashboards Customizados",
     description:
-      "Painéis interativos e personalizados para acompanhar os indicadores mais importantes do seu negócio em tempo real.",
+      "Painéis interativos e personalizados para acompanhar os indicadores mais importantes do seu negócio.",
     features: [
       "Visualizações sob medida",
-      "Atualização em tempo real",
+      "Atualização contínua de dados",
       "Acesso mobile e desktop",
       "Drill-down e filtros dinâmicos",
     ],
@@ -84,17 +84,17 @@ const solutions = [
     accent: "primary",
   },
   {
-    icon: MessageSquare,
-    title: "Chatbots & IA Conversacional",
+    icon: GraduationCap,
+    title: "Mentoria de Power BI",
     description:
-      "Atendimento inteligente 24/7. Nossos chatbots entendem contexto, aprendem com interações e resolvem demandas automaticamente.",
+      "Aprenda Power BI com especialistas e domine a criação de dashboards, relatórios e análises de dados para seu negócio.",
     features: [
-      "IA conversacional avançada",
-      "Integração com WhatsApp",
-      "Respostas contextualizadas",
-      "Escalonamento inteligente",
+      "Aulas práticas e personalizadas",
+      "Projetos com dados reais",
+      "Acompanhamento individual",
+      "Certificado de conclusão",
     ],
-    href: "/contato",
+    href: "/solucoes/mentoria-power-bi",
     accent: "accent",
   },
 ];
