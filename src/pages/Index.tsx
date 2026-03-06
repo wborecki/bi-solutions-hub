@@ -128,6 +128,7 @@ const Index = () => {
                 src={heroIllustration}
                 alt="Ilustração de Business Intelligence e análise de dados"
                 className="w-[480px] h-auto object-contain"
+                loading="eager"
               />
             </motion.div>
           </div>

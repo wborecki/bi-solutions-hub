@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
-import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { ArrowRight, Clock, Search } from "lucide-react";
 import { CTASection } from "@/components/home/CTASection";
@@ -97,14 +96,15 @@ const BlogCard = ({ post, index, inView }: { post: typeof posts[0]; index: numbe
         <img
           src={post.image}
           alt={post.title}
+          loading="lazy"
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />
       </div>
       <div className="p-6 space-y-3">
         <div className="flex items-center gap-3">
-          <Badge variant="outline" className="text-xs font-medium">
+          <span className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold text-foreground">
             {post.category}
-          </Badge>
+          </span>
           <span className="flex items-center gap-1 text-xs text-muted-foreground">
             <Clock className="w-3 h-3" />
             {post.readTime}
