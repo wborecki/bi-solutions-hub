@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { cn } from "@/lib/utils";
-import heroIllustration from "@/assets/hero-illustration.png";
+import solutionsHero from "@/assets/solutions-hero.png";
 
 const solutions = [
   {
@@ -166,8 +166,8 @@ const Solucoes = () => {
               transition={{ duration: 0.7, delay: 0.2 }}
             >
               <img
-                src={heroIllustration}
-                alt="Ilustração de soluções em Business Intelligence e automação"
+                src={solutionsHero}
+                alt="Ilustração de soluções em automação e Business Intelligence"
                 className="w-[480px] h-auto object-contain"
               />
             </motion.div>
