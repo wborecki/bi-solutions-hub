@@ -145,7 +145,7 @@ export default function Servicos() {
       {/* Hero */}
       <section className="relative pt-32 pb-20 bg-gradient-to-b from-primary via-primary/95 to-background overflow-hidden">
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-brand-tiffany rounded-full blur-3xl" />
+          <div className="absolute top-20 left-10 w-72 h-72 bg-accent rounded-full blur-3xl" />
           <div className="absolute bottom-10 right-10 w-96 h-96 bg-secondary rounded-full blur-3xl" />
         </div>
         
@@ -156,19 +156,19 @@ export default function Servicos() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <span className="inline-block px-4 py-1.5 rounded-full bg-brand-tiffany/20 text-brand-tiffany text-sm font-medium mb-6">
+            <span className="inline-block px-4 py-1.5 rounded-full bg-accent/20 text-accent-foreground text-sm font-medium mb-6">
               Serviços Especializados
             </span>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-primary-foreground mb-6">
               Transformamos sua operação{" "}
-              <span className="text-brand-tiffany">jurídica</span>
+              <span className="text-accent">jurídica</span>
             </h1>
             <p className="text-xl text-primary-foreground/80 mb-8 leading-relaxed">
               Consultoria, desenvolvimento e mentoria para escritórios e departamentos 
               jurídicos que buscam excelência operacional e resultados mensuráveis.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg" className="bg-brand-tiffany text-primary hover:bg-brand-tiffany/90">
+              <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90">
                 <Link to="/contato">
                   Agendar Diagnóstico Gratuito
                   <ArrowRight className="ml-2 w-5 h-5" />
@@ -212,11 +212,11 @@ export default function Servicos() {
                   <Card className="h-full border-0 shadow-lg hover:shadow-xl transition-all duration-300 group overflow-hidden">
                     <CardHeader className="pb-4">
                       <div className="flex items-start gap-4">
-                        <div className="w-14 h-14 rounded-xl bg-gradient-brand flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300">
+                        <div className="w-14 h-14 rounded-xl bg-primary flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300">
                           <IconComponent className="w-7 h-7 text-white" />
                         </div>
                         <div>
-                          <CardTitle className="text-xl font-display mb-2 group-hover:text-brand-tiffany transition-colors">
+                          <CardTitle className="text-xl font-display mb-2 group-hover:text-accent transition-colors">
                             {service.title}
                           </CardTitle>
                           <span className="inline-block px-3 py-1 rounded-full bg-accent/20 text-accent-foreground text-xs font-medium">
@@ -232,7 +232,7 @@ export default function Servicos() {
                       <ul className="space-y-3">
                         {service.features.map((feature) => (
                           <li key={feature} className="flex items-start gap-3 text-sm text-muted-foreground">
-                            <CheckCircle2 className="w-5 h-5 text-brand-tiffany shrink-0 mt-0.5" />
+                            <CheckCircle2 className="w-5 h-5 text-accent shrink-0 mt-0.5" />
                             {feature}
                           </li>
                         ))}
@@ -277,11 +277,11 @@ export default function Servicos() {
               >
                 <div className="text-center">
                   <div className="relative inline-block mb-6">
-                    <span className="text-7xl font-display font-bold text-brand-tiffany/20">
+                    <span className="text-7xl font-display font-bold text-accent/20">
                       {step.step}
                     </span>
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-12 h-12 rounded-full bg-gradient-brand flex items-center justify-center text-white font-bold">
+                      <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-bold">
                         {index + 1}
                       </div>
                     </div>
@@ -294,7 +294,7 @@ export default function Servicos() {
                   </p>
                 </div>
                 {index < processSteps.length - 1 && (
-                  <div className="hidden lg:block absolute top-12 left-[60%] w-[80%] h-0.5 bg-gradient-to-r from-brand-tiffany/50 to-transparent" />
+                  <div className="hidden lg:block absolute top-12 left-[60%] w-[80%] h-0.5 bg-gradient-to-r from-accent/50 to-transparent" />
                 )}
               </motion.div>
             ))}
@@ -330,12 +330,12 @@ export default function Servicos() {
               return (
                 <motion.div key={solution.title} variants={itemVariants}>
                   <Link to={solution.href}>
-                    <Card className="h-full border-0 shadow-lg hover:shadow-xl transition-all duration-300 group hover:border-brand-tiffany/50 cursor-pointer">
+                    <Card className="h-full border-0 shadow-lg hover:shadow-xl transition-all duration-300 group hover:border-accent/50 cursor-pointer">
                       <CardHeader className="text-center pb-4">
-                        <div className="w-16 h-16 rounded-2xl bg-accent/20 flex items-center justify-center mx-auto mb-4 group-hover:bg-gradient-brand group-hover:text-white transition-all duration-300">
-                          <IconComponent className="w-8 h-8 text-brand-tiffany group-hover:text-white transition-colors" />
+                        <div className="w-16 h-16 rounded-2xl bg-accent/20 flex items-center justify-center mx-auto mb-4 group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                          <IconComponent className="w-8 h-8 text-accent group-hover:text-white transition-colors" />
                         </div>
-                        <CardTitle className="text-xl font-display group-hover:text-brand-tiffany transition-colors">
+                        <CardTitle className="text-xl font-display group-hover:text-accent transition-colors">
                           {solution.title}
                         </CardTitle>
                       </CardHeader>
@@ -343,7 +343,7 @@ export default function Servicos() {
                         <CardDescription className="text-base mb-4">
                           {solution.description}
                         </CardDescription>
-                        <span className="inline-flex items-center text-sm font-medium text-brand-tiffany group-hover:gap-2 transition-all">
+                        <span className="inline-flex items-center text-sm font-medium text-accent group-hover:gap-2 transition-all">
                           Saiba mais
                           <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
                         </span>
@@ -361,7 +361,7 @@ export default function Servicos() {
       <section className="py-24 bg-gradient-to-r from-primary via-secondary to-primary">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
-            <Users className="w-16 h-16 text-brand-tiffany mx-auto mb-6" />
+            <Users className="w-16 h-16 text-accent mx-auto mb-6" />
             <h2 className="text-3xl md:text-4xl font-display font-bold text-primary-foreground mb-6">
               Pronto para transformar sua operação?
             </h2>
@@ -370,7 +370,7 @@ export default function Servicos() {
               a alcançar novos patamares de eficiência e resultados.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg" className="bg-brand-tiffany text-primary hover:bg-brand-tiffany/90">
+              <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90">
                 <Link to="/contato">
                   <Phone className="mr-2 w-5 h-5" />
                   Falar com Especialista

@@ -123,7 +123,7 @@ export default function CasesDeSucesso() {
       {/* Hero */}
       <section className="relative pt-32 pb-20 bg-gradient-to-b from-primary via-primary/95 to-background overflow-hidden">
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-20 right-20 w-80 h-80 bg-brand-tiffany rounded-full blur-3xl" />
+          <div className="absolute top-20 right-20 w-80 h-80 bg-accent rounded-full blur-3xl" />
           <div className="absolute bottom-0 left-10 w-64 h-64 bg-secondary rounded-full blur-3xl" />
         </div>
         
@@ -134,12 +134,12 @@ export default function CasesDeSucesso() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <span className="inline-block px-4 py-1.5 rounded-full bg-brand-tiffany/20 text-brand-tiffany text-sm font-medium mb-6">
+            <span className="inline-block px-4 py-1.5 rounded-full bg-accent/20 text-accent-foreground text-sm font-medium mb-6">
               Histórias de Sucesso
             </span>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-primary-foreground mb-6">
               Resultados que{" "}
-              <span className="text-brand-tiffany">transformam</span>
+              <span className="text-accent">transformam</span>
             </h1>
             <p className="text-xl text-primary-foreground/80 mb-8 leading-relaxed">
               Conheça como nossos clientes alcançaram resultados extraordinários 
@@ -214,7 +214,7 @@ export default function CasesDeSucesso() {
                       {/* Content Side */}
                       <CardContent className={`p-8 lg:p-12 ${isEven ? '' : 'lg:order-2'}`}>
                         <div className="flex items-center gap-3 mb-6">
-                          <div className="w-12 h-12 rounded-xl bg-gradient-brand flex items-center justify-center">
+                          <div className="w-12 h-12 rounded-xl bg-primary flex items-center justify-center">
                             <ClientIcon className="w-6 h-6 text-white" />
                           </div>
                           <div>
@@ -249,7 +249,7 @@ export default function CasesDeSucesso() {
                             const ResultIcon = result.icon;
                             return (
                               <div key={result.label} className="text-center p-4 rounded-xl bg-muted/50">
-                                <ResultIcon className="w-5 h-5 text-brand-tiffany mx-auto mb-2" />
+                                <ResultIcon className="w-5 h-5 text-accent mx-auto mb-2" />
                                 <div className="text-2xl font-display font-bold text-foreground">
                                   {result.metric}
                                 </div>
@@ -273,7 +273,7 @@ export default function CasesDeSucesso() {
 
                       {/* Testimonial Side */}
                       <div className={`bg-gradient-to-br from-primary to-secondary p-8 lg:p-12 flex flex-col justify-center ${isEven ? '' : 'lg:order-1'}`}>
-                        <Quote className="w-12 h-12 text-brand-tiffany/50 mb-6" />
+                        <Quote className="w-12 h-12 text-accent/50 mb-6" />
                         <blockquote className="text-xl lg:text-2xl text-primary-foreground font-display leading-relaxed mb-8">
                           "{caseItem.testimonial.quote}"
                         </blockquote>
@@ -305,7 +305,7 @@ export default function CasesDeSucesso() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <Award className="w-16 h-16 text-brand-tiffany mx-auto mb-6" />
+            <Award className="w-16 h-16 text-accent mx-auto mb-6" />
             <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-6">
               Seu escritório pode ser o próximo case de sucesso
             </h2>
@@ -314,7 +314,7 @@ export default function CasesDeSucesso() {
               jurídica com soluções orientadas a dados.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg" className="bg-gradient-brand hover:opacity-90">
+              <Button asChild size="lg" className="bg-primary hover:bg-primary/90">
                 <Link to="/contato">
                   Quero ser um Case
                   <ArrowRight className="ml-2 w-5 h-5" />
