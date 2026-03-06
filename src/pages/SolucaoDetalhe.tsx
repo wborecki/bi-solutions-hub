@@ -20,6 +20,7 @@ import {
 
 const solutionsData = {
   "business-intelligence": {
+    illustration: illustrationBI,
     icon: BarChart3,
     title: "Business Intelligence",
     subtitle: "Dashboards e Relatórios Customizados",
@@ -41,6 +42,7 @@ const solutionsData = {
     ],
   },
   "robos-juridicos": {
+    illustration: illustrationRobos,
     icon: Bot,
     title: "Robôs Jurídicos",
     subtitle: "Automação de Consultas e Processos",
@@ -62,6 +64,7 @@ const solutionsData = {
     ],
   },
   "jurimetria": {
+    illustration: illustrationJurimetria,
     icon: Scale,
     title: "Jurimetria",
     subtitle: "Inteligência Jurídica Baseada em Dados",
