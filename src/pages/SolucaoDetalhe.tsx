@@ -1,5 +1,5 @@
 import { useParams, Link } from "react-router-dom";
-import { ArrowRight, CheckCircle, BarChart3, Bot, Scale, Cpu, LayoutDashboard, Plug, Lightbulb, GraduationCap } from "lucide-react";
+import { ArrowRight, CheckCircle, BarChart3, Bot, Scale, Cpu, LayoutDashboard, Plug, Lightbulb, GraduationCap, Monitor } from "lucide-react";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { CTASection } from "@/components/home/CTASection";
@@ -159,6 +159,27 @@ const solutionsData = {
       "Certificado de conclusão",
       "Suporte pós-mentoria",
       "Networking com outros profissionais",
+    ],
+  },
+  "implantacao-sistemas": {
+    illustration: illustrationIntegracoes,
+    icon: Monitor,
+    title: "Implantação de Sistemas Jurídicos",
+    subtitle: "Sistemas Sob Medida para sua Operação",
+    longDescription: `Realizamos a implantação completa de sistemas jurídicos, desde a configuração inicial até o treinamento da equipe. Cuidamos da migração de dados, personalização de funcionalidades e acompanhamento para garantir que o sistema funcione perfeitamente no dia a dia do seu escritório ou departamento jurídico.`,
+    features: [
+      { title: "Configuração Personalizada", description: "Adaptamos o sistema às necessidades específicas do seu escritório ou departamento." },
+      { title: "Migração de Dados", description: "Transferência segura de todos os dados do sistema anterior sem perda de informações." },
+      { title: "Treinamento da Equipe", description: "Capacitação completa para que todos os usuários dominem o novo sistema." },
+      { title: "Suporte na Adoção", description: "Acompanhamento contínuo nos primeiros meses para garantir a adoção plena." },
+    ],
+    benefits: [
+      "Sistema funcionando rapidamente",
+      "Zero perda de dados na migração",
+      "Equipe treinada e confiante",
+      "Processos organizados desde o início",
+      "Suporte dedicado pós-implantação",
+      "Customização para seu fluxo de trabalho",
     ],
   },
   "consultoria": {

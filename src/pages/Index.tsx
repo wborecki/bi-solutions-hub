@@ -8,7 +8,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import {
   Shield, Sparkles, ArrowRight, Bot, BarChart3, LayoutDashboard,
-  Plug, Lightbulb, Search, Cpu, Rocket, Quote, Clock, GraduationCap,
+  Plug, Lightbulb, Search, Cpu, Rocket, Quote, Clock, GraduationCap, Monitor,
 } from "lucide-react";
 import heroIllustration from "@/assets/hero-illustration.png";
 import biaRobot from "@/assets/bia-robot.png";
@@ -20,6 +20,7 @@ const solutions = [
   { icon: BarChart3, title: "Business Intelligence", description: "Relatórios e análises estratégicas para decisões baseadas em dados." },
   { icon: LayoutDashboard, title: "Dashboards", description: "Painéis interativos e customizados para visualização de dados." },
   { icon: Plug, title: "Integrações", description: "Conecte seus sistemas e centralize informações automaticamente." },
+  { icon: Monitor, title: "Implantação de Sistemas", description: "Implantação e configuração de sistemas jurídicos sob medida." },
   { icon: GraduationCap, title: "Mentoria Power BI", description: "Aprenda Power BI com especialistas e domine a análise de dados." },
   { icon: Lightbulb, title: "Consultoria", description: "Orientação especializada para transformação digital do seu negócio." },
 ];

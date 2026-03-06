@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import {
   ArrowRight, BarChart3, Bot, Scale, CheckCircle, Plug,
-  Lightbulb, LayoutDashboard, Zap, Shield, Users, GraduationCap,
+  Lightbulb, LayoutDashboard, Zap, Shield, Users, GraduationCap, Monitor,
 } from "lucide-react";
 import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
@@ -81,6 +81,20 @@ const solutions = [
       "Middleware e ETL avançado",
     ],
     href: "/contato",
+    accent: "primary",
+  },
+  {
+    icon: Monitor,
+    title: "Implantação de Sistemas Jurídicos",
+    description:
+      "Implantação, configuração e personalização de sistemas jurídicos para escritórios e departamentos jurídicos.",
+    features: [
+      "Configuração personalizada",
+      "Migração de dados",
+      "Treinamento da equipe",
+      "Suporte na adoção",
+    ],
+    href: "/solucoes/implantacao-sistemas",
     accent: "primary",
   },
   {
