@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import logoSbi from "@/assets/logo-sbi.png";
 
 const solutionItems = [
-  { icon: Bot, label: "Automação IA", desc: "Automatize tarefas com IA", href: "/solucoes/automacao-ia" },
+  { icon: Bot, label: "Automação de Fluxos", desc: "Automatize processos e integre sistemas", href: "/solucoes/automacao-ia" },
   { icon: BarChart3, label: "Business Intelligence", desc: "Dados estratégicos para decisões", href: "/solucoes/business-intelligence" },
   { icon: LayoutDashboard, label: "Dashboards", desc: "Painéis visuais e interativos", href: "/solucoes/dashboards" },
   { icon: Plug, label: "Integrações", desc: "Conecte seus sistemas", href: "/solucoes/integracoes" },

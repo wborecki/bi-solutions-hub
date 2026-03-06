@@ -56,7 +56,7 @@ export function Footer() {
             <h4 className="font-display font-semibold mb-3">Soluções</h4>
             <ul className="space-y-2">
               {[
-                { label: "Automação IA", href: "/solucoes/automacao-ia" },
+                { label: "Automação de Fluxos", href: "/solucoes/automacao-ia" },
                 { label: "Business Intelligence", href: "/solucoes/business-intelligence" },
                 { label: "Dashboards", href: "/solucoes/dashboards" },
                 { label: "Mentoria Power BI", href: "/solucoes/mentoria-power-bi" },

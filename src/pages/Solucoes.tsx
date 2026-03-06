@@ -15,16 +15,16 @@ import solutionsHero from "@/assets/solutions-hero.png";
 const solutions = [
   {
     icon: Bot,
-    title: "Automação IA",
+    title: "Automação de Fluxos",
     description:
-      "Automatize processos repetitivos com inteligência artificial. Reduza erros, acelere entregas e libere sua equipe para atividades estratégicas.",
+      "Automatize processos conectando seus sistemas em fluxos inteligentes. Elimine tarefas manuais e ganhe eficiência operacional.",
     features: [
-      "Robôs para consultas automáticas",
-      "Processamento inteligente de documentos",
-      "Fluxos de trabalho automatizados",
-      "Monitoramento e alertas automatizados",
+      "Fluxos automatizados entre sistemas",
+      "Gatilhos inteligentes por eventos",
+      "Notificações automáticas",
+      "Integração com e-mail, CRM e ERP",
     ],
-    href: "/solucoes/robos-juridicos",
+    href: "/solucoes/automacao-ia",
     accent: "primary",
   },
   {
