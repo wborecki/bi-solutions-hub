@@ -220,6 +220,9 @@ const Index = () => {
         </div>
       </Section>
 
+      {/* Bia Análise de Processos */}
+      <BiaAnaliseSection />
+
       {/* Produto Bia */}
       <Section className="bg-muted/50">
         <div className="max-w-6xl mx-auto px-4">
