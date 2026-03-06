@@ -9,7 +9,7 @@ import {
   Shield, Sparkles, ArrowRight, Bot, BarChart3, LayoutDashboard,
   Plug, MessageSquare, Lightbulb, Search, Cpu, Rocket, Quote, ExternalLink,
 } from "lucide-react";
-import heroDashboard from "@/assets/hero-dashboard.png";
+import heroIllustration from "@/assets/hero-illustration.png";
 
 const solutions = [
   { icon: Bot, title: "Automação IA", description: "Automatize processos repetitivos com inteligência artificial avançada." },
@@ -112,33 +112,16 @@ const Index = () => {
             </motion.div>
 
             <motion.div
-              className="relative hidden lg:flex items-center justify-center"
+              className="hidden lg:flex items-center justify-center"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.7, delay: 0.2 }}
             >
               <img
-                src={heroDashboard}
-                alt="Dashboard de Business Intelligence com gráficos e análises"
-                className="w-96 h-96 object-contain rounded-2xl"
+                src={heroIllustration}
+                alt="Ilustração de Business Intelligence e análise de dados"
+                className="w-[480px] h-auto object-contain"
               />
-              {/* Floating badges */}
-              <motion.div
-                className="absolute top-8 right-4 bg-card border rounded-xl shadow-md px-4 py-3"
-                animate={{ y: [0, -8, 0] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              >
-                <p className="text-sm font-semibold">+50 projetos</p>
-                <p className="text-xs text-muted-foreground">entregues</p>
-              </motion.div>
-              <motion.div
-                className="absolute bottom-12 left-0 bg-card border rounded-xl shadow-md px-4 py-3"
-                animate={{ y: [0, 8, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-              >
-                <p className="text-sm font-semibold">100% satisfação</p>
-                <p className="text-xs text-muted-foreground">dos clientes</p>
-              </motion.div>
             </motion.div>
           </div>
         </div>
