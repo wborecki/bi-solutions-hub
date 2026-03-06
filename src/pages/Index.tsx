@@ -246,9 +246,13 @@ const Index = () => {
               </Button>
             </div>
             <div className="flex items-center justify-center">
-              <div className="w-64 h-64 rounded-3xl flex items-center justify-center">
-                <img src={biaRobot} alt="Bia - Assistente IA" className="w-56 h-56 object-contain" />
-              </div>
+              <motion.div
+                className="w-72 h-72 rounded-3xl flex items-center justify-center"
+                animate={{ y: [0, -12, 0] }}
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              >
+                <img src={biaRobot} alt="Bia - Assistente IA" className="w-64 h-64 object-contain drop-shadow-xl" />
+              </motion.div>
             </div>
           </motion.div>
         </div>
