@@ -13,6 +13,7 @@ import {
 import heroIllustration from "@/assets/hero-illustration.png";
 import biaRobot from "@/assets/bia-robot.png";
 import { StatsSection } from "@/components/home/StatsSection";
+import { BiaAnaliseSection } from "@/components/home/BiaAnaliseSection";
 
 const solutions = [
   { icon: Bot, title: "Automação IA", description: "Automatize processos repetitivos com inteligência artificial avançada." },
