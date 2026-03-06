@@ -10,30 +10,19 @@ export function CTASection() {
 
   return (
     <section className="py-24 relative overflow-hidden" ref={ref}>
-      {/* Background */}
       <div className="absolute inset-0 bg-gradient-brand" />
       
-      {/* Animated decorations */}
       <motion.div 
-        className="absolute top-0 left-0 w-96 h-96 rounded-full bg-brand-tiffany/10 blur-3xl"
-        animate={{ 
-          x: [0, 50, 0],
-          y: [0, 30, 0],
-          scale: [1, 1.1, 1]
-        }}
+        className="absolute top-0 left-0 w-96 h-96 rounded-full bg-accent/10 blur-3xl"
+        animate={{ x: [0, 50, 0], y: [0, 30, 0], scale: [1, 1.1, 1] }}
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div 
         className="absolute bottom-0 right-0 w-80 h-80 rounded-full bg-white/5 blur-3xl"
-        animate={{ 
-          x: [0, -30, 0],
-          y: [0, -50, 0],
-          scale: [1, 1.2, 1]
-        }}
+        animate={{ x: [0, -30, 0], y: [0, -50, 0], scale: [1, 1.2, 1] }}
         transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
       />
       
-      {/* Grid pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0" style={{
           backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 0)`,
@@ -43,7 +32,7 @@ export function CTASection() {
 
       <div className="container mx-auto px-4 relative z-10">
         <motion.div 
-          className="max-w-3xl mx-auto text-center text-white"
+          className="max-w-3xl mx-auto text-center text-primary-foreground"
           initial={{ opacity: 0, y: 60 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7 }}
@@ -56,7 +45,7 @@ export function CTASection() {
           >
             Pronto para transformar seus dados em{" "}
             <motion.span 
-              className="text-brand-tiffany"
+              className="text-accent"
               animate={{ opacity: [0.7, 1, 0.7] }}
               transition={{ duration: 2, repeat: Infinity }}
             >
@@ -66,7 +55,7 @@ export function CTASection() {
           </motion.h2>
           
           <motion.p 
-            className="text-lg md:text-xl text-white/80 mb-8 leading-relaxed"
+            className="text-lg md:text-xl text-primary-foreground/80 mb-8 leading-relaxed"
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : {}}
             transition={{ delay: 0.4 }}
@@ -85,7 +74,7 @@ export function CTASection() {
               <Button 
                 asChild 
                 size="lg" 
-                className="bg-brand-tiffany text-primary hover:bg-brand-tiffany/90 font-semibold shadow-lg"
+                className="bg-accent text-accent-foreground hover:bg-accent/90 font-semibold shadow-lg"
               >
                 <Link to="/contato">
                   Solicitar Contato
@@ -98,10 +87,10 @@ export function CTASection() {
                 asChild 
                 size="lg" 
                 variant="outline" 
-                className="border-white/30 text-white hover:bg-white/10 backdrop-blur-sm"
+                className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 backdrop-blur-sm"
               >
                 <a 
-                  href="https://wa.me/5547999999999?text=Olá! Gostaria de saber mais sobre as soluções da Solutions in BI." 
+                  href="https://wa.me/551151920925?text=Olá! Gostaria de saber mais sobre as soluções da Solutions in BI." 
                   target="_blank" 
                   rel="noopener noreferrer"
                 >
@@ -112,9 +101,8 @@ export function CTASection() {
             </motion.div>
           </motion.div>
 
-          {/* Trust badges */}
           <motion.div 
-            className="mt-12 flex flex-wrap items-center justify-center gap-8 text-white/60 text-sm"
+            className="mt-12 flex flex-wrap items-center justify-center gap-8 text-primary-foreground/60 text-sm"
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : {}}
             transition={{ delay: 0.8 }}
@@ -127,7 +115,7 @@ export function CTASection() {
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: 0.9 + index * 0.1 }}
               >
-                <div className="w-1.5 h-1.5 rounded-full bg-brand-tiffany" />
+                <div className="w-1.5 h-1.5 rounded-full bg-accent" />
                 {item}
               </motion.span>
             ))}

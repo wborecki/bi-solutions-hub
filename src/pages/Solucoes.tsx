@@ -37,7 +37,7 @@ const solutions = [
     ],
     href: "/solucoes/robos-juridicos",
     color: "bg-secondary",
-    gradient: "from-secondary to-brand-tiffany",
+    gradient: "from-secondary to-accent",
   },
   {
     icon: Scale,

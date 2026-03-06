@@ -33,7 +33,7 @@ export function Header() {
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         isScrolled
           ? "bg-background/80 backdrop-blur-md border-b shadow-sm py-3"
-          : "py-5"
+          : "bg-background/60 backdrop-blur-sm py-5"
       )}
     >
       <div className="max-w-6xl mx-auto px-4 flex items-center justify-between">
