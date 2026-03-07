@@ -81,7 +81,7 @@ const Sobre = () => {
               animate={aboutInView ? { opacity: 1, scale: 1 } : {}}
               transition={{ duration: 0.5 }}
             >
-              <img src={logoSbi} alt="Solutions in BI" className="w-48 md:w-56 h-auto object-contain" />
+              <img src={logoSbi} alt="Solutions in BI" className="w-48 md:w-56 h-auto object-contain mix-blend-multiply" />
             </motion.div>
             <motion.div
               className="space-y-4"
