@@ -12,6 +12,12 @@ import biaV11 from "@/assets/bia-v11.png";
 import biaV12 from "@/assets/bia-v12.png";
 import biaV13 from "@/assets/bia-v13.png";
 import biaV14 from "@/assets/bia-v14.png";
+import biaV15 from "@/assets/bia-v15.png";
+import biaV16 from "@/assets/bia-v16.png";
+import biaV17 from "@/assets/bia-v17.png";
+import biaV18 from "@/assets/bia-v18.png";
+import biaV19 from "@/assets/bia-v19.png";
+import biaV20 from "@/assets/bia-v20.png";
 
 const variants = [
   { src: biaV1, label: "V1", desc: "Chibi arredondado, visor escuro, corpo branco/roxo" },
@@ -28,6 +34,12 @@ const variants = [
   { src: biaV12, label: "V12", desc: "Gota branca, acenando, visor roxo brilhante" },
   { src: biaV13, label: "V13", desc: "Ovo branco matte, visor amplo, bracinhos esféricos" },
   { src: biaV14, label: "V14", desc: "Braços abertos, luz teal no peito, visor roxo" },
+  { src: biaV15, label: "V15", desc: "Chibi roxo com holograma de gráfico, olhos teal" },
+  { src: biaV16, label: "V16", desc: "Branco flutuante, anel teal, detalhes roxos" },
+  { src: biaV17, label: "V17", desc: "Coração teal no peito, visor azul, acenando" },
+  { src: biaV18, label: "V18", desc: "Ovo branco, antena esférica, olhos roxos" },
+  { src: biaV19, label: "V19", desc: "Roxo metálico, circuitos teal, asas laterais" },
+  { src: biaV20, label: "V20", desc: "Branco Pixar, lupa, pose de analista/detetive" },
 ];
 
 export default function BiaPreview() {
@@ -35,7 +47,7 @@ export default function BiaPreview() {
     <div className="min-h-screen bg-background p-8">
       <div className="max-w-6xl mx-auto">
         <h1 className="text-3xl font-bold text-center mb-2">Escolha a Bia</h1>
-        <p className="text-muted-foreground text-center mb-10">Todas as 14 variações — qual será a mascote oficial?</p>
+        <p className="text-muted-foreground text-center mb-10">Todas as 20 variações — qual será a mascote oficial?</p>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
           {variants.map((v) => (
             <div key={v.label} className="flex flex-col items-center gap-3 p-4 rounded-xl border bg-card hover:shadow-lg transition-shadow">
