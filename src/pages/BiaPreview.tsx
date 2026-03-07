@@ -18,6 +18,7 @@ import biaV17 from "@/assets/bia-v17.png";
 import biaV18 from "@/assets/bia-v18.png";
 import biaV19 from "@/assets/bia-v19.png";
 import biaV20 from "@/assets/bia-v20.png";
+import biaV21 from "@/assets/bia-v21.png";
 
 const variants = [
   { src: biaV1, label: "V1", desc: "Chibi arredondado, visor escuro, corpo branco/roxo" },
