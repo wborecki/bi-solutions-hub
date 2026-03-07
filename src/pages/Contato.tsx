@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { CTASection } from "@/components/home/CTASection";
+import { FAQSection } from "@/components/home/FAQSection";
 
 const contactInfo = [
   { icon: MapPin, label: "Endereço", value: "Rua Pamplona, 145, Cj 703\nSão Paulo - SP", href: undefined },
@@ -236,6 +237,7 @@ const Contato = () => {
         </div>
       </section>
 
+      <FAQSection />
       <CTASection />
     </Layout>
   );

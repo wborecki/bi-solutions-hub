@@ -117,7 +117,7 @@ const Index = () => {
             </motion.div>
 
             <motion.div
-              className="hidden lg:flex items-center justify-center"
+              className="flex items-center justify-center"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.7, delay: 0.2 }}
@@ -125,7 +125,7 @@ const Index = () => {
               <img
                 src={heroIllustration}
                 alt="Ilustração de Business Intelligence e análise de dados"
-                className="w-[480px] h-auto object-contain"
+                className="w-64 md:w-80 lg:w-[480px] h-auto object-contain"
                 loading="eager"
               />
             </motion.div>
@@ -199,17 +199,32 @@ const Index = () => {
           >
             {solutions.map((sol) => {
               const Icon = sol.icon;
+              const slugMap: Record<string, string> = {
+                "Automação de Fluxos": "automacao",
+                "Business Intelligence": "business-intelligence",
+                "Dashboards": "dashboards",
+                "Integrações": "integracoes",
+                "Implantação de Sistemas": "implantacao-sistemas",
+                "Mentoria Power BI": "mentoria-power-bi",
+                "Consultoria": "consultoria",
+                "Coleta de Dados": "coleta-dados",
+              };
               return (
                 <motion.div key={sol.title} variants={itemVariants} className="w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]">
-                  <Card className="rounded-xl border bg-card hover:shadow-md transition-shadow h-full">
-                    <CardContent className="pt-6 pb-6 px-6 space-y-3">
-                      <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                        <Icon className="h-6 w-6 text-primary" />
-                      </div>
-                      <h3 className="text-lg font-display font-bold">{sol.title}</h3>
-                      <p className="text-sm text-muted-foreground leading-relaxed">{sol.description}</p>
-                    </CardContent>
-                  </Card>
+                  <Link to={`/solucoes/${slugMap[sol.title] || "automacao"}`} className="block h-full">
+                    <Card className="rounded-xl border bg-card hover:shadow-md hover:border-primary/30 transition-all h-full group cursor-pointer">
+                      <CardContent className="pt-6 pb-6 px-6 space-y-3">
+                        <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                          <Icon className="h-6 w-6 text-primary" />
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <h3 className="text-lg font-display font-bold">{sol.title}</h3>
+                          <ArrowRight className="h-4 w-4 text-primary opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                        </div>
+                        <p className="text-sm text-muted-foreground leading-relaxed">{sol.description}</p>
+                      </CardContent>
+                    </Card>
+                  </Link>
                 </motion.div>
               );
             })}
