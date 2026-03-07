@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Páginas principais -->
   <url>
     <loc>https://solutionsinbi.com/</loc>
     <changefreq>weekly</changefreq>
@@ -30,6 +31,162 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+
+  <!-- Soluções -->
+  <url>
+    <loc>https://solutionsinbi.com/solucoes/automacao-ia</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://solutionsinbi.com/solucoes/business-intelligence</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://solutionsinbi.com/solucoes/jurimetria</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://solutionsinbi.com/solucoes/implantacao-sistemas</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://solutionsinbi.com/solucoes/mentoria-power-bi</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://solutionsinbi.com/solucoes/coleta-de-dados</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://solutionsinbi.com/solucoes/robos-juridicos</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Blog Posts -->
+  <url>
+    <loc>https://solutionsinbi.com/blog/bi-escritorio-juridico</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://solutionsinbi.com/blog/power-bi-vs-tableau</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://solutionsinbi.com/blog/etl-o-que-e</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://solutionsinbi.com/blog/kpis-juridicos</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://solutionsinbi.com/blog/dashboard-produtividade</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://solutionsinbi.com/blog/jurimetria-futuro-advocacia</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://solutionsinbi.com/blog/jurimetria-provisionamento</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://solutionsinbi.com/blog/jurimetria-trabalhista</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://solutionsinbi.com/blog/jurimetria-civel</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://solutionsinbi.com/blog/automacao-juridica-robos</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://solutionsinbi.com/blog/5-processos-automatizar</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://solutionsinbi.com/blog/automacao-fluxos-email</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://solutionsinbi.com/blog/roi-automacao</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://solutionsinbi.com/blog/integracao-sistemas-silos</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://solutionsinbi.com/blog/apis-juridico-tribunais</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://solutionsinbi.com/blog/coleta-dados-juridicos</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://solutionsinbi.com/blog/dados-publicos-portais</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://solutionsinbi.com/blog/aprender-power-bi-2025</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://solutionsinbi.com/blog/dax-iniciantes-formulas</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://solutionsinbi.com/blog/tendencias-bi-2025</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://solutionsinbi.com/blog/ia-juridico-mudancas</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://solutionsinbi.com/blog/futuro-gestao-juridica</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://solutionsinbi.com/blog/transformacao-digital-juridico</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Páginas legais -->
   <url>
     <loc>https://solutionsinbi.com/privacy</loc>
     <changefreq>yearly</changefreq>

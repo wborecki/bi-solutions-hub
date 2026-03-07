@@ -1,5 +1,9 @@
 User-agent: *
 Allow: /
 Disallow: /404
+Disallow: /bia-preview
+
+User-agent: Googlebot
+Allow: /
 
 Sitemap: https://solutionsinbi.com/sitemap.xml
