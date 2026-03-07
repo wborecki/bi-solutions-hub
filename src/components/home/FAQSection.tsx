@@ -14,9 +14,9 @@ const faqs = [
       "Depende da complexidade, mas projetos típicos levam de 2 a 8 semanas. Dashboards simples podem ser entregues em poucos dias, enquanto soluções completas de jurimetria ou automação de fluxos demandam mais tempo para coleta, integração e validação dos dados.",
   },
   {
-    question: "Vocês atendem empresas fora de São Paulo?",
+    question: "É possível integrar com meu sistema atual?",
     answer:
-      "Sim! Atendemos clientes em todo o Brasil de forma remota. Nosso processo de trabalho é totalmente digital, com reuniões por videoconferência e entregas online. Temos clientes em diversos estados.",
+      "Sim! Nossas soluções se conectam com os principais ERPs, CRMs, sistemas jurídicos e plataformas do mercado. Trabalhamos com APIs, bancos de dados e ferramentas como Power Automate para garantir que tudo funcione de forma integrada com o que você já utiliza.",
   },
   {
     question: "Preciso ter um sistema de gestão para usar BI?",
