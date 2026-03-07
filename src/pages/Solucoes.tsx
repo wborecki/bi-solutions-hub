@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { cn } from "@/lib/utils";
+import { OptimizedImage } from "@/components/OptimizedImage";
 import solutionsHero from "@/assets/solutions-hero.png";
 
 const solutions = [
@@ -159,7 +160,7 @@ const Solucoes = () => {
         canonical="/solucoes"
       />
       {/* Hero */}
-      <section className="pt-28 pb-16 md:pt-32 md:pb-20">
+      <section className="pt-28 pb-16 md:pt-36 md:pb-20">
         <div className="max-w-6xl mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <motion.div
@@ -200,10 +201,11 @@ const Solucoes = () => {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.7, delay: 0.2 }}
             >
-              <img
+              <OptimizedImage
                 src={solutionsHero}
                 alt="Ilustração de soluções em automação e Business Intelligence"
-                className="w-[480px] h-auto object-contain"
+                className="w-[480px] h-auto"
+                loading="eager"
               />
             </motion.div>
           </div>

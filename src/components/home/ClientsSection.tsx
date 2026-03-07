@@ -67,6 +67,7 @@ export function ClientsSection() {
               <img
                 src={client.logo}
                 alt={client.name}
+                loading="lazy"
                 className="h-16 w-auto object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
               />
             </div>
