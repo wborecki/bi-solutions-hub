@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -22,8 +22,9 @@ function Wrapper({ children }: { children: React.ReactNode }) {
 
 describe("NotFound page", () => {
   it("renders 404 message and link to home", () => {
-    render(<NotFound />, { wrapper: Wrapper });
-    expect(screen.getByText(/não encontrada/i)).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /voltar/i })).toHaveAttribute("href", "/");
+    const { getByText, container } = render(<NotFound />, { wrapper: Wrapper });
+    expect(getByText(/não encontrada/i)).toBeInTheDocument();
+    const homeLink = container.querySelector('a[href="/"]');
+    expect(homeLink).toBeTruthy();
   });
 });

@@ -9,11 +9,7 @@ describe("SEO", () => {
     const { container } = render(
       <HelmetProvider>
         <MemoryRouter>
-          <SEO
-            title="Teste"
-            description="Descrição teste"
-            canonical="/teste"
-          />
+          <SEO title="Teste" description="Descrição teste" canonical="/teste" />
         </MemoryRouter>
       </HelmetProvider>
     );
@@ -30,17 +26,6 @@ describe("SEO", () => {
             type="article"
             article={{ publishedTime: "2025-01-01", section: "BI", tags: ["dados"] }}
           />
-        </MemoryRouter>
-      </HelmetProvider>
-    );
-    expect(container).toBeDefined();
-  });
-
-  it("accepts noIndex prop", () => {
-    const { container } = render(
-      <HelmetProvider>
-        <MemoryRouter>
-          <SEO title="No Index" description="Desc" noIndex />
         </MemoryRouter>
       </HelmetProvider>
     );

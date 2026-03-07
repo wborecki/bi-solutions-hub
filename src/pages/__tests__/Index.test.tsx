@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -21,13 +21,14 @@ function Wrapper({ children }: { children: React.ReactNode }) {
 }
 
 describe("Index page", () => {
-  it("renders hero section with CTA", () => {
-    render(<Index />, { wrapper: Wrapper });
-    expect(screen.getByText(/Solutions in BI/i)).toBeInTheDocument();
+  it("renders hero section", () => {
+    const { getByText } = render(<Index />, { wrapper: Wrapper });
+    expect(getByText(/Solutions in BI/i)).toBeInTheDocument();
   });
 
-  it("renders solutions section", () => {
-    render(<Index />, { wrapper: Wrapper });
-    expect(screen.getByText(/Business Intelligence/i)).toBeInTheDocument();
+  it("renders solutions cards", () => {
+    const { getByText } = render(<Index />, { wrapper: Wrapper });
+    expect(getByText(/Business Intelligence/i)).toBeInTheDocument();
+    expect(getByText(/Automação de Fluxos/i)).toBeInTheDocument();
   });
 });
