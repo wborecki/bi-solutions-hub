@@ -18,6 +18,7 @@ const Contato = lazy(() => import("./pages/Contato"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const Terms = lazy(() => import("./pages/Terms"));
 const NotFound = lazy(() => import("./pages/NotFound"));
+const BiaPreview = lazy(() => import("./pages/BiaPreview"));
 
 const queryClient = new QueryClient();
 
@@ -48,6 +49,7 @@ const App = () => (
             <Route path="/contato" element={<Contato />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
+            <Route path="/bia-preview" element={<BiaPreview />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
