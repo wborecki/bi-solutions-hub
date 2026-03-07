@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, ChevronDown, Bot, BarChart3, LayoutDashboard, Plug, Lightbulb, GraduationCap, Monitor } from "lucide-react";
+import { Menu, X, ChevronDown, Bot, BarChart3, LayoutDashboard, Plug, Lightbulb, GraduationCap, Monitor, Database } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import logoSbi from "@/assets/logo-sbi.png";
@@ -13,6 +13,7 @@ const solutionItems = [
   { icon: Monitor, label: "Implantação de Sistemas", desc: "Sistemas jurídicos sob medida", href: "/solucoes/implantacao-sistemas" },
   { icon: GraduationCap, label: "Mentoria Power BI", desc: "Aprenda com especialistas", href: "/solucoes/mentoria-power-bi" },
   { icon: Lightbulb, label: "Consultoria", desc: "Orientação para transformação digital", href: "/solucoes/consultoria" },
+  { icon: Database, label: "Coleta de Dados", desc: "Captura de informações de diversas fontes", href: "/solucoes/coleta-de-dados" },
 ];
 
 const navLinks = [
