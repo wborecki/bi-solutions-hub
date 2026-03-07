@@ -68,8 +68,11 @@ export function Header() {
       )}
     >
       <div className="max-w-6xl mx-auto px-4 flex items-center justify-between">
-        <Link to="/" className="flex items-center">
+        <Link to="/" className="flex items-center gap-2.5">
           <img src={logoSbi} alt="Solutions in BI" className="h-10 w-auto object-contain" />
+          <span className="hidden lg:block text-xs font-display text-muted-foreground/60 italic border-l border-border pl-2.5">
+            Facilitando processos
+          </span>
         </Link>
 
         <nav className="hidden md:flex items-center gap-1">
