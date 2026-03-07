@@ -8,6 +8,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import logoSbi from "@/assets/logo-sbi.png";
 import teamWillian from "@/assets/team-willian-photo.jpg";
 import teamElisa from "@/assets/team-elisa-photo.jpg";
+import heroSobreIllustration from "@/assets/hero-sobre-illustration.png";
+import { OptimizedImage } from "@/components/OptimizedImage";
 
 const values = [
   { icon: Lightbulb, label: "Inovação", description: "Buscamos constantemente novas formas de resolver problemas com tecnologia." },
@@ -76,25 +78,41 @@ const Sobre = () => {
       {/* Hero */}
       <section className="pt-28 md:pt-36 pb-20 bg-background relative overflow-hidden dot-pattern">
         <div className="container mx-auto px-4 relative z-10">
-          <motion.div
-            className="max-w-2xl mx-auto text-center"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
-              Sobre Nós
-            </span>
-            <h1 className="text-4xl md:text-5xl font-display font-bold text-primary-dark mb-6 leading-tight">
-              Especialistas em{" "}
-              <span className="text-gradient">inteligência de dados</span>
-            </h1>
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              A Solutions in BI desenvolve soluções de automação, Business Intelligence e
-              Inteligência Artificial para o mercado jurídico e corporativo, transformando
-              dados em decisões estratégicas.
-            </p>
-          </motion.div>
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <motion.div
+              className="space-y-6"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium">
+                Sobre Nós
+              </span>
+              <h1 className="text-4xl md:text-5xl font-display font-bold text-primary-dark leading-tight">
+                Especialistas em{" "}
+                <span className="text-gradient">inteligência de dados</span>
+              </h1>
+              <p className="text-lg text-muted-foreground leading-relaxed max-w-lg">
+                A Solutions in BI desenvolve soluções de automação, Business Intelligence e
+                Inteligência Artificial para o mercado jurídico e corporativo, transformando
+                dados em decisões estratégicas.
+              </p>
+            </motion.div>
+
+            <motion.div
+              className="flex items-center justify-center"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+            >
+              <OptimizedImage
+                src={heroSobreIllustration}
+                alt="Equipe colaborando com análise de dados e dashboards"
+                className="w-64 md:w-80 lg:w-[420px] h-auto"
+                loading="eager"
+              />
+            </motion.div>
+          </div>
         </div>
       </section>
 
