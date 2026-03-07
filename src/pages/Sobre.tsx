@@ -162,7 +162,7 @@ const Sobre = () => {
                   animate={missionInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.4, delay: i * 0.1 }}
                 >
-                  <Card className="rounded-2xl border bg-card hover:border-l-4 hover:border-l-accent transition-all h-full">
+                  <Card className="rounded-2xl border bg-card h-full">
                     <CardContent className="p-8 flex gap-5 items-start">
                       <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
                         <Icon className="h-6 w-6 text-primary" />
@@ -210,7 +210,7 @@ const Sobre = () => {
           >
             {team.map((member) => (
               <motion.div key={member.name} variants={itemVariants}>
-                <Card className="rounded-2xl border bg-card overflow-hidden hover:shadow-lg hover:border-l-4 hover:border-l-accent transition-all group">
+                <Card className="rounded-2xl border bg-card overflow-hidden hover:shadow-lg transition-shadow group">
                   <div className="aspect-[4/3] overflow-hidden">
                     <img
                       src={member.photo}
@@ -275,7 +275,7 @@ const Sobre = () => {
               const Icon = v.icon;
               return (
                 <motion.div key={v.label} variants={itemVariants}>
-                  <Card className="rounded-xl border bg-card hover:shadow-md hover:border-l-4 hover:border-l-accent transition-all h-full">
+                  <Card className="rounded-xl border bg-card hover:shadow-md transition-shadow h-full">
                     <CardContent className="p-6 space-y-3">
                       <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
                         <Icon className="h-5 w-5 text-primary" />
@@ -324,7 +324,7 @@ const Sobre = () => {
                 key={item}
                 variants={itemVariants}
               >
-                <Card className="rounded-xl border bg-card hover:shadow-sm hover:border-l-4 hover:border-l-accent transition-all h-full">
+                <Card className="rounded-xl border bg-card hover:shadow-sm transition-shadow h-full">
                   <CardContent className="p-5 flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-accent shrink-0 mt-0.5" />
                     <span className="text-sm font-medium text-foreground">{item}</span>

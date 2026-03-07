@@ -219,7 +219,7 @@ const Index = () => {
               return (
                 <motion.div key={sol.title} variants={itemVariants} className="w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]">
                   <Link to={`/solucoes/${slugMap[sol.title] || "automacao"}`} className="block h-full">
-                    <Card className="rounded-xl border bg-card hover:shadow-md hover:border-l-4 hover:border-l-accent transition-all h-full group cursor-pointer">
+                    <Card className="rounded-xl border bg-card hover:shadow-md transition-shadow h-full group cursor-pointer">
                       <CardContent className="pt-6 pb-6 px-6 space-y-3">
                         <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
                           <Icon className="h-6 w-6 text-primary" />
@@ -267,7 +267,7 @@ const Index = () => {
           >
             {testimonials.map((t) => (
               <motion.div key={t.name} variants={itemVariants}>
-                <Card className="rounded-xl border bg-card hover:shadow-md hover:border-l-4 hover:border-l-accent transition-all h-full">
+                <Card className="rounded-xl border bg-card hover:shadow-md transition-shadow h-full">
                   <CardContent className="pt-6 pb-6 px-6 space-y-4">
                     <Quote className="h-8 w-8 text-primary/30" />
                     <p className="text-sm text-muted-foreground leading-relaxed italic">"{t.content}"</p>
