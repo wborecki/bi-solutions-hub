@@ -138,8 +138,6 @@ const Index = () => {
       {/* Clientes */}
       <ClientsSection />
 
-      {/* Stats */}
-      <StatsSection />
 
       {/* Como funciona */}
       <Section className="section-sand dot-pattern" ref={stepsRef}>
