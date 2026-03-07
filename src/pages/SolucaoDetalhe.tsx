@@ -13,6 +13,7 @@ import illustrationDashboards from "@/assets/illustration-dashboards.png";
 import illustrationIntegracoes from "@/assets/illustration-integracoes.png";
 import illustrationConsultoria from "@/assets/illustration-consultoria.png";
 import illustrationImplantacao from "@/assets/illustration-implantacao.png";
+import illustrationMentoria from "@/assets/illustration-mentoria.png";
 
 const solutionsData = {
   "business-intelligence": {
