@@ -111,24 +111,47 @@ export function Header() {
             </Link>
 
             {dropdownOpen && (
-              <div className="absolute top-full left-0 pt-2 z-50">
-                <div className="bg-background/95 backdrop-blur-md border rounded-xl shadow-lg p-2 min-w-[280px]">
-                  {solutionItems.map((item) => {
-                    const Icon = item.icon;
-                    return (
-                      <Link
-                        key={item.label}
-                        to={item.href}
-                        className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm hover:bg-muted transition-colors group"
-                      >
-                        <Icon className="h-4 w-4 text-primary shrink-0" />
-                        <div>
-                          <p className="font-semibold text-foreground">{item.label}</p>
-                          <p className="text-xs text-muted-foreground">{item.desc}</p>
+              <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 z-50">
+                <div className="bg-background/95 backdrop-blur-md border rounded-xl shadow-xl p-4 min-w-[640px]">
+                  <div className="grid grid-cols-3 gap-6">
+                    {solutionCategories.map((cat) => {
+                      const CatIcon = cat.icon;
+                      return (
+                        <div key={cat.category}>
+                          <div className="flex items-center gap-2 mb-3 px-2">
+                            <CatIcon className="h-3.5 w-3.5 text-primary" />
+                            <span className="text-xs font-bold text-primary uppercase tracking-wider">{cat.category}</span>
+                          </div>
+                          <div className="flex flex-col gap-0.5">
+                            {cat.items.map((item) => {
+                              const Icon = item.icon;
+                              return (
+                                <Link
+                                  key={item.label}
+                                  to={item.href}
+                                  className="flex items-start gap-3 px-2 py-2 rounded-lg text-sm hover:bg-muted transition-colors"
+                                >
+                                  <Icon className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+                                  <div>
+                                    <p className="font-semibold text-foreground text-sm leading-tight">{item.label}</p>
+                                    <p className="text-xs text-muted-foreground leading-tight mt-0.5">{item.desc}</p>
+                                  </div>
+                                </Link>
+                              );
+                            })}
+                          </div>
                         </div>
-                      </Link>
-                    );
-                  })}
+                      );
+                    })}
+                  </div>
+                  <div className="border-t mt-3 pt-3">
+                    <Link
+                      to="/solucoes"
+                      className="flex items-center justify-center gap-1 text-sm font-semibold text-primary hover:text-primary/80 transition-colors"
+                    >
+                      Ver todas as soluções →
+                    </Link>
+                  </div>
                 </div>
               </div>
             )}
@@ -182,26 +205,29 @@ export function Header() {
             >
               Soluções
             </Link>
-            <div className="pl-4 flex flex-col gap-0.5">
-              {solutionItems.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <Link
-                    key={item.label}
-                    to={item.href}
-                    className={cn(
-                      "flex items-center gap-2 px-4 py-2 rounded-lg text-sm transition-colors",
-                      location.pathname === item.href
-                        ? "text-primary bg-primary/5"
-                        : "text-muted-foreground hover:text-foreground"
-                    )}
-                  >
-                    <Icon className="h-3.5 w-3.5" />
-                    {item.label}
-                  </Link>
-                );
-              })}
-            </div>
+            {solutionCategories.map((cat) => (
+              <div key={cat.category} className="mb-2">
+                <p className="px-4 py-1 text-xs font-bold text-primary uppercase tracking-wider">{cat.category}</p>
+                {cat.items.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <Link
+                      key={item.label}
+                      to={item.href}
+                      className={cn(
+                        "flex items-center gap-2 px-6 py-2 rounded-lg text-sm transition-colors",
+                        location.pathname === item.href
+                          ? "text-primary bg-primary/5"
+                          : "text-muted-foreground hover:text-foreground"
+                      )}
+                    >
+                      <Icon className="h-3.5 w-3.5" />
+                      {item.label}
+                    </Link>
+                  );
+                })}
+              </div>
+            ))}
             {navLinks.map((link) => (
               <Link
                 key={link.href}
