@@ -200,7 +200,7 @@ const Index = () => {
             {solutions.map((sol) => {
               const Icon = sol.icon;
               const slugMap: Record<string, string> = {
-                "Automação de Fluxos": "automacao",
+                "Automação de Fluxos": "automacao-ia",
                 "Business Intelligence": "business-intelligence",
                 "Dashboards": "dashboards",
                 "Integrações": "integracoes",
