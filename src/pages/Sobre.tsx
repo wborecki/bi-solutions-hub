@@ -266,7 +266,7 @@ const Sobre = () => {
           </motion.div>
 
           <motion.div
-            className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-4xl mx-auto"
+            className="flex flex-wrap justify-center gap-5 max-w-4xl mx-auto"
             variants={containerVariants}
             initial="hidden"
             animate={valuesInView ? "visible" : "hidden"}
@@ -274,7 +274,7 @@ const Sobre = () => {
             {values.map((v) => {
               const Icon = v.icon;
               return (
-                <motion.div key={v.label} variants={itemVariants}>
+                <motion.div key={v.label} variants={itemVariants} className="w-full sm:w-[calc(50%-10px)] lg:w-[calc(33.333%-14px)]">
                   <Card className="rounded-xl border bg-card hover:shadow-md transition-shadow h-full">
                     <CardContent className="p-6 space-y-3">
                       <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
