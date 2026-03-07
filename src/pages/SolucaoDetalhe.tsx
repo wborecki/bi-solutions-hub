@@ -143,7 +143,7 @@ const solutionsData = {
     ],
   },
   "mentoria-power-bi": {
-    illustration: illustrationDashboards,
+    illustration: illustrationMentoria,
     icon: GraduationCap,
     title: "Mentoria de Power BI",
     subtitle: "Aprenda com Especialistas",
