@@ -12,6 +12,7 @@ import illustrationAutomacao from "@/assets/illustration-automacao.png";
 import illustrationDashboards from "@/assets/illustration-dashboards.png";
 import illustrationIntegracoes from "@/assets/illustration-integracoes.png";
 import illustrationConsultoria from "@/assets/illustration-consultoria.png";
+import illustrationImplantacao from "@/assets/illustration-implantacao.png";
 
 const solutionsData = {
   "business-intelligence": {
@@ -162,14 +163,14 @@ const solutionsData = {
     ],
   },
   "implantacao-sistemas": {
-    illustration: illustrationIntegracoes,
+    illustration: illustrationImplantacao,
     icon: Monitor,
     title: "Implantação de Sistemas Jurídicos",
     subtitle: "Sistemas Sob Medida para sua Operação",
-    longDescription: `Realizamos a implantação completa de sistemas jurídicos como CPJ-SAJ, PROJuris, ADVBOX, Themis, Legal One (Thomson Reuters), Astrea e EsyLaw. Desde a configuração inicial até o treinamento da equipe, cuidamos da migração de dados, personalização de funcionalidades e acompanhamento para garantir que o sistema funcione perfeitamente no dia a dia do seu escritório ou departamento jurídico.`,
+    longDescription: `Realizamos a implantação completa dos principais sistemas jurídicos do mercado. Desde a configuração inicial até o treinamento da equipe, cuidamos da migração de dados, personalização de funcionalidades e acompanhamento para garantir que o sistema funcione perfeitamente no dia a dia do seu escritório ou departamento jurídico.`,
     features: [
-      { title: "Configuração Personalizada", description: "Adaptamos sistemas como CPJ-SAJ, PROJuris, ADVBOX, Themis e Legal One às necessidades do seu escritório." },
-      { title: "Migração de Dados", description: "Transferência segura de todos os dados do sistema anterior — Astrea, EsyLaw, planilhas ou outros — sem perda de informações." },
+      { title: "Configuração Personalizada", description: "Adaptamos o sistema jurídico às necessidades específicas do seu escritório ou departamento." },
+      { title: "Migração de Dados", description: "Transferência segura de todos os dados do sistema anterior — planilhas, banco de dados ou outros — sem perda de informações." },
       { title: "Treinamento da Equipe", description: "Capacitação completa para que todos os usuários dominem o novo sistema jurídico." },
       { title: "Suporte na Adoção", description: "Acompanhamento contínuo nos primeiros meses para garantir a adoção plena do sistema." },
     ],
