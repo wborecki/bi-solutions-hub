@@ -228,16 +228,28 @@ const Solucoes = () => {
           </motion.div>
 
           <motion.div
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+            className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 [&>*:nth-last-child(-n+2):nth-child(3n+1)]:lg:col-start-1 [&>*:nth-last-child(1):nth-child(3n+2)]:lg:col-start-2"
             variants={containerVariants}
             initial="hidden"
             animate={gridInView ? "visible" : "hidden"}
           >
-            {solutions.map((sol) => {
+            {solutions.map((sol, index) => {
               const Icon = sol.icon;
               const isAccent = sol.accent === "accent";
+              const totalItems = solutions.length;
+              const remainder = totalItems % 3;
+              const isLastRow = index >= totalItems - remainder && remainder > 0;
+              
               return (
-                <motion.div key={sol.title} variants={itemVariants}>
+                <motion.div 
+                  key={sol.title} 
+                  variants={itemVariants}
+                  className={cn(
+                    isLastRow && remainder === 2 && index === totalItems - 2 && "lg:justify-self-end lg:mr-3",
+                    isLastRow && remainder === 2 && index === totalItems - 1 && "lg:justify-self-start lg:ml-3",
+                    isLastRow && remainder === 1 && "lg:col-start-2"
+                  )}
+                >
                   <Card className="h-full rounded-2xl border bg-card hover:shadow-lg transition-all duration-300 group overflow-hidden">
                     <CardContent className="p-6 flex flex-col h-full">
                       <div
