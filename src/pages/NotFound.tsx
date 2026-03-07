@@ -17,7 +17,7 @@ const NotFound = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <NotFoundIllustration />
+          <img src={illustration404} alt="Erro 404" className="w-auto max-w-xs md:max-w-sm mx-auto" />
           <div className="space-y-3">
             <h1 className="text-2xl md:text-3xl font-display font-bold text-foreground">
               Página não encontrada
