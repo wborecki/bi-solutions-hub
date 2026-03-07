@@ -255,7 +255,7 @@ const SolucaoDetalhe = () => {
   return (
     <Layout>
       {/* Hero */}
-      <section className="pt-28 pb-20 bg-background relative overflow-hidden">
+      <section className="pt-28 md:pt-36 pb-20 bg-background relative overflow-hidden">
         <div className="absolute inset-0 opacity-[0.03]">
           <div className="absolute inset-0" style={{
             backgroundImage: `radial-gradient(circle at 1px 1px, hsl(var(--foreground)) 1px, transparent 0)`,

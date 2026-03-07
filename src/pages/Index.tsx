@@ -10,6 +10,7 @@ import {
   Shield, Sparkles, ArrowRight, Bot, BarChart3, LayoutDashboard,
   Plug, Lightbulb, Search, Cpu, Rocket, Quote, Clock, GraduationCap, Monitor, Database,
 } from "lucide-react";
+import { OptimizedImage } from "@/components/OptimizedImage";
 import heroIllustration from "@/assets/hero-dashboards-final.png";
 
 import { StatsSection } from "@/components/home/StatsSection";
@@ -123,10 +124,10 @@ const Index = () => {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.7, delay: 0.2 }}
             >
-              <img
+              <OptimizedImage
                 src={heroIllustration}
                 alt="Ilustração de Business Intelligence e análise de dados"
-                className="w-64 md:w-80 lg:w-[480px] h-auto object-contain"
+                className="w-64 md:w-80 lg:w-[480px] h-auto"
                 loading="eager"
               />
             </motion.div>
