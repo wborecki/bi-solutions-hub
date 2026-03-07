@@ -169,7 +169,16 @@ const Blog = () => {
         canonical="/blog"
       />
       {/* Hero */}
-      <section className="pt-28 md:pt-36 pb-16 bg-background relative overflow-hidden dot-pattern">
+      <section className="pt-28 md:pt-36 pb-16 bg-background relative overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.03]">
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `radial-gradient(circle at 1px 1px, hsl(var(--foreground)) 1px, transparent 0)`,
+              backgroundSize: "32px 32px",
+            }}
+          />
+        </div>
         <div className="container mx-auto px-4 relative z-10">
           <motion.div
             className="max-w-2xl"
@@ -223,10 +232,8 @@ const Blog = () => {
         </div>
       </section>
 
-      <div className="section-divider" />
-
       {/* Posts */}
-      <section className="py-16 section-sand" ref={postsRef}>
+      <section className="py-16" ref={postsRef}>
         <div className="container mx-auto px-4">
           {paginatedPosts.length > 0 ? (
             <>
@@ -288,7 +295,6 @@ const Blog = () => {
         </div>
       </section>
 
-      <div className="section-divider" />
       <CTASection />
     </Layout>
   );
