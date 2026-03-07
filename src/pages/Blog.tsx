@@ -16,46 +16,62 @@ import blogColeta from "@/assets/blog-il-coleta.png";
 import blogTendencias from "@/assets/blog-il-tendencias.png";
 import blogMentoria from "@/assets/blog-il-mentoria.png";
 import blogEtl from "@/assets/blog-il-etl.png";
+import blogPowerBiTableau from "@/assets/blog-power-bi-tableau.png";
+import blogKpis from "@/assets/blog-kpis.png";
+import blogDashboardProd from "@/assets/blog-dashboard-prod.png";
+import blogProvisionamento from "@/assets/blog-provisionamento.png";
+import blogTrabalhista from "@/assets/blog-trabalhista.png";
+import blogCivel from "@/assets/blog-civel.png";
+import blog5processos from "@/assets/blog-5processos.png";
+import blogFluxosEmail from "@/assets/blog-fluxos-email.png";
+import blogRoi from "@/assets/blog-roi.png";
+import blogApis from "@/assets/blog-apis.png";
+import blogDadosPublicos from "@/assets/blog-dados-publicos.png";
+import blogAprenderPbi from "@/assets/blog-aprender-pbi.png";
+import blogDax from "@/assets/blog-dax.png";
+import blogIaJuridico from "@/assets/blog-ia-juridico.png";
+import blogFuturoGestao from "@/assets/blog-futuro-gestao.png";
+import blogTransformacao from "@/assets/blog-transformacao.png";
 
 const categories = ["Todos", "Business Intelligence", "Jurimetria", "Automação", "Integrações", "Coleta de Dados", "Mentoria", "Tendências"];
 
 const posts = [
   // BI
   { id: 1, title: "Como o Business Intelligence pode transformar seu escritório jurídico", excerpt: "Descubra como dashboards e relatórios automatizados podem otimizar a gestão do seu escritório.", category: "Business Intelligence", date: "15 Jan 2025", readTime: "5 min", featured: true, slug: "bi-escritorio-juridico", image: blogBi },
-  { id: 4, title: "Power BI vs Tableau: Qual a melhor ferramenta?", excerpt: "Análise comparativa das principais ferramentas de visualização de dados do mercado.", category: "Business Intelligence", date: "28 Dez 2024", readTime: "6 min", featured: false, slug: "power-bi-vs-tableau", image: blogBi },
+  { id: 4, title: "Power BI vs Tableau: Qual a melhor ferramenta?", excerpt: "Análise comparativa das principais ferramentas de visualização de dados do mercado.", category: "Business Intelligence", date: "28 Dez 2024", readTime: "6 min", featured: false, slug: "power-bi-vs-tableau", image: blogPowerBiTableau },
   { id: 6, title: "ETL: O que é e por que sua empresa precisa", excerpt: "O processo de Extração, Transformação e Carga de dados e sua importância para o BI.", category: "Business Intelligence", date: "15 Dez 2024", readTime: "5 min", featured: false, slug: "etl-o-que-e", image: blogEtl },
-  { id: 7, title: "KPIs jurídicos: Os indicadores que todo escritório deve acompanhar", excerpt: "Conheça os indicadores de desempenho mais importantes para a gestão jurídica eficiente.", category: "Business Intelligence", date: "10 Dez 2024", readTime: "6 min", featured: false, slug: "kpis-juridicos", image: blogBi },
-  { id: 8, title: "Dashboard de produtividade: Como medir o desempenho da equipe", excerpt: "Aprenda a criar dashboards que medem a produtividade e identificam gargalos operacionais.", category: "Business Intelligence", date: "5 Dez 2024", readTime: "5 min", featured: false, slug: "dashboard-produtividade", image: blogBi },
+  { id: 7, title: "KPIs jurídicos: Os indicadores que todo escritório deve acompanhar", excerpt: "Conheça os indicadores de desempenho mais importantes para a gestão jurídica eficiente.", category: "Business Intelligence", date: "10 Dez 2024", readTime: "6 min", featured: false, slug: "kpis-juridicos", image: blogKpis },
+  { id: 8, title: "Dashboard de produtividade: Como medir o desempenho da equipe", excerpt: "Aprenda a criar dashboards que medem a produtividade e identificam gargalos operacionais.", category: "Business Intelligence", date: "5 Dez 2024", readTime: "5 min", featured: false, slug: "dashboard-produtividade", image: blogDashboardProd },
   
   // Jurimetria
   { id: 2, title: "Jurimetria: O futuro da advocacia baseada em dados", excerpt: "Entenda como a análise estatística de dados jurídicos pode prever resultados e reduzir riscos.", category: "Jurimetria", date: "10 Jan 2025", readTime: "7 min", featured: true, slug: "jurimetria-futuro-advocacia", image: blogJurimetria },
-  { id: 9, title: "Como a jurimetria ajuda na gestão de provisionamento", excerpt: "Descubra como análises estatísticas melhoram a precisão do provisionamento jurídico.", category: "Jurimetria", date: "1 Dez 2024", readTime: "6 min", featured: false, slug: "jurimetria-provisionamento", image: blogJurimetria },
-  { id: 10, title: "Análise jurimétrica trabalhista: Tendências e padrões", excerpt: "Como identificar padrões em decisões trabalhistas e usar dados para estratégia processual.", category: "Jurimetria", date: "25 Nov 2024", readTime: "7 min", featured: false, slug: "jurimetria-trabalhista", image: blogJurimetria },
-  { id: 11, title: "Jurimetria no contencioso cível: Guia prático", excerpt: "Aplicações práticas da jurimetria para casos cíveis e como calcular probabilidades de sucesso.", category: "Jurimetria", date: "20 Nov 2024", readTime: "8 min", featured: false, slug: "jurimetria-civel", image: blogJurimetria },
+  { id: 9, title: "Como a jurimetria ajuda na gestão de provisionamento", excerpt: "Descubra como análises estatísticas melhoram a precisão do provisionamento jurídico.", category: "Jurimetria", date: "1 Dez 2024", readTime: "6 min", featured: false, slug: "jurimetria-provisionamento", image: blogProvisionamento },
+  { id: 10, title: "Análise jurimétrica trabalhista: Tendências e padrões", excerpt: "Como identificar padrões em decisões trabalhistas e usar dados para estratégia processual.", category: "Jurimetria", date: "25 Nov 2024", readTime: "7 min", featured: false, slug: "jurimetria-trabalhista", image: blogTrabalhista },
+  { id: 11, title: "Jurimetria no contencioso cível: Guia prático", excerpt: "Aplicações práticas da jurimetria para casos cíveis e como calcular probabilidades de sucesso.", category: "Jurimetria", date: "20 Nov 2024", readTime: "8 min", featured: false, slug: "jurimetria-civel", image: blogCivel },
   
   // Automação
   { id: 3, title: "Automação jurídica: Robôs que economizam tempo", excerpt: "Conheça as vantagens de automatizar consultas processuais e o impacto na produtividade.", category: "Automação", date: "5 Jan 2025", readTime: "4 min", featured: false, slug: "automacao-juridica-robos", image: blogAutomacao },
-  { id: 12, title: "5 processos jurídicos que você deveria automatizar hoje", excerpt: "Identifique quais tarefas repetitivas do seu escritório podem ser automatizadas imediatamente.", category: "Automação", date: "15 Nov 2024", readTime: "5 min", featured: true, slug: "5-processos-automatizar", image: blogAutomacao },
-  { id: 13, title: "Automação de fluxos: Do e-mail ao sistema jurídico", excerpt: "Como criar fluxos automatizados que conectam e-mail, CRM e sistemas de gestão processual.", category: "Automação", date: "10 Nov 2024", readTime: "6 min", featured: false, slug: "automacao-fluxos-email", image: blogAutomacao },
-  { id: 14, title: "ROI da automação: Como calcular o retorno do investimento", excerpt: "Metodologia prática para calcular quanto a automação pode economizar no seu escritório.", category: "Automação", date: "5 Nov 2024", readTime: "5 min", featured: false, slug: "roi-automacao", image: blogAutomacao },
+  { id: 12, title: "5 processos jurídicos que você deveria automatizar hoje", excerpt: "Identifique quais tarefas repetitivas do seu escritório podem ser automatizadas imediatamente.", category: "Automação", date: "15 Nov 2024", readTime: "5 min", featured: true, slug: "5-processos-automatizar", image: blog5processos },
+  { id: 13, title: "Automação de fluxos: Do e-mail ao sistema jurídico", excerpt: "Como criar fluxos automatizados que conectam e-mail, CRM e sistemas de gestão processual.", category: "Automação", date: "10 Nov 2024", readTime: "6 min", featured: false, slug: "automacao-fluxos-email", image: blogFluxosEmail },
+  { id: 14, title: "ROI da automação: Como calcular o retorno do investimento", excerpt: "Metodologia prática para calcular quanto a automação pode economizar no seu escritório.", category: "Automação", date: "5 Nov 2024", readTime: "5 min", featured: false, slug: "roi-automacao", image: blogRoi },
   
   // Integrações
   { id: 15, title: "Integração de sistemas: Eliminando silos de dados", excerpt: "Como conectar seus sistemas e criar um ecossistema integrado de informações.", category: "Integrações", date: "1 Nov 2024", readTime: "5 min", featured: false, slug: "integracao-sistemas-silos", image: blogIntegracoes },
-  { id: 16, title: "APIs no jurídico: Conectando sistemas de tribunais", excerpt: "Entenda como APIs permitem integrar dados de tribunais diretamente aos seus sistemas.", category: "Integrações", date: "25 Out 2024", readTime: "6 min", featured: false, slug: "apis-juridico-tribunais", image: blogIntegracoes },
+  { id: 16, title: "APIs no jurídico: Conectando sistemas de tribunais", excerpt: "Entenda como APIs permitem integrar dados de tribunais diretamente aos seus sistemas.", category: "Integrações", date: "25 Out 2024", readTime: "6 min", featured: false, slug: "apis-juridico-tribunais", image: blogApis },
   
   // Coleta de Dados
   { id: 17, title: "Coleta de dados jurídicos: Fontes e estratégias", excerpt: "Conheça as principais fontes de dados públicos e como utilizá-las para alimentar suas análises.", category: "Coleta de Dados", date: "20 Out 2024", readTime: "7 min", featured: false, slug: "coleta-dados-juridicos", image: blogColeta },
-  { id: 18, title: "Dados públicos: Como aproveitar informações de portais governamentais", excerpt: "Guia completo sobre como acessar e utilizar dados de portais como DataJud e e-SAJ.", category: "Coleta de Dados", date: "15 Out 2024", readTime: "6 min", featured: false, slug: "dados-publicos-portais", image: blogColeta },
+  { id: 18, title: "Dados públicos: Como aproveitar informações de portais governamentais", excerpt: "Guia completo sobre como acessar e utilizar dados de portais como DataJud e e-SAJ.", category: "Coleta de Dados", date: "15 Out 2024", readTime: "6 min", featured: false, slug: "dados-publicos-portais", image: blogDadosPublicos },
   
   // Mentoria
-  { id: 19, title: "Por que aprender Power BI em 2025?", excerpt: "Os motivos pelos quais dominar Power BI é essencial para profissionais do mercado jurídico.", category: "Mentoria", date: "10 Out 2024", readTime: "4 min", featured: false, slug: "aprender-power-bi-2025", image: blogMentoria },
-  { id: 20, title: "DAX para iniciantes: As 10 fórmulas essenciais", excerpt: "Aprenda as fórmulas DAX mais usadas para criar dashboards profissionais no Power BI.", category: "Mentoria", date: "5 Out 2024", readTime: "8 min", featured: false, slug: "dax-iniciantes-formulas", image: blogMentoria },
+  { id: 19, title: "Por que aprender Power BI em 2025?", excerpt: "Os motivos pelos quais dominar Power BI é essencial para profissionais do mercado jurídico.", category: "Mentoria", date: "10 Out 2024", readTime: "4 min", featured: false, slug: "aprender-power-bi-2025", image: blogAprenderPbi },
+  { id: 20, title: "DAX para iniciantes: As 10 fórmulas essenciais", excerpt: "Aprenda as fórmulas DAX mais usadas para criar dashboards profissionais no Power BI.", category: "Mentoria", date: "5 Out 2024", readTime: "8 min", featured: false, slug: "dax-iniciantes-formulas", image: blogDax },
   
   // Tendências
   { id: 5, title: "Tendências de BI para 2025: O que esperar", excerpt: "Principais tendências em BI e análise de dados para o mercado jurídico e corporativo.", category: "Tendências", date: "20 Dez 2024", readTime: "8 min", featured: true, slug: "tendencias-bi-2025", image: blogTendencias },
-  { id: 21, title: "IA no jurídico: O que muda na prática advocatícia", excerpt: "Como a inteligência artificial está transformando o dia a dia dos escritórios de advocacia.", category: "Tendências", date: "1 Out 2024", readTime: "7 min", featured: false, slug: "ia-juridico-mudancas", image: blogTendencias },
-  { id: 22, title: "O futuro da gestão jurídica: Dados, automação e IA", excerpt: "Uma visão sobre como tecnologia e dados estão redesenhando a gestão de escritórios.", category: "Tendências", date: "25 Set 2024", readTime: "6 min", featured: false, slug: "futuro-gestao-juridica", image: blogTendencias },
-  { id: 23, title: "Transformação digital no jurídico: Por onde começar", excerpt: "Um guia prático para iniciar a transformação digital do seu escritório ou departamento.", category: "Tendências", date: "20 Set 2024", readTime: "5 min", featured: false, slug: "transformacao-digital-juridico", image: blogTendencias },
+  { id: 21, title: "IA no jurídico: O que muda na prática advocatícia", excerpt: "Como a inteligência artificial está transformando o dia a dia dos escritórios de advocacia.", category: "Tendências", date: "1 Out 2024", readTime: "7 min", featured: false, slug: "ia-juridico-mudancas", image: blogIaJuridico },
+  { id: 22, title: "O futuro da gestão jurídica: Dados, automação e IA", excerpt: "Uma visão sobre como tecnologia e dados estão redesenhando a gestão de escritórios.", category: "Tendências", date: "25 Set 2024", readTime: "6 min", featured: false, slug: "futuro-gestao-juridica", image: blogFuturoGestao },
+  { id: 23, title: "Transformação digital no jurídico: Por onde começar", excerpt: "Um guia prático para iniciar a transformação digital do seu escritório ou departamento.", category: "Tendências", date: "20 Set 2024", readTime: "5 min", featured: false, slug: "transformacao-digital-juridico", image: blogTransformacao },
 ];
 
 const POSTS_PER_PAGE = 9;
