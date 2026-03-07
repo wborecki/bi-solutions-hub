@@ -85,7 +85,7 @@ const Index = () => {
         canonical="/"
       />
       {/* Hero */}
-      <Section className="pt-28 md:pt-36">
+      <Section className="pt-32 md:pt-44 pb-20 md:pb-32">
         <div className="max-w-6xl mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <motion.div
@@ -137,8 +137,6 @@ const Index = () => {
           </div>
         </div>
       </Section>
-
-      <StatsSection />
 
       {/* Como funciona */}
       <Section className="bg-muted/50" ref={stepsRef}>
