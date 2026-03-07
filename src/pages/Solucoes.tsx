@@ -3,6 +3,7 @@ import {
   ArrowRight, BarChart3, Bot, Scale, CheckCircle, Plug,
   Lightbulb, LayoutDashboard, Zap, Shield, Users, GraduationCap, Monitor, Database,
 } from "lucide-react";
+import { CTASection } from "@/components/home/CTASection";
 import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
 import { Card, CardContent } from "@/components/ui/card";
@@ -319,42 +320,7 @@ const Solucoes = () => {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-20 bg-primary-dark text-primary-foreground">
-        <div className="max-w-6xl mx-auto px-4 text-center">
-          <motion.div
-            className="max-w-2xl mx-auto space-y-6"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="text-3xl md:text-4xl font-display font-bold">
-              Pronto para transformar sua operação?
-            </h2>
-            <p className="text-primary-foreground/80 text-lg">
-              Agende um diagnóstico gratuito e descubra como podemos impulsionar seu negócio.
-            </p>
-            <div className="flex flex-wrap gap-3 justify-center">
-              <Button asChild size="lg" variant="secondary">
-                <Link to="/contato">
-                  Falar com Especialista <ArrowRight className="h-4 w-4 ml-2" />
-                </Link>
-              </Button>
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10"
-              >
-                <a href="https://wa.me/551151920925" target="_blank" rel="noopener noreferrer">
-                  WhatsApp
-                </a>
-              </Button>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      <CTASection />
     </Layout>
   );
 };

@@ -1,4 +1,5 @@
 import { Layout } from "@/components/layout/Layout";
+import { CTASection } from "@/components/home/CTASection";
 import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -363,34 +364,7 @@ export default function Servicos() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-24 bg-gradient-to-r from-primary via-secondary to-primary">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center">
-            <Users className="w-16 h-16 text-accent mx-auto mb-6" />
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-primary-foreground mb-6">
-              Pronto para transformar sua operação?
-            </h2>
-            <p className="text-xl text-primary-foreground/80 mb-8">
-              Agende um diagnóstico gratuito e descubra como podemos ajudar seu escritório 
-              a alcançar novos patamares de eficiência e resultados.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90">
-                <Link to="/contato">
-                  <Phone className="mr-2 w-5 h-5" />
-                  Falar com Especialista
-                </Link>
-              </Button>
-              <Button asChild size="lg" variant="outline" className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10">
-                <a href="https://wa.me/5511951920925" target="_blank" rel="noopener noreferrer">
-                  WhatsApp Direto
-                </a>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
+      <CTASection />
     </Layout>
   );
 }

@@ -14,6 +14,7 @@ import heroIllustration from "@/assets/hero-illustration.png";
 import biaRobot from "@/assets/bia-robot.png";
 import { StatsSection } from "@/components/home/StatsSection";
 import { BiaAnaliseSection } from "@/components/home/BiaAnaliseSection";
+import { CTASection } from "@/components/home/CTASection";
 
 const solutions = [
   { icon: Bot, title: "Automação de Fluxos", description: "Automatize processos e conecte seus sistemas com fluxos inteligentes." },
@@ -269,52 +270,7 @@ const Index = () => {
         </div>
       </Section>
 
-      {/* CTA */}
-      <Section className="bg-primary-dark text-primary-foreground">
-        <div className="max-w-6xl mx-auto px-4 text-center">
-          <motion.div
-            className="max-w-3xl mx-auto space-y-6"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold">
-              Pronto para transformar seus dados em{" "}
-              <span className="text-accent">resultados</span>?
-            </h2>
-            <p className="text-primary-foreground/80 text-lg max-w-2xl mx-auto">
-              Entre em contato conosco e descubra como nossas soluções podem impulsionar a eficiência e a tomada de decisões do seu negócio.
-            </p>
-            <div className="flex flex-wrap gap-3 justify-center">
-              <Button asChild size="lg" variant="secondary">
-                <Link to="/contato">
-                  Solicitar Contato <ArrowRight className="h-4 w-4 ml-2" />
-                </Link>
-              </Button>
-              <Button asChild size="lg" variant="outline" className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10">
-                <a href="https://wa.me/551151920925" target="_blank" rel="noopener noreferrer">
-                  WhatsApp
-                </a>
-              </Button>
-            </div>
-            <div className="flex flex-wrap justify-center gap-6 pt-4 text-sm text-primary-foreground/70">
-              <span className="flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-accent" />
-                +5 anos de experiência
-              </span>
-              <span className="flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-accent" />
-                +50 projetos entregues
-              </span>
-              <span className="flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-accent" />
-                100% de satisfação
-              </span>
-            </div>
-          </motion.div>
-        </div>
-      </Section>
+      <CTASection />
     </Layout>
   );
 };
