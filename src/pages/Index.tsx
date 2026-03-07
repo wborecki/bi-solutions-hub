@@ -15,6 +15,7 @@ import biaRobot from "@/assets/bia-robot.png";
 import { StatsSection } from "@/components/home/StatsSection";
 import { BiaAnaliseSection } from "@/components/home/BiaAnaliseSection";
 import { CTASection } from "@/components/home/CTASection";
+import { ClientsSection } from "@/components/home/ClientsSection";
 
 const solutions = [
   { icon: Bot, title: "Automação de Fluxos", description: "Automatize processos e conecte seus sistemas com fluxos inteligentes." },
@@ -139,6 +140,9 @@ const Index = () => {
           </div>
         </div>
       </Section>
+
+      {/* Clientes */}
+      <ClientsSection />
 
       {/* Como funciona */}
       <Section className="bg-muted/50" ref={stepsRef}>
