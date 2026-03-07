@@ -10,7 +10,7 @@ import {
   Shield, Sparkles, ArrowRight, Bot, BarChart3, LayoutDashboard,
   Plug, Lightbulb, Search, Cpu, Rocket, Quote, Clock, GraduationCap, Monitor, Database,
 } from "lucide-react";
-import heroIllustration from "@/assets/hero-data-analytics-v3.png";
+import heroIllustration from "@/assets/hero-data-analytics-v4.png";
 
 import { StatsSection } from "@/components/home/StatsSection";
 import { BiaAnaliseSection } from "@/components/home/BiaAnaliseSection";
