@@ -90,7 +90,27 @@ const Index = () => {
         canonical="/"
       />
       {/* Hero */}
-      <Section className="pt-32 md:pt-44 pb-20 md:pb-32">
+      <Section className="pt-32 md:pt-44 pb-20 md:pb-32 relative overflow-hidden">
+        {/* Decorative geometric elements */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          {/* Large gradient circle top-right */}
+          <div className="absolute -top-32 -right-32 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-primary/[0.04] to-accent/[0.06] blur-3xl" />
+          {/* Small accent circle bottom-left */}
+          <div className="absolute -bottom-20 -left-20 w-[300px] h-[300px] rounded-full bg-gradient-to-tr from-accent/[0.05] to-transparent blur-2xl" />
+          {/* Subtle diagonal lines */}
+          <svg className="absolute top-0 right-0 w-full h-full opacity-[0.03]" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="hero-lines" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse" patternTransform="rotate(35)">
+                <line x1="0" y1="0" x2="0" y2="60" stroke="hsl(275, 44%, 29%)" strokeWidth="1" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#hero-lines)" />
+          </svg>
+          {/* Floating dot grid accent */}
+          <div className="absolute top-1/4 right-1/4 w-2 h-2 rounded-full bg-accent/20" />
+          <div className="absolute top-1/3 right-1/3 w-1.5 h-1.5 rounded-full bg-primary/15" />
+          <div className="absolute bottom-1/3 right-1/5 w-1 h-1 rounded-full bg-accent/25" />
+        </div>
         <div className="max-w-6xl mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <motion.div
