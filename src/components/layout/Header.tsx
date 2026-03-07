@@ -112,29 +112,35 @@ export function Header() {
 
             {dropdownOpen && (
               <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 z-50">
-                <div className="bg-background/95 backdrop-blur-md border rounded-xl shadow-xl p-4 min-w-[640px]">
-                  <div className="grid grid-cols-3 gap-6">
-                    {solutionCategories.map((cat) => {
+                <div className="bg-background/95 backdrop-blur-md border rounded-xl shadow-xl p-5 min-w-[680px]">
+                  <div className="grid grid-cols-3 gap-0">
+                    {solutionCategories.map((cat, catIndex) => {
                       const CatIcon = cat.icon;
                       return (
-                        <div key={cat.category}>
-                          <div className="flex items-center gap-2 mb-3 px-2">
+                        <div
+                          key={cat.category}
+                          className={cn(
+                            "px-4",
+                            catIndex < solutionCategories.length - 1 && "border-r border-border/50"
+                          )}
+                        >
+                          <div className="flex items-center gap-2 mb-3">
                             <CatIcon className="h-3.5 w-3.5 text-muted-foreground/70" />
                             <span className="text-[11px] font-semibold text-muted-foreground/70 uppercase tracking-widest">{cat.category}</span>
                           </div>
-                          <div className="flex flex-col gap-0.5">
+                          <div className="flex flex-col gap-1">
                             {cat.items.map((item) => {
                               const Icon = item.icon;
                               return (
                                 <Link
                                   key={item.label}
                                   to={item.href}
-                                  className="flex items-start gap-3 px-2 py-2 rounded-lg text-sm hover:bg-muted transition-colors"
+                                  className="flex items-start gap-3 px-2 py-2.5 rounded-lg text-sm hover:bg-muted transition-colors"
                                 >
                                   <Icon className="h-4 w-4 text-primary shrink-0 mt-0.5" />
-                                  <div>
+                                  <div className="min-w-0">
                                     <p className="font-semibold text-foreground text-sm leading-tight">{item.label}</p>
-                                    <p className="text-xs text-muted-foreground leading-tight mt-0.5">{item.desc}</p>
+                                    <p className="text-xs text-muted-foreground leading-snug mt-0.5">{item.desc}</p>
                                   </div>
                                 </Link>
                               );
@@ -144,7 +150,7 @@ export function Header() {
                       );
                     })}
                   </div>
-                  <div className="border-t mt-3 pt-3">
+                  <div className="border-t mt-4 pt-3">
                     <Link
                       to="/solucoes"
                       className="flex items-center justify-center gap-1 text-sm font-semibold text-primary hover:text-primary/80 transition-colors"
