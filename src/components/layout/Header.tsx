@@ -1,20 +1,40 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, ChevronDown, Bot, BarChart3, LayoutDashboard, Plug, Lightbulb, GraduationCap, Monitor, Database } from "lucide-react";
+import { Menu, X, ChevronDown, Bot, BarChart3, LayoutDashboard, Plug, Lightbulb, GraduationCap, Monitor, Database, TrendingUp, Settings, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import logoSbi from "@/assets/logo-sbi.png";
 
-const solutionItems = [
-  { icon: Bot, label: "Automação de Fluxos", desc: "Automatize processos e integre sistemas", href: "/solucoes/automacao-ia" },
-  { icon: BarChart3, label: "Business Intelligence", desc: "Dados estratégicos para decisões", href: "/solucoes/business-intelligence" },
-  { icon: LayoutDashboard, label: "Dashboards", desc: "Painéis visuais e interativos", href: "/solucoes/dashboards" },
-  { icon: Plug, label: "Integrações", desc: "Conecte seus sistemas", href: "/solucoes/integracoes" },
-  { icon: Monitor, label: "Implantação de Sistemas", desc: "Sistemas jurídicos sob medida", href: "/solucoes/implantacao-sistemas" },
-  { icon: GraduationCap, label: "Mentoria Power BI", desc: "Aprenda com especialistas", href: "/solucoes/mentoria-power-bi" },
-  { icon: Lightbulb, label: "Consultoria", desc: "Orientação para transformação digital", href: "/solucoes/consultoria" },
-  { icon: Database, label: "Coleta de Dados", desc: "Captura de informações de diversas fontes", href: "/solucoes/coleta-de-dados" },
+const solutionCategories = [
+  {
+    category: "Dados & Analytics",
+    icon: TrendingUp,
+    items: [
+      { icon: BarChart3, label: "Business Intelligence", desc: "Relatórios e análises estratégicas", href: "/solucoes/business-intelligence" },
+      { icon: LayoutDashboard, label: "Dashboards", desc: "Painéis visuais e interativos", href: "/solucoes/dashboards" },
+      { icon: Database, label: "Coleta de Dados", desc: "Captura automatizada de informações", href: "/solucoes/coleta-de-dados" },
+    ],
+  },
+  {
+    category: "Automação & Sistemas",
+    icon: Settings,
+    items: [
+      { icon: Bot, label: "Automação de Fluxos", desc: "Automatize processos e integre sistemas", href: "/solucoes/automacao-ia" },
+      { icon: Plug, label: "Integrações", desc: "Conecte seus sistemas", href: "/solucoes/integracoes" },
+      { icon: Monitor, label: "Implantação de Sistemas", desc: "Sistemas jurídicos sob medida", href: "/solucoes/implantacao-sistemas" },
+    ],
+  },
+  {
+    category: "Capacitação & Estratégia",
+    icon: BookOpen,
+    items: [
+      { icon: GraduationCap, label: "Mentoria Power BI", desc: "Aprenda com especialistas", href: "/solucoes/mentoria-power-bi" },
+      { icon: Lightbulb, label: "Consultoria", desc: "Orientação para transformação digital", href: "/solucoes/consultoria" },
+    ],
+  },
 ];
+
+const allSolutionItems = solutionCategories.flatMap((cat) => cat.items);
 
 const navLinks = [
   { label: "Sobre", href: "/sobre" },
