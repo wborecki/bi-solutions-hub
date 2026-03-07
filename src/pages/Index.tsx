@@ -194,7 +194,7 @@ const Index = () => {
           </motion.div>
 
           <motion.div
-            className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
+            className="flex flex-wrap justify-center gap-6"
             variants={containerVariants}
             initial="hidden"
             animate={solutionsInView ? "visible" : "hidden"}
@@ -202,7 +202,7 @@ const Index = () => {
             {solutions.map((sol) => {
               const Icon = sol.icon;
               return (
-                <motion.div key={sol.title} variants={itemVariants}>
+                <motion.div key={sol.title} variants={itemVariants} className="w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]">
                   <Card className="rounded-xl border bg-card hover:shadow-md transition-shadow h-full">
                     <CardContent className="pt-6 pb-6 px-6 space-y-3">
                       <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
