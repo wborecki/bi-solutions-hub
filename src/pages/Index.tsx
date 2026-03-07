@@ -97,14 +97,6 @@ const Index = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <div className="flex gap-2">
-                <span className="bg-primary text-primary-foreground text-xs font-semibold px-3 py-1 rounded-full inline-flex items-center gap-1">
-                  <Shield className="h-3 w-3" /> Confiável
-                </span>
-                <span className="bg-primary text-primary-foreground text-xs font-semibold px-3 py-1 rounded-full inline-flex items-center gap-1">
-                  <Sparkles className="h-3 w-3" /> Inovador
-                </span>
-              </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold leading-tight text-primary-dark">
                 Transformamos dados em{" "}
                 <span className="text-gradient">decisões inteligentes</span>
