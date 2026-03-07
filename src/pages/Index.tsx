@@ -16,6 +16,7 @@ import { StatsSection } from "@/components/home/StatsSection";
 import { BiaAnaliseSection } from "@/components/home/BiaAnaliseSection";
 import { CTASection } from "@/components/home/CTASection";
 import { ClientsSection } from "@/components/home/ClientsSection";
+import { FAQSection } from "@/components/home/FAQSection";
 
 const solutions = [
   { icon: Bot, title: "Automação de Fluxos", description: "Automatize processos e conecte seus sistemas com fluxos inteligentes." },
