@@ -14,6 +14,7 @@ import heroIllustration from "@/assets/hero-illustration.png";
 import biaRobot from "@/assets/bia-robot.png";
 import { StatsSection } from "@/components/home/StatsSection";
 import { BiaAnaliseSection } from "@/components/home/BiaAnaliseSection";
+import { CTASection } from "@/components/home/CTASection";
 
 const solutions = [
   { icon: Bot, title: "Automação de Fluxos", description: "Automatize processos e conecte seus sistemas com fluxos inteligentes." },
