@@ -138,8 +138,11 @@ const Index = () => {
       {/* Clientes */}
       <ClientsSection />
 
+      {/* Stats */}
+      <StatsSection />
+
       {/* Como funciona */}
-      <Section className="bg-muted/50" ref={stepsRef}>
+      <Section className="section-sand dot-pattern" ref={stepsRef}>
         <div className="max-w-6xl mx-auto px-4">
           <motion.div
             className="text-center max-w-2xl mx-auto mb-12"
@@ -179,6 +182,8 @@ const Index = () => {
         </div>
       </Section>
 
+      <div className="section-divider" />
+
       {/* Soluções */}
       <Section ref={solutionsRef}>
         <div className="max-w-6xl mx-auto px-4">
@@ -214,7 +219,7 @@ const Index = () => {
               return (
                 <motion.div key={sol.title} variants={itemVariants} className="w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]">
                   <Link to={`/solucoes/${slugMap[sol.title] || "automacao"}`} className="block h-full">
-                    <Card className="rounded-xl border bg-card hover:shadow-md hover:border-primary/30 transition-all h-full group cursor-pointer">
+                    <Card className="rounded-xl border bg-card hover:shadow-md hover:border-l-4 hover:border-l-accent transition-all h-full group cursor-pointer">
                       <CardContent className="pt-6 pb-6 px-6 space-y-3">
                         <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
                           <Icon className="h-6 w-6 text-primary" />
@@ -239,8 +244,10 @@ const Index = () => {
 
 
 
+      <div className="section-divider" />
+
       {/* Depoimentos */}
-      <Section ref={testimonialsRef}>
+      <Section className="section-sand" ref={testimonialsRef}>
         <div className="max-w-6xl mx-auto px-4">
           <motion.div
             className="text-center max-w-2xl mx-auto mb-12"
@@ -260,7 +267,7 @@ const Index = () => {
           >
             {testimonials.map((t) => (
               <motion.div key={t.name} variants={itemVariants}>
-                <Card className="rounded-xl border bg-card hover:shadow-md transition-shadow h-full">
+                <Card className="rounded-xl border bg-card hover:shadow-md hover:border-l-4 hover:border-l-accent transition-all h-full">
                   <CardContent className="pt-6 pb-6 px-6 space-y-4">
                     <Quote className="h-8 w-8 text-primary/30" />
                     <p className="text-sm text-muted-foreground leading-relaxed italic">"{t.content}"</p>
@@ -283,6 +290,7 @@ const Index = () => {
         </div>
       </Section>
 
+      <div className="section-divider" />
       <FAQSection />
       <CTASection />
     </Layout>

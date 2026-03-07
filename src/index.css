@@ -39,6 +39,9 @@ html {
     --input: 240 6% 90%;
     --ring: 275 44% 29%;
 
+    --sand: 22 25% 83%;
+    --sand-foreground: 240 10% 10%;
+
     --radius: 0.75rem;
 
     --sidebar-background: 0 0% 98%;
@@ -80,6 +83,9 @@ html {
     --border: 240 5% 18%;
     --input: 240 5% 18%;
     --ring: 275 44% 29%;
+
+    --sand: 22 20% 25%;
+    --sand-foreground: 0 0% 95%;
 
     --sidebar-background: 240 10% 8%;
     --sidebar-foreground: 0 0% 95%;
@@ -132,6 +138,20 @@ html {
 
   .glass {
     @apply backdrop-blur-lg bg-white/80 dark:bg-black/50;
+  }
+
+  .section-sand {
+    background-color: hsl(var(--sand) / 0.3);
+  }
+
+  .section-divider {
+    @apply h-px w-full;
+    background: linear-gradient(to right, transparent, hsl(var(--primary) / 0.15), hsl(var(--accent) / 0.15), transparent);
+  }
+
+  .dot-pattern {
+    background-image: radial-gradient(circle at 1px 1px, hsl(var(--primary) / 0.06) 1px, transparent 0);
+    background-size: 32px 32px;
   }
 }
 
