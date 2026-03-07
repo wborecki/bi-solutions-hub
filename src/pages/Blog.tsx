@@ -86,12 +86,17 @@ const BlogCard = ({ post, index, inView }: { post: typeof posts[0]; index: numbe
       to={`/blog/${post.slug}`}
       className="group block rounded-2xl border border-border bg-card overflow-hidden hover:shadow-md transition-all duration-300"
     >
-      <div className="aspect-[16/10] overflow-hidden">
+      <div className="aspect-[16/10] overflow-hidden relative">
+        <div className="absolute inset-0 bg-muted animate-pulse" />
         <img
           src={post.image}
           alt={post.title}
           loading="lazy"
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          onLoad={(e) => {
+            const prev = e.currentTarget.previousElementSibling as HTMLElement;
+            if (prev) prev.style.display = 'none';
+          }}
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 relative z-[1]"
         />
       </div>
       <div className="p-6 space-y-3">

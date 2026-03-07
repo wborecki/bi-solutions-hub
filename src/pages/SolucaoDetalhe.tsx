@@ -1,5 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import { ArrowRight, CheckCircle, BarChart3, Bot, Scale, Cpu, LayoutDashboard, Plug, Lightbulb, GraduationCap, Monitor, Database } from "lucide-react";
+import { OptimizedImage } from "@/components/OptimizedImage";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { CTASection } from "@/components/home/CTASection";
@@ -308,10 +309,11 @@ const SolucaoDetalhe = () => {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.7, delay: 0.2 }}
             >
-              <img
+              <OptimizedImage
                 src={solution.illustration}
                 alt={`Ilustração ${solution.title}`}
-                className="w-96 h-96 object-contain"
+                className="w-96 h-96"
+                loading="eager"
               />
             </motion.div>
           </div>
