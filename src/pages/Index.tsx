@@ -222,48 +222,7 @@ const Index = () => {
       {/* Bia Análise de Processos */}
       <BiaAnaliseSection />
 
-      {/* Produto Bia */}
-      <Section className="bg-muted/50">
-        <div className="max-w-6xl mx-auto px-4">
-          <motion.div
-            className="grid lg:grid-cols-2 gap-12 items-center"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <div className="space-y-5">
-              <span className="bg-accent text-accent-foreground text-xs font-semibold px-3 py-1 rounded-full">Produto em Destaque</span>
-              <h2 className="text-3xl md:text-4xl font-display font-bold">
-                Conheça a <span className="text-gradient">Bia</span>
-              </h2>
-              <p className="text-muted-foreground leading-relaxed">
-                Sua secretária pessoal no WhatsApp. A Bia utiliza inteligência artificial para organizar sua rotina, agendar compromissos e responder mensagens automaticamente.
-              </p>
-              <ul className="space-y-2">
-                {["Agendamento inteligente", "Respostas automáticas", "Integração com calendário", "Disponível 24/7"].map((item) => (
-                  <li key={item} className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <div className="w-1.5 h-1.5 rounded-full bg-accent" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-              <Button disabled className="opacity-60 cursor-not-allowed">
-                <Clock className="h-4 w-4 mr-2" /> Em Breve
-              </Button>
-            </div>
-            <div className="flex items-center justify-center">
-              <motion.div
-                className="w-72 h-72 rounded-3xl flex items-center justify-center"
-                animate={{ y: [0, -12, 0] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              >
-                <img src={biaRobot} alt="Bia - Assistente IA" className="w-64 h-64 object-contain drop-shadow-xl" />
-              </motion.div>
-            </div>
-          </motion.div>
-        </div>
-      </Section>
+
 
       {/* Depoimentos */}
       <Section ref={testimonialsRef}>
