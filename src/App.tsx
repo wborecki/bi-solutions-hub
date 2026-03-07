@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ScrollToTop } from "./components/ScrollToTop";
 import Index from "./pages/Index";
+import { Analytics } from "./components/Analytics";
 
 const Solucoes = lazy(() => import("./pages/Solucoes"));
 const SolucaoDetalhe = lazy(() => import("./pages/SolucaoDetalhe"));
@@ -33,6 +34,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <Analytics />
         <ScrollToTop />
         <Suspense fallback={<Loading />}>
           <Routes>
