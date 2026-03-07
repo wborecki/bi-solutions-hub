@@ -108,25 +108,25 @@ const Sobre = () => {
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
             {[
-              { icon: Target, title: "Missão", text: "Apoiar empresas na tomada de decisões assertivas por meio de análise de dados e automação inteligente." },
-              { icon: Eye, title: "Visão", text: "Ser referência em tecnologia e inteligência de dados para o mercado jurídico e corporativo no Brasil." },
+              { 
+                title: "Missão", 
+                text: <>Apoiar advogados e empresas na tomada de <strong className="font-bold text-white">decisões mais assertivas</strong> por meio de ferramentas de análise e automação, contribuindo para a excelência na gestão de informações.</> 
+              },
+              { 
+                title: "Visão", 
+                text: <>Ser referência em tecnologia e <strong className="font-bold text-white">inteligência de dados</strong> para o mercado jurídico e corporativo no Brasil, expandindo nossa atuação para oferecer soluções inovadoras e personalizadas em todos os setores.</> 
+              },
             ].map((item, i) => {
-              const Icon = item.icon;
               return (
                 <motion.div
                   key={item.title}
-                  className="rounded-2xl border border-border bg-card p-8 flex gap-5 items-start"
+                  className="rounded-2xl bg-primary-dark p-8 md:p-12 flex flex-col items-center text-center shadow-lg"
                   initial={{ opacity: 0, y: 20 }}
                   animate={missionInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.4, delay: i * 0.1 }}
                 >
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
-                    <Icon className="h-6 w-6 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-display font-bold text-foreground mb-1">{item.title}</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{item.text}</p>
-                  </div>
+                  <h3 className="text-3xl font-display font-bold text-white mb-6">{item.title}</h3>
+                  <p className="text-[17px] text-white/90 leading-[1.6] font-light">{item.text}</p>
                 </motion.div>
               );
             })}
