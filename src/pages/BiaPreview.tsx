@@ -41,6 +41,7 @@ const variants = [
   { src: biaV18, label: "V18", desc: "Ovo branco, antena esférica, olhos roxos" },
   { src: biaV19, label: "V19", desc: "Roxo metálico, circuitos teal, asas laterais" },
   { src: biaV20, label: "V20", desc: "Branco Pixar, lupa, pose de analista/detetive" },
+  { src: biaV21, label: "V21", desc: "Premium: cápsula branca, visor amplo, olhos teal, detalhes roxo/teal, acenando — estilo Pixar HD" },
 ];
 
 export default function BiaPreview() {
