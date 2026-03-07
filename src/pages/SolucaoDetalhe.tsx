@@ -14,6 +14,7 @@ import illustrationIntegracoes from "@/assets/illustration-integracoes.png";
 import illustrationConsultoria from "@/assets/illustration-consultoria.png";
 import illustrationImplantacao from "@/assets/illustration-implantacao.png";
 import illustrationMentoria from "@/assets/illustration-mentoria.png";
+import illustrationColeta from "@/assets/illustration-coleta.png";
 
 const solutionsData = {
   "business-intelligence": {
@@ -206,7 +207,7 @@ const solutionsData = {
     ],
   },
   "coleta-de-dados": {
-    illustration: illustrationIntegracoes,
+    illustration: illustrationColeta,
     icon: Database,
     title: "Coleta de Dados",
     subtitle: "Captura e Organização de Informações",
