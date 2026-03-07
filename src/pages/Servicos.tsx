@@ -1,4 +1,5 @@
 import { Layout } from "@/components/layout/Layout";
+import { CTASection } from "@/components/home/CTASection";
 import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
