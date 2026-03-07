@@ -90,13 +90,13 @@ const Sobre = () => {
               transition={{ duration: 0.5, delay: 0.15 }}
             >
               <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground">
-                Quem somos
+                Nossa História
               </h2>
               <p className="text-muted-foreground leading-relaxed">
-                A Solutions in BI nasceu da vontade de levar inteligência de dados para empresas que buscam eficiência e resultados concretos. Atuamos no mercado jurídico e corporativo oferecendo soluções de automação, dashboards, implantação de sistemas e consultoria estratégica.
+                A Solutions in BI foi fundada com o propósito de proporcionar às empresas e escritórios de advocacia uma maneira inovadora de gerenciar e analisar dados, transformando informações em ativos estratégicos. Por trás da criação da empresa estão profissionais com ampla experiência e visão de mercado.
               </p>
               <p className="text-muted-foreground leading-relaxed">
-                Nosso compromisso é entregar tecnologia de forma simples e acessível, com atendimento próximo e foco total nos resultados do cliente. Cada projeto é tratado como único, com soluções sob medida para as necessidades de cada negócio.
+                Combinando experiência técnica e conhecimento de mercado, a Solutions in BI se tornou uma parceira estratégica para escritórios e empresas que desejam transformar dados em insights valiosos e processos mais eficientes.
               </p>
             </motion.div>
           </div>
@@ -108,25 +108,25 @@ const Sobre = () => {
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
             {[
-              { 
-                title: "Missão", 
-                text: <>Apoiar advogados e empresas na tomada de <strong className="font-bold text-white">decisões mais assertivas</strong> por meio de ferramentas de análise e automação, contribuindo para a excelência na gestão de informações.</> 
-              },
-              { 
-                title: "Visão", 
-                text: <>Ser referência em tecnologia e <strong className="font-bold text-white">inteligência de dados</strong> para o mercado jurídico e corporativo no Brasil, expandindo nossa atuação para oferecer soluções inovadoras e personalizadas em todos os setores.</> 
-              },
+              { icon: Target, title: "Missão", text: "Apoiar advogados e empresas na tomada de decisões mais assertivas por meio de ferramentas de análise e automação, contribuindo para a excelência na gestão de informações." },
+              { icon: Eye, title: "Visão", text: "Ser referência em tecnologia e inteligência de dados para o mercado jurídico e corporativo no Brasil, expandindo nossa atuação para oferecer soluções inovadoras e personalizadas em todos os setores." },
             ].map((item, i) => {
+              const Icon = item.icon;
               return (
                 <motion.div
                   key={item.title}
-                  className="rounded-2xl bg-primary-dark p-8 md:p-12 flex flex-col items-center text-center shadow-lg"
+                  className="rounded-2xl border border-border bg-card p-8 flex gap-5 items-start"
                   initial={{ opacity: 0, y: 20 }}
                   animate={missionInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.4, delay: i * 0.1 }}
                 >
-                  <h3 className="text-3xl font-display font-bold text-white mb-6">{item.title}</h3>
-                  <p className="text-[17px] text-white/90 leading-[1.6] font-light">{item.text}</p>
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+                    <Icon className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-display font-bold text-foreground mb-1">{item.title}</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{item.text}</p>
+                  </div>
                 </motion.div>
               );
             })}
