@@ -1,10 +1,63 @@
 import { useParams, Link } from "react-router-dom";
+import { useState, useEffect, useMemo } from "react";
 import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Clock, Calendar, Share2, Linkedin, Twitter, Facebook } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
+import { ArrowLeft, Clock, Calendar, Share2, Linkedin, Twitter, Facebook, ArrowRight } from "lucide-react";
 import { CTASection } from "@/components/home/CTASection";
 import { motion } from "framer-motion";
+
+import blogBi from "@/assets/blog-il-bi.png";
+import blogJurimetria from "@/assets/blog-il-jurimetria.png";
+import blogAutomacao from "@/assets/blog-il-automacao.png";
+import blogIntegracoes from "@/assets/blog-il-integracoes.png";
+import blogColeta from "@/assets/blog-il-coleta.png";
+import blogTendencias from "@/assets/blog-il-tendencias.png";
+import blogMentoria from "@/assets/blog-il-mentoria.png";
+import blogEtl from "@/assets/blog-il-etl.png";
+import blogPowerBiTableau from "@/assets/blog-power-bi-tableau.png";
+import blogKpis from "@/assets/blog-kpis.png";
+import blogDashboardProd from "@/assets/blog-dashboard-prod.png";
+import blogProvisionamento from "@/assets/blog-provisionamento.png";
+import blogTrabalhista from "@/assets/blog-trabalhista.png";
+import blogCivel from "@/assets/blog-civel.png";
+import blog5processos from "@/assets/blog-5processos.png";
+import blogFluxosEmail from "@/assets/blog-fluxos-email.png";
+import blogRoi from "@/assets/blog-roi.png";
+import blogApis from "@/assets/blog-apis.png";
+import blogDadosPublicos from "@/assets/blog-dados-publicos.png";
+import blogAprenderPbi from "@/assets/blog-aprender-pbi.png";
+import blogDax from "@/assets/blog-dax.png";
+import blogIaJuridico from "@/assets/blog-ia-juridico.png";
+import blogFuturoGestao from "@/assets/blog-futuro-gestao.png";
+import blogTransformacao from "@/assets/blog-transformacao.png";
+
+const imageMap: Record<string, string> = {
+  "bi-escritorio-juridico": blogBi,
+  "jurimetria-futuro-advocacia": blogJurimetria,
+  "automacao-juridica-robos": blogAutomacao,
+  "power-bi-vs-tableau": blogPowerBiTableau,
+  "tendencias-bi-2025": blogTendencias,
+  "etl-o-que-e": blogEtl,
+  "kpis-juridicos": blogKpis,
+  "dashboard-produtividade": blogDashboardProd,
+  "jurimetria-provisionamento": blogProvisionamento,
+  "jurimetria-trabalhista": blogTrabalhista,
+  "jurimetria-civel": blogCivel,
+  "5-processos-automatizar": blog5processos,
+  "automacao-fluxos-email": blogFluxosEmail,
+  "roi-automacao": blogRoi,
+  "integracao-sistemas-silos": blogIntegracoes,
+  "apis-juridico-tribunais": blogApis,
+  "coleta-dados-juridicos": blogColeta,
+  "dados-publicos-portais": blogDadosPublicos,
+  "aprender-power-bi-2025": blogAprenderPbi,
+  "dax-iniciantes-formulas": blogDax,
+  "ia-juridico-mudancas": blogIaJuridico,
+  "futuro-gestao-juridica": blogFuturoGestao,
+  "transformacao-digital-juridico": blogTransformacao,
+};
 
 const postsData: Record<string, {
   title: string;
@@ -357,9 +410,36 @@ const postsData: Record<string, {
   },
 };
 
+// Helper: get all slugs as array for related posts
+const allSlugs = Object.keys(postsData);
+
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
   const post = slug ? postsData[slug] : null;
+  const [readProgress, setReadProgress] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      setReadProgress(docHeight > 0 ? Math.min((scrollTop / docHeight) * 100, 100) : 0);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const relatedPosts = useMemo(() => {
+    if (!post || !slug) return [];
+    // Find posts in same category, excluding current
+    const sameCat = allSlugs.filter(
+      (s) => s !== slug && postsData[s].category === post.category
+    );
+    // If not enough, add from other categories
+    const others = allSlugs.filter(
+      (s) => s !== slug && postsData[s].category !== post.category
+    );
+    return [...sameCat, ...others].slice(0, 3);
+  }, [slug, post]);
 
   if (!post) {
     return (
@@ -376,6 +456,7 @@ const BlogPost = () => {
     );
   }
 
+  const heroImage = slug ? imageMap[slug] : undefined;
   const shareUrl = typeof window !== "undefined" ? window.location.href : "";
 
   return (
@@ -394,7 +475,13 @@ const BlogPost = () => {
           "publisher": { "@type": "Organization", "name": "Solutions in BI" },
         }}
       />
-      <section className="pt-28 md:pt-36 pb-12 bg-background">
+
+      {/* Reading Progress Bar */}
+      <div className="fixed top-0 left-0 right-0 z-50">
+        <Progress value={readProgress} className="h-1 rounded-none bg-transparent" />
+      </div>
+
+      <section className="pt-28 md:pt-36 pb-6 bg-background">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto">
             <motion.div
@@ -436,6 +523,29 @@ const BlogPost = () => {
         </div>
       </section>
 
+      {/* Hero Image */}
+      {heroImage && (
+        <section className="pb-8">
+          <div className="container mx-auto px-4">
+            <motion.div
+              className="max-w-3xl mx-auto"
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.15 }}
+            >
+              <div className="rounded-2xl overflow-hidden border border-border">
+                <img
+                  src={heroImage}
+                  alt={post.title}
+                  className="w-full h-auto object-cover"
+                  loading="eager"
+                />
+              </div>
+            </motion.div>
+          </div>
+        </section>
+      )}
+
       <div className="container mx-auto px-4">
         <div className="max-w-2xl mx-auto border-t border-border" />
       </div>
@@ -450,12 +560,20 @@ const BlogPost = () => {
           >
             <article className="space-y-6">
               {post.content.map((paragraph, index) => (
-                <p key={index} className="text-foreground leading-[1.8] text-[16px]">
+                <p
+                  key={index}
+                  className={
+                    index === 0
+                      ? "text-lg text-foreground leading-[1.8] font-medium"
+                      : "text-foreground leading-[1.8] text-[16px]"
+                  }
+                >
                   {paragraph}
                 </p>
               ))}
             </article>
 
+            {/* Share */}
             <div className="border-t border-border pt-8 mt-16">
               <div className="flex items-center gap-4">
                 <span className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
@@ -481,6 +599,47 @@ const BlogPost = () => {
                 </div>
               </div>
             </div>
+
+            {/* Related Posts */}
+            {relatedPosts.length > 0 && (
+              <div className="mt-16 pt-8 border-t border-border">
+                <h2 className="text-xl font-display font-bold mb-6">Artigos relacionados</h2>
+                <div className="grid sm:grid-cols-3 gap-4">
+                  {relatedPosts.map((relSlug) => {
+                    const rel = postsData[relSlug];
+                    const relImage = imageMap[relSlug];
+                    return (
+                      <Link
+                        key={relSlug}
+                        to={`/blog/${relSlug}`}
+                        className="group block rounded-xl border border-border bg-card overflow-hidden hover:shadow-md transition-all"
+                      >
+                        {relImage && (
+                          <div className="aspect-[16/10] overflow-hidden">
+                            <img
+                              src={relImage}
+                              alt={rel.title}
+                              loading="lazy"
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            />
+                          </div>
+                        )}
+                        <div className="p-4 space-y-2">
+                          <span className="text-xs font-semibold text-primary">{rel.category}</span>
+                          <h3 className="text-sm font-semibold leading-snug line-clamp-2 group-hover:text-primary transition-colors">
+                            {rel.title}
+                          </h3>
+                          <span className="flex items-center gap-1 text-xs text-muted-foreground">
+                            <Clock className="w-3 h-3" />
+                            {rel.readTime}
+                          </span>
+                        </div>
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
 
             <div className="mt-8">
               <Button asChild variant="outline" size="sm">
