@@ -112,8 +112,8 @@ export function Header() {
 
             {dropdownOpen && (
               <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 z-50">
-                <div className="bg-background/95 backdrop-blur-md border rounded-xl shadow-xl p-5 min-w-[680px]">
-                  <div className="grid grid-cols-3 gap-0">
+                <div className="bg-background/95 backdrop-blur-md border rounded-xl shadow-xl p-5 w-[720px]">
+                  <div className="grid grid-cols-[1fr_1fr_1fr] gap-0">
                     {solutionCategories.map((cat, catIndex) => {
                       const CatIcon = cat.icon;
                       return (
