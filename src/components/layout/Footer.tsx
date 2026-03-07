@@ -61,6 +61,7 @@ export function Footer() {
                 { label: "Dashboards", href: "/solucoes/dashboards" },
                 { label: "Implantação de Sistemas", href: "/solucoes/implantacao-sistemas" },
                 { label: "Mentoria Power BI", href: "/solucoes/mentoria-power-bi" },
+                { label: "Coleta de Dados", href: "/solucoes/coleta-de-dados" },
               ].map((link) => (
                 <li key={link.label}>
                   <Link to={link.href} className="text-sm text-muted-foreground hover:text-primary transition-colors">

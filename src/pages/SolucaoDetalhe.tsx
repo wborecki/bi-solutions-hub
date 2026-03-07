@@ -1,5 +1,5 @@
 import { useParams, Link } from "react-router-dom";
-import { ArrowRight, CheckCircle, BarChart3, Bot, Scale, Cpu, LayoutDashboard, Plug, Lightbulb, GraduationCap, Monitor } from "lucide-react";
+import { ArrowRight, CheckCircle, BarChart3, Bot, Scale, Cpu, LayoutDashboard, Plug, Lightbulb, GraduationCap, Monitor, Database } from "lucide-react";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { CTASection } from "@/components/home/CTASection";
@@ -201,6 +201,27 @@ const solutionsData = {
       "Equipe capacitada",
       "Competitividade ampliada",
       "Inovação contínua",
+    ],
+  },
+  "coleta-de-dados": {
+    illustration: illustrationIntegracoes,
+    icon: Database,
+    title: "Coleta de Dados",
+    subtitle: "Captura e Organização de Informações",
+    longDescription: `Oferecemos soluções de coleta automatizada de dados de diversas fontes públicas e privadas. Nosso serviço captura, organiza e entrega informações estruturadas prontas para alimentar seus dashboards, relatórios e análises estratégicas, economizando tempo e garantindo precisão.`,
+    features: [
+      { title: "Coleta Automatizada", description: "Captura periódica e programada de dados de sites, portais e sistemas públicos." },
+      { title: "Limpeza e Padronização", description: "Tratamento dos dados coletados para garantir qualidade e consistência." },
+      { title: "Entrega Estruturada", description: "Dados organizados em planilhas, bancos de dados ou integrados diretamente aos seus sistemas." },
+      { title: "Monitoramento Contínuo", description: "Acompanhamento de atualizações nas fontes com alertas automáticos de mudanças." },
+    ],
+    benefits: [
+      "Economia de horas de trabalho manual",
+      "Dados sempre atualizados e confiáveis",
+      "Alimentação automática de dashboards",
+      "Redução de erros na captura de informações",
+      "Escalabilidade sem aumento de equipe",
+      "Tomada de decisão com dados frescos",
     ],
   },
 };

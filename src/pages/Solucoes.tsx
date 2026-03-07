@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import {
   ArrowRight, BarChart3, Bot, Scale, CheckCircle, Plug,
-  Lightbulb, LayoutDashboard, Zap, Shield, Users, GraduationCap, Monitor,
+  Lightbulb, LayoutDashboard, Zap, Shield, Users, GraduationCap, Monitor, Database,
 } from "lucide-react";
 import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
@@ -110,6 +110,20 @@ const solutions = [
     ],
     href: "/solucoes/mentoria-power-bi",
     accent: "accent",
+  },
+  {
+    icon: Database,
+    title: "Coleta de Dados",
+    description:
+      "Captura e organização de informações de diversas fontes públicas e privadas para alimentar suas análises e decisões estratégicas.",
+    features: [
+      "Coleta automatizada de fontes públicas",
+      "Organização e limpeza de dados",
+      "Atualização periódica programada",
+      "Entrega em formatos prontos para análise",
+    ],
+    href: "/solucoes/coleta-de-dados",
+    accent: "primary",
   },
 ];
 

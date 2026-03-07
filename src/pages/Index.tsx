@@ -8,7 +8,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import {
   Shield, Sparkles, ArrowRight, Bot, BarChart3, LayoutDashboard,
-  Plug, Lightbulb, Search, Cpu, Rocket, Quote, Clock, GraduationCap, Monitor,
+  Plug, Lightbulb, Search, Cpu, Rocket, Quote, Clock, GraduationCap, Monitor, Database,
 } from "lucide-react";
 import heroIllustration from "@/assets/hero-illustration.png";
 import biaRobot from "@/assets/bia-robot.png";
@@ -23,6 +23,7 @@ const solutions = [
   { icon: Monitor, title: "Implantação de Sistemas", description: "Implantação e configuração de sistemas jurídicos sob medida." },
   { icon: GraduationCap, title: "Mentoria Power BI", description: "Aprenda Power BI com especialistas e domine a análise de dados." },
   { icon: Lightbulb, title: "Consultoria", description: "Orientação especializada para transformação digital do seu negócio." },
+  { icon: Database, title: "Coleta de Dados", description: "Captura e organização de informações de diversas fontes para alimentar suas análises." },
 ];
 
 const steps = [
