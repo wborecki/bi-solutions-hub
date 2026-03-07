@@ -237,7 +237,7 @@ const Contato = () => {
         </div>
       </section>
 
-      <FAQSection />
+      
       <CTASection />
     </Layout>
   );

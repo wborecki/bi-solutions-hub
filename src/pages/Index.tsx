@@ -281,6 +281,7 @@ const Index = () => {
         </div>
       </Section>
 
+      <FAQSection />
       <CTASection />
     </Layout>
   );
