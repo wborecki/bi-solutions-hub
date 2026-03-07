@@ -106,13 +106,13 @@ const Index = () => {
               <p className="text-lg text-muted-foreground leading-relaxed max-w-lg">
                 Soluções de automação e inteligência artificial para empresas que querem escalar com eficiência.
               </p>
-              <div className="flex flex-wrap gap-3 pt-2">
-                <Button asChild size="lg">
+              <div className="flex flex-wrap items-stretch gap-3 pt-2">
+                <Button asChild size="lg" className="h-12">
                   <Link to="/contato">
                     Fale Conosco <ArrowRight className="h-4 w-4 ml-2" />
                   </Link>
                 </Button>
-                <Button asChild variant="outline" size="lg">
+                <Button asChild variant="outline" size="lg" className="h-12">
                   <Link to="/solucoes">Ver Soluções</Link>
                 </Button>
               </div>
