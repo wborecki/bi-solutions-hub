@@ -78,15 +78,16 @@ const POSTS_PER_PAGE = 9;
 
 const BlogCard = ({ post, index, inView }: { post: typeof posts[0]; index: number; inView: boolean }) => (
   <motion.article
+    className="h-full"
     initial={{ opacity: 0, y: 20 }}
     animate={inView ? { opacity: 1, y: 0 } : {}}
     transition={{ duration: 0.4, delay: index * 0.08 }}
   >
     <Link
       to={`/blog/${post.slug}`}
-      className="group block rounded-2xl border border-border bg-card overflow-hidden hover:shadow-md transition-all duration-300"
+      className="group flex flex-col h-full rounded-2xl border border-border bg-card overflow-hidden hover:shadow-md transition-all duration-300"
     >
-      <div className="aspect-[16/10] overflow-hidden relative">
+      <div className="aspect-[16/10] overflow-hidden relative shrink-0">
         <div className="absolute inset-0 bg-muted animate-pulse" />
         <img
           src={post.image}
@@ -99,7 +100,7 @@ const BlogCard = ({ post, index, inView }: { post: typeof posts[0]; index: numbe
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 relative z-[1]"
         />
       </div>
-      <div className="p-6 space-y-3">
+      <div className="p-6 flex flex-col flex-1 space-y-3">
         <div className="flex items-center gap-3">
           <span className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold text-foreground">
             {post.category}
@@ -112,10 +113,10 @@ const BlogCard = ({ post, index, inView }: { post: typeof posts[0]; index: numbe
         <h3 className="text-lg font-display font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-2 leading-snug">
           {post.title}
         </h3>
-        <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
+        <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed flex-1">
           {post.excerpt}
         </p>
-        <div className="flex items-center justify-between pt-2">
+        <div className="flex items-center justify-between pt-2 mt-auto">
           <span className="text-xs text-muted-foreground">{post.date}</span>
           <span className="text-sm text-primary font-medium inline-flex items-center gap-1 group-hover:gap-2 transition-all">
             Ler mais
