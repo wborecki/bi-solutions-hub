@@ -90,16 +90,8 @@ const Index = () => {
         canonical="/"
       />
       {/* Hero */}
-      <Section className="pt-32 md:pt-44 pb-20 md:pb-32 relative overflow-hidden">
-        <div
-          className="absolute inset-0 opacity-[0.07] pointer-events-none"
-          style={{
-            backgroundImage: `url(${watermarkBg})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        />
-        <div className="max-w-6xl mx-auto px-4 relative z-10">
+      <Section className="pt-32 md:pt-44 pb-20 md:pb-32">
+        <div className="max-w-6xl mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <motion.div
               className="space-y-6"
