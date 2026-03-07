@@ -125,8 +125,8 @@ export function Header() {
                           )}
                         >
                           <div className="flex items-center gap-2 mb-3">
-                            <CatIcon className="h-3.5 w-3.5 text-muted-foreground/70" />
-                            <span className="text-[11px] font-semibold text-muted-foreground/70 uppercase tracking-widest">{cat.category}</span>
+                            <CatIcon className="h-3.5 w-3.5 text-warm-muted" />
+                            <span className="text-[11px] font-semibold text-warm-muted uppercase tracking-widest">{cat.category}</span>
                           </div>
                           <div className="flex flex-col gap-1">
                             {cat.items.map((item) => {
