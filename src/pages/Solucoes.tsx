@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import {
   ArrowRight, BarChart3, Bot, Scale, CheckCircle, Plug,
   Lightbulb, LayoutDashboard, Zap, Shield, Users, GraduationCap, Monitor, Database,
+  Workflow, Compass,
 } from "lucide-react";
 import { CTASection } from "@/components/home/CTASection";
 import { Layout } from "@/components/layout/Layout";
@@ -16,10 +17,10 @@ import solutionsHero from "@/assets/solutions-hero.png";
 
 const solutions = [
   {
-    icon: Bot,
+    icon: Workflow,
     title: "Automação de Fluxos",
     description:
-      "Automatize processos conectando seus sistemas em fluxos inteligentes. Elimine tarefas manuais e ganhe eficiência operacional.",
+      "Automatize processos e conecte seus sistemas com fluxos inteligentes.",
     features: [
       "Fluxos automatizados entre sistemas",
       "Gatilhos inteligentes por eventos",
@@ -30,10 +31,24 @@ const solutions = [
     accent: "primary",
   },
   {
+    icon: Bot,
+    title: "Robôs Jurídicos",
+    description:
+      "Automatize consultas processuais e tarefas repetitivas para ganhar produtividade com segurança.",
+    features: [
+      "Consultas automáticas em tribunais",
+      "Monitoramento processual contínuo",
+      "Extração e organização de dados",
+      "Alertas inteligentes por evento",
+    ],
+    href: "/solucoes/robos-juridicos",
+    accent: "accent",
+  },
+  {
     icon: BarChart3,
     title: "Business Intelligence",
     description:
-      "Dashboards e relatórios que transformam dados brutos em insights acionáveis para decisões mais rápidas e assertivas.",
+      "Relatórios e análises estratégicas para decisões baseadas em dados.",
     features: [
       "Dashboards interativos em Power BI",
       "KPIs e métricas de performance",
@@ -41,13 +56,13 @@ const solutions = [
       "Relatórios automatizados",
     ],
     href: "/solucoes/business-intelligence",
-    accent: "accent",
+    accent: "primary",
   },
   {
     icon: Scale,
     title: "Jurimetria",
     description:
-      "Análise estatística de dados jurídicos para previsibilidade processual, gestão de riscos e estratégia baseada em evidências.",
+      "Análise estatística de dados jurídicos para previsibilidade e decisões estratégicas.",
     features: [
       "Análise estatística de resultados",
       "Pareceres jurimétricos detalhados",
@@ -55,13 +70,13 @@ const solutions = [
       "Estatísticas por tribunal e relator",
     ],
     href: "/solucoes/jurimetria",
-    accent: "primary",
+    accent: "accent",
   },
   {
     icon: LayoutDashboard,
-    title: "Dashboards Customizados",
+    title: "Dashboards",
     description:
-      "Painéis interativos e personalizados para acompanhar os indicadores mais importantes do seu negócio.",
+      "Painéis interativos e customizados para visualização de dados.",
     features: [
       "Visualizações sob medida",
       "Atualização contínua de dados",
@@ -69,13 +84,13 @@ const solutions = [
       "Drill-down e filtros dinâmicos",
     ],
     href: "/solucoes/business-intelligence",
-    accent: "accent",
+    accent: "primary",
   },
   {
     icon: Plug,
     title: "Integrações",
     description:
-      "Conecte seus sistemas e centralize informações. Eliminamos silos de dados e criamos um ecossistema integrado e eficiente.",
+      "Conecte seus sistemas e centralize informações automaticamente.",
     features: [
       "APIs e conectores customizados",
       "Integração entre ERPs e CRMs",
@@ -83,13 +98,13 @@ const solutions = [
       "Middleware e ETL avançado",
     ],
     href: "/contato",
-    accent: "primary",
+    accent: "accent",
   },
   {
     icon: Monitor,
-    title: "Implantação de Sistemas Jurídicos",
+    title: "Implantação de Sistemas",
     description:
-      "Implantação, configuração e personalização de sistemas jurídicos para escritórios e departamentos jurídicos.",
+      "Implantação e configuração de sistemas jurídicos sob medida.",
     features: [
       "Configuração personalizada",
       "Migração de dados",
@@ -101,9 +116,9 @@ const solutions = [
   },
   {
     icon: GraduationCap,
-    title: "Mentoria de Power BI",
+    title: "Mentoria Power BI",
     description:
-      "Aprenda Power BI com especialistas e domine a criação de dashboards, relatórios e análises de dados para seu negócio.",
+      "Aprenda Power BI com especialistas e domine a análise de dados.",
     features: [
       "Aulas práticas e personalizadas",
       "Projetos com dados reais",
@@ -114,10 +129,24 @@ const solutions = [
     accent: "accent",
   },
   {
+    icon: Compass,
+    title: "Consultoria",
+    description:
+      "Orientação especializada para transformação digital do seu negócio.",
+    features: [
+      "Diagnóstico de maturidade digital",
+      "Roadmap de transformação",
+      "Seleção de tecnologias ideais",
+      "Acompanhamento de implementação",
+    ],
+    href: "/contato",
+    accent: "primary",
+  },
+  {
     icon: Database,
     title: "Coleta de Dados",
     description:
-      "Captura e organização de informações de diversas fontes públicas e privadas para alimentar suas análises e decisões estratégicas.",
+      "Captura e organização de informações de diversas fontes para alimentar suas análises.",
     features: [
       "Coleta automatizada de fontes públicas",
       "Organização e limpeza de dados",
@@ -125,7 +154,7 @@ const solutions = [
       "Entrega em formatos prontos para análise",
     ],
     href: "/solucoes/coleta-de-dados",
-    accent: "primary",
+    accent: "accent",
   },
 ];
 
