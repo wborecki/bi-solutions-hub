@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
@@ -35,12 +35,15 @@ const priorityLabels: Record<string, string> = {
   urgente: "Urgente",
 };
 
+type TicketWithCompany = Tables<"tickets"> & { companies?: { name: string } | null };
+
 export default function Chamados() {
-  const { user, profile } = useAuth();
+  const { user, profile, isAdmin } = useAuth();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const { toast } = useToast();
-  const [tickets, setTickets] = useState<Tables<"tickets">[]>([]);
+  const [tickets, setTickets] = useState<TicketWithCompany[]>([]);
+  const [companies, setCompanies] = useState<Tables<"companies">[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(searchParams.get("new") === "true");
   const [title, setTitle] = useState("");
@@ -48,20 +51,32 @@ export default function Chamados() {
   const [priority, setPriority] = useState<string>("media");
   const [submitting, setSubmitting] = useState(false);
   const [filterStatus, setFilterStatus] = useState<string>("all");
+  const [filterCompany, setFilterCompany] = useState<string>("all");
 
   const fetchTickets = async () => {
-    let query = supabase.from("tickets").select("*").order("created_at", { ascending: false });
-    if (filterStatus !== "all") {
-      query = query.eq("status", filterStatus as Tables<"tickets">["status"]);
+    const [ticketsRes, companiesRes] = await Promise.all([
+      supabase.from("tickets").select("*, companies(name)").order("created_at", { ascending: false }),
+      isAdmin ? supabase.from("companies").select("*").order("name") : Promise.resolve({ data: [] }),
+    ]);
+
+    setTickets((ticketsRes.data ?? []) as TicketWithCompany[]);
+    if (isAdmin) {
+      setCompanies((companiesRes.data ?? []) as Tables<"companies">[]);
     }
-    const { data } = await query;
-    setTickets(data ?? []);
     setLoading(false);
   };
 
   useEffect(() => {
     fetchTickets();
-  }, [filterStatus]);
+  }, []);
+
+  const filtered = useMemo(() => {
+    return tickets.filter((t) => {
+      const matchStatus = filterStatus === "all" || t.status === filterStatus;
+      const matchCompany = filterCompany === "all" || t.company_id === filterCompany;
+      return matchStatus && matchCompany;
+    });
+  }, [tickets, filterStatus, filterCompany]);
 
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -137,24 +152,39 @@ export default function Chamados() {
           </Card>
         ) : (
           <>
-            <div className="flex gap-2">
-              {["all", "aberto", "em_andamento", "resolvido", "fechado"].map((s) => (
-                <Button
-                  key={s}
-                  variant={filterStatus === s ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => setFilterStatus(s)}
-                >
-                  {s === "all" ? "Todos" : statusLabels[s]}
-                </Button>
-              ))}
+            <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between">
+              <div className="flex gap-2 flex-wrap">
+                {["all", "aberto", "em_andamento", "resolvido", "fechado"].map((s) => (
+                  <Button
+                    key={s}
+                    variant={filterStatus === s ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => setFilterStatus(s)}
+                  >
+                    {s === "all" ? "Todos" : statusLabels[s]}
+                  </Button>
+                ))}
+              </div>
+              {isAdmin && companies.length > 0 && (
+                <Select value={filterCompany} onValueChange={setFilterCompany}>
+                  <SelectTrigger className="w-[220px]">
+                    <SelectValue placeholder="Todas as empresas" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">Todas as empresas</SelectItem>
+                    {companies.map((c) => (
+                      <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
             </div>
 
             {loading ? (
               <div className="flex justify-center py-12">
                 <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
               </div>
-            ) : tickets.length === 0 ? (
+            ) : filtered.length === 0 ? (
               <Card>
                 <CardContent className="py-12 text-center text-muted-foreground">
                   Nenhum chamado encontrado.
@@ -162,7 +192,7 @@ export default function Chamados() {
               </Card>
             ) : (
               <div className="space-y-3">
-                {tickets.map((t) => (
+                {filtered.map((t) => (
                   <Card
                     key={t.id}
                     className="cursor-pointer hover:shadow-md transition-shadow"
@@ -173,6 +203,7 @@ export default function Chamados() {
                         <p className="font-medium text-foreground">{t.title}</p>
                         <p className="text-xs text-muted-foreground">
                           {new Date(t.created_at).toLocaleDateString("pt-BR")} · {priorityLabels[t.priority]}
+                          {isAdmin && t.companies?.name && ` · ${t.companies.name}`}
                         </p>
                       </div>
                       <Badge className={statusColors[t.status]}>{statusLabels[t.status]}</Badge>
