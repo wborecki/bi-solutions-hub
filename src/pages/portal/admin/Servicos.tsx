@@ -137,12 +137,7 @@ export default function Servicos() {
                   <div className="space-y-2">
                     <Label>Ícone</Label>
                     <Select value={form.icon} onValueChange={(v) => setForm({ ...form, icon: v })}>
-                      <SelectTrigger>
-                        <span className="flex items-center gap-2">
-                          {ICON_MAP[form.icon] && (() => { const I = ICON_MAP[form.icon]; return <I className="h-4 w-4" />; })()}
-                          <SelectValue />
-                        </span>
-                      </SelectTrigger>
+                      <SelectTrigger><SelectValue /></SelectTrigger>
                       <SelectContent>
                         {ICON_OPTIONS.map((i) => {
                           const IconComp = ICON_MAP[i];
