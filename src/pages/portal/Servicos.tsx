@@ -12,6 +12,7 @@ const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
 
 type ClientService = {
   id: string;
+  name: string;
   service_id: string;
   embed_url: string;
   is_active: boolean;
@@ -28,7 +29,7 @@ export default function PortalServicos() {
     if (!profile?.company_id) { setLoading(false); return; }
     supabase
       .from("company_services")
-      .select("id, service_id, embed_url, is_active, services(id, name, slug, description, icon, type)")
+      .select("id, name, service_id, embed_url, is_active, services(id, name, slug, description, icon, type)")
       .eq("company_id", profile.company_id)
       .eq("is_active", true)
       .then(({ data }) => {
@@ -64,8 +65,8 @@ export default function PortalServicos() {
                     <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center">
                       <Icon className="h-6 w-6 text-primary" />
                     </div>
-                    <p className="font-medium text-foreground">{svc.name}</p>
-                    {svc.description && <p className="text-xs text-muted-foreground line-clamp-2">{svc.description}</p>}
+                    <p className="font-medium text-foreground">{cs.name || svc.name}</p>
+                    {cs.name && cs.name !== svc.name && <p className="text-xs text-muted-foreground">{svc.name}</p>}
                     {hasEmbed && <span className="text-xs text-primary font-medium">Abrir relatório →</span>}
                   </CardContent>
                 </Card>

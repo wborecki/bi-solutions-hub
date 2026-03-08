@@ -1,0 +1,1 @@
+ALTER TABLE public.company_services ADD COLUMN name text NOT NULL DEFAULT '';

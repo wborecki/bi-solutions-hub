@@ -7,32 +7,28 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowLeft, Save, ShieldCheck, ShieldAlert } from "lucide-react";
+import { ArrowLeft, Save, ShieldCheck, ShieldAlert, Plus, Trash2 } from "lucide-react";
 
 type Service = { id: string; name: string; slug: string; type: string };
-type CompanyService = {
-  id: string;
-  service_id: string;
-  embed_url: string;
-  is_active: boolean;
-  config: Record<string, unknown>;
-};
 
-type FormEntry = {
+type InstanceEntry = {
+  dbId?: string; // existing company_services row id
+  name: string;
   embed_url: string;
   is_active: boolean;
   workspace_id: string;
   report_id: string;
   dataset_id: string;
   rls_role: string;
-  looker_filters: string; // JSON string
+  looker_filters: string;
+  _deleted?: boolean;
 };
 
-const emptyForm = (): FormEntry => ({
+const emptyInstance = (serviceName: string, index: number): InstanceEntry => ({
+  name: index === 0 ? serviceName : `${serviceName} ${index + 1}`,
   embed_url: "",
-  is_active: false,
+  is_active: true,
   workspace_id: "",
   report_id: "",
   dataset_id: "",
@@ -46,10 +42,10 @@ export default function EmpresaServicos() {
   const { toast } = useToast();
   const [companyName, setCompanyName] = useState("");
   const [services, setServices] = useState<Service[]>([]);
-  const [linked, setLinked] = useState<Map<string, CompanyService>>(new Map());
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [formState, setFormState] = useState<Map<string, FormEntry>>(new Map());
+  // Map<serviceId, InstanceEntry[]>
+  const [instancesMap, setInstancesMap] = useState<Map<string, InstanceEntry[]>>(new Map());
 
   useEffect(() => {
     if (!companyId) return;
@@ -63,12 +59,13 @@ export default function EmpresaServicos() {
       const svcList = (servicesRes.data ?? []) as Service[];
       setServices(svcList);
 
-      const map = new Map<string, CompanyService>();
-      const formMap = new Map<string, FormEntry>();
-      for (const cs of (linkedRes.data ?? []) as CompanyService[]) {
-        map.set(cs.service_id, cs);
-        const cfg = cs.config as Record<string, unknown>;
-        formMap.set(cs.service_id, {
+      const map = new Map<string, InstanceEntry[]>();
+      // Group existing company_services by service_id
+      for (const cs of (linkedRes.data ?? [])) {
+        const cfg = (cs.config ?? {}) as Record<string, unknown>;
+        const entry: InstanceEntry = {
+          dbId: cs.id,
+          name: (cs as any).name || "",
           embed_url: cs.embed_url,
           is_active: cs.is_active,
           workspace_id: (cfg?.workspace_id as string) || "",
@@ -76,23 +73,52 @@ export default function EmpresaServicos() {
           dataset_id: (cfg?.dataset_id as string) || "",
           rls_role: (cfg?.rls_role as string) || "Reader",
           looker_filters: cfg?.looker_filters ? JSON.stringify(cfg.looker_filters, null, 2) : "",
-        });
+        };
+        const arr = map.get(cs.service_id) ?? [];
+        arr.push(entry);
+        map.set(cs.service_id, arr);
       }
+      // Services without any instances get empty array
       for (const s of svcList) {
-        if (!formMap.has(s.id)) formMap.set(s.id, emptyForm());
+        if (!map.has(s.id)) map.set(s.id, []);
       }
-      setLinked(map);
-      setFormState(formMap);
+      setInstancesMap(map);
       setLoading(false);
     };
     fetchData();
   }, [companyId]);
 
-  const updateField = (serviceId: string, field: keyof FormEntry, value: string | boolean) => {
-    setFormState((prev) => {
+  const addInstance = (serviceId: string) => {
+    setInstancesMap((prev) => {
       const next = new Map(prev);
-      const cur = next.get(serviceId) ?? emptyForm();
-      next.set(serviceId, { ...cur, [field]: value });
+      const arr = [...(next.get(serviceId) ?? [])];
+      const svc = services.find((s) => s.id === serviceId);
+      arr.push(emptyInstance(svc?.name ?? "Relatório", arr.length));
+      next.set(serviceId, arr);
+      return next;
+    });
+  };
+
+  const removeInstance = (serviceId: string, index: number) => {
+    setInstancesMap((prev) => {
+      const next = new Map(prev);
+      const arr = [...(next.get(serviceId) ?? [])];
+      if (arr[index]?.dbId) {
+        arr[index] = { ...arr[index], _deleted: true };
+      } else {
+        arr.splice(index, 1);
+      }
+      next.set(serviceId, arr);
+      return next;
+    });
+  };
+
+  const updateField = (serviceId: string, index: number, field: keyof InstanceEntry, value: string | boolean) => {
+    setInstancesMap((prev) => {
+      const next = new Map(prev);
+      const arr = [...(next.get(serviceId) ?? [])];
+      arr[index] = { ...arr[index], [field]: value };
+      next.set(serviceId, arr);
       return next;
     });
   };
@@ -100,48 +126,49 @@ export default function EmpresaServicos() {
   const handleSave = async () => {
     if (!companyId) return;
     setSaving(true);
-    for (const [serviceId, state] of formState.entries()) {
-      const existing = linked.get(serviceId);
+
+    for (const [serviceId, instances] of instancesMap.entries()) {
       const svc = services.find((s) => s.id === serviceId);
 
-      // Build config JSONB
-      const config: Record<string, Json> = {};
-      if (svc?.type === "bi_embed") {
-        if (state.workspace_id) config.workspace_id = state.workspace_id;
-        if (state.report_id) config.report_id = state.report_id;
-        if (state.dataset_id) config.dataset_id = state.dataset_id;
-        if (state.rls_role) config.rls_role = state.rls_role;
-      }
-      if (svc?.type === "looker_embed" && state.looker_filters) {
-        try {
-          config.looker_filters = JSON.parse(state.looker_filters) as Json;
-        } catch {
-          /* ignore invalid JSON */
+      for (const inst of instances) {
+        // Build config
+        const config: Record<string, Json> = {};
+        if (svc?.type === "bi_embed") {
+          if (inst.workspace_id) config.workspace_id = inst.workspace_id;
+          if (inst.report_id) config.report_id = inst.report_id;
+          if (inst.dataset_id) config.dataset_id = inst.dataset_id;
+          if (inst.rls_role) config.rls_role = inst.rls_role;
         }
-      }
+        if (svc?.type === "looker_embed" && inst.looker_filters) {
+          try { config.looker_filters = JSON.parse(inst.looker_filters) as Json; } catch { /* ignore */ }
+        }
 
-      if (state.is_active) {
-        if (existing) {
+        if (inst._deleted && inst.dbId) {
+          await supabase.from("company_services").delete().eq("id", inst.dbId);
+        } else if (inst.dbId) {
           await supabase.from("company_services").update({
-            embed_url: state.embed_url,
-            is_active: true,
+            name: inst.name,
+            embed_url: inst.embed_url,
+            is_active: inst.is_active,
             config: config as unknown as Json,
-          }).eq("id", existing.id);
-        } else {
+          }).eq("id", inst.dbId);
+        } else if (!inst._deleted) {
           await supabase.from("company_services").insert({
             company_id: companyId,
             service_id: serviceId,
-            embed_url: state.embed_url,
-            is_active: true,
+            name: inst.name,
+            embed_url: inst.embed_url,
+            is_active: inst.is_active,
             config: config as unknown as Json,
           });
         }
-      } else if (existing) {
-        await supabase.from("company_services").update({ is_active: false }).eq("id", existing.id);
       }
     }
+
     setSaving(false);
     toast({ title: "Serviços da empresa atualizados!" });
+    // Refresh
+    window.location.reload();
   };
 
   if (loading) {
@@ -163,7 +190,7 @@ export default function EmpresaServicos() {
           </Button>
           <div>
             <h1 className="font-display text-2xl font-bold text-foreground">Serviços — {companyName}</h1>
-            <p className="text-sm text-muted-foreground">Ative os serviços e configure URLs de embed e RLS</p>
+            <p className="text-sm text-muted-foreground">Configure múltiplos relatórios por tipo de serviço</p>
           </div>
         </div>
 
@@ -174,119 +201,153 @@ export default function EmpresaServicos() {
             </CardContent>
           </Card>
         ) : (
-          <div className="space-y-3">
+          <div className="space-y-4">
             {services.map((s) => {
-              const state = formState.get(s.id) ?? emptyForm();
+              const instances = (instancesMap.get(s.id) ?? []).filter((i) => !i._deleted);
               const isPbi = s.type === "bi_embed";
               const isLooker = s.type === "looker_embed";
               const showEmbed = isPbi || isLooker;
-              const hasPbiRls = isPbi && state.workspace_id && state.report_id && state.dataset_id;
 
               return (
                 <Card key={s.id}>
                   <CardContent className="p-4 space-y-3">
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <div>
-                          <p className="font-medium text-foreground">{s.name}</p>
-                          <p className="text-xs text-muted-foreground">{s.type}</p>
-                        </div>
-                        {state.is_active && hasPbiRls && (
-                          <span className="flex items-center gap-1 text-xs bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 px-2 py-0.5 rounded-full">
-                            <ShieldCheck className="h-3 w-3" /> RLS
-                          </span>
-                        )}
+                      <div>
+                        <p className="font-medium text-foreground">{s.name}</p>
+                        <p className="text-xs text-muted-foreground">{s.type} · {instances.length} relatório(s)</p>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <Label className="text-sm text-muted-foreground">
-                          {state.is_active ? "Ativo" : "Inativo"}
-                        </Label>
-                        <Switch
-                          checked={state.is_active}
-                          onCheckedChange={(v) => updateField(s.id, "is_active", v)}
-                        />
-                      </div>
+                      {showEmbed && (
+                        <Button variant="outline" size="sm" onClick={() => addInstance(s.id)}>
+                          <Plus className="h-3.5 w-3.5 mr-1" /> Adicionar relatório
+                        </Button>
+                      )}
                     </div>
 
-                    {state.is_active && showEmbed && (
-                      <div className="space-y-3">
-                        <div className="space-y-1">
-                          <Label className="text-xs">URL de Embed (pública / fallback)</Label>
-                          <Input
-                            placeholder="https://app.powerbi.com/view?r=... ou https://lookerstudio.google.com/embed/..."
-                            value={state.embed_url}
-                            onChange={(e) => updateField(s.id, "embed_url", e.target.value)}
-                          />
-                        </div>
+                    {instances.length > 0 && (
+                      <div className="space-y-3 ml-2 border-l-2 border-muted pl-4">
+                        {instances.map((inst, idx) => {
+                          const hasPbiRls = isPbi && inst.workspace_id && inst.report_id && inst.dataset_id;
+                          // Find the real index in the full array (including deleted)
+                          const allInstances = instancesMap.get(s.id) ?? [];
+                          const realIdx = allInstances.indexOf(inst) !== -1
+                            ? allInstances.filter((i) => !i._deleted).indexOf(inst)
+                            : idx;
+                          // We need the actual index in the original array for updateField
+                          const actualIdx = allInstances.findIndex((i) => i === inst);
 
-                        {/* Power BI RLS Config */}
-                        {isPbi && (
-                          <div className="border rounded-lg p-3 space-y-2 bg-muted/30">
-                            <p className="text-xs font-medium flex items-center gap-1">
-                              <ShieldCheck className="h-3 w-3" /> Configuração Power BI Embedded (RLS)
-                            </p>
-                            <p className="text-xs text-muted-foreground">
-                              Preencha para ativar RLS seguro. Deixe vazio para usar a URL pública.
-                            </p>
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-                              <div className="space-y-1">
-                                <Label className="text-xs">Workspace ID</Label>
-                                <Input
-                                  placeholder="xxxxxxxx-xxxx-..."
-                                  value={state.workspace_id}
-                                  onChange={(e) => updateField(s.id, "workspace_id", e.target.value)}
-                                  className="text-xs"
-                                />
+                          return (
+                            <div key={`${s.id}-${idx}`} className="space-y-2 bg-muted/20 rounded-lg p-3">
+                              <div className="flex items-center justify-between gap-2">
+                                <div className="flex items-center gap-2 flex-1">
+                                  <Input
+                                    placeholder="Nome do relatório"
+                                    value={inst.name}
+                                    onChange={(e) => updateField(s.id, actualIdx, "name", e.target.value)}
+                                    className="text-sm font-medium max-w-xs"
+                                  />
+                                  {hasPbiRls && (
+                                    <span className="flex items-center gap-1 text-xs bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 px-2 py-0.5 rounded-full whitespace-nowrap">
+                                      <ShieldCheck className="h-3 w-3" /> RLS
+                                    </span>
+                                  )}
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  <Label className="text-xs text-muted-foreground whitespace-nowrap">
+                                    {inst.is_active ? "Ativo" : "Inativo"}
+                                  </Label>
+                                  <input
+                                    type="checkbox"
+                                    checked={inst.is_active}
+                                    onChange={(e) => updateField(s.id, actualIdx, "is_active", e.target.checked)}
+                                    className="accent-primary"
+                                  />
+                                  <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    className="h-7 w-7 text-destructive hover:bg-destructive/10"
+                                    onClick={() => removeInstance(s.id, actualIdx)}
+                                  >
+                                    <Trash2 className="h-3.5 w-3.5" />
+                                  </Button>
+                                </div>
                               </div>
-                              <div className="space-y-1">
-                                <Label className="text-xs">Report ID</Label>
-                                <Input
-                                  placeholder="xxxxxxxx-xxxx-..."
-                                  value={state.report_id}
-                                  onChange={(e) => updateField(s.id, "report_id", e.target.value)}
-                                  className="text-xs"
-                                />
-                              </div>
-                              <div className="space-y-1">
-                                <Label className="text-xs">Dataset ID</Label>
-                                <Input
-                                  placeholder="xxxxxxxx-xxxx-..."
-                                  value={state.dataset_id}
-                                  onChange={(e) => updateField(s.id, "dataset_id", e.target.value)}
-                                  className="text-xs"
-                                />
-                              </div>
-                            </div>
-                            <div className="space-y-1">
-                              <Label className="text-xs">Nome da Role RLS (padrão: Reader)</Label>
-                              <Input
-                                placeholder="Reader"
-                                value={state.rls_role}
-                                onChange={(e) => updateField(s.id, "rls_role", e.target.value)}
-                                className="text-xs"
-                              />
-                            </div>
-                          </div>
-                        )}
 
-                        {/* Looker Filters Config */}
-                        {isLooker && (
-                          <div className="border rounded-lg p-3 space-y-2 bg-muted/30">
-                            <p className="text-xs font-medium flex items-center gap-1">
-                              <ShieldAlert className="h-3 w-3" /> Filtros por URL (Looker Studio)
-                            </p>
-                            <p className="text-xs text-muted-foreground">
-                              JSON com mapeamento de parâmetros. Use "user_email" para injetar o email do usuário.
-                              Ex: {`{"ds0.email": "user_email"}`}
-                            </p>
-                            <Input
-                              placeholder='{"ds0.email": "user_email"}'
-                              value={state.looker_filters}
-                              onChange={(e) => updateField(s.id, "looker_filters", e.target.value)}
-                              className="text-xs font-mono"
-                            />
-                          </div>
-                        )}
+                              {showEmbed && (
+                                <div className="space-y-2">
+                                  <div className="space-y-1">
+                                    <Label className="text-xs">URL de Embed</Label>
+                                    <Input
+                                      placeholder="https://app.powerbi.com/view?r=..."
+                                      value={inst.embed_url}
+                                      onChange={(e) => updateField(s.id, actualIdx, "embed_url", e.target.value)}
+                                      className="text-xs"
+                                    />
+                                  </div>
+
+                                  {isPbi && (
+                                    <div className="border rounded-lg p-3 space-y-2 bg-background/50">
+                                      <p className="text-xs font-medium flex items-center gap-1">
+                                        <ShieldCheck className="h-3 w-3" /> Config Power BI (RLS)
+                                      </p>
+                                      <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+                                        <div className="space-y-1">
+                                          <Label className="text-xs">Workspace ID</Label>
+                                          <Input
+                                            placeholder="xxxxxxxx-xxxx-..."
+                                            value={inst.workspace_id}
+                                            onChange={(e) => updateField(s.id, actualIdx, "workspace_id", e.target.value)}
+                                            className="text-xs"
+                                          />
+                                        </div>
+                                        <div className="space-y-1">
+                                          <Label className="text-xs">Report ID</Label>
+                                          <Input
+                                            placeholder="xxxxxxxx-xxxx-..."
+                                            value={inst.report_id}
+                                            onChange={(e) => updateField(s.id, actualIdx, "report_id", e.target.value)}
+                                            className="text-xs"
+                                          />
+                                        </div>
+                                        <div className="space-y-1">
+                                          <Label className="text-xs">Dataset ID</Label>
+                                          <Input
+                                            placeholder="xxxxxxxx-xxxx-..."
+                                            value={inst.dataset_id}
+                                            onChange={(e) => updateField(s.id, actualIdx, "dataset_id", e.target.value)}
+                                            className="text-xs"
+                                          />
+                                        </div>
+                                      </div>
+                                      <div className="space-y-1">
+                                        <Label className="text-xs">Role RLS</Label>
+                                        <Input
+                                          placeholder="Reader"
+                                          value={inst.rls_role}
+                                          onChange={(e) => updateField(s.id, actualIdx, "rls_role", e.target.value)}
+                                          className="text-xs"
+                                        />
+                                      </div>
+                                    </div>
+                                  )}
+
+                                  {isLooker && (
+                                    <div className="border rounded-lg p-3 space-y-2 bg-background/50">
+                                      <p className="text-xs font-medium flex items-center gap-1">
+                                        <ShieldAlert className="h-3 w-3" /> Filtros Looker
+                                      </p>
+                                      <Input
+                                        placeholder='{"ds0.email": "user_email"}'
+                                        value={inst.looker_filters}
+                                        onChange={(e) => updateField(s.id, actualIdx, "looker_filters", e.target.value)}
+                                        className="text-xs font-mono"
+                                      />
+                                    </div>
+                                  )}
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })}
                       </div>
                     )}
                   </CardContent>
