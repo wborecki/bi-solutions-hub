@@ -254,7 +254,10 @@ export function Header() {
                 {link.label}
               </Link>
             ))}
-            <div className="pt-4 border-t mt-2">
+            <div className="pt-4 border-t mt-2 flex flex-col gap-2">
+              <Button variant="outline" asChild className="w-full">
+                <Link to="/portal/login">Portal do Cliente</Link>
+              </Button>
               <Button asChild className="w-full">
                 <Link to="/contato">Fale Conosco</Link>
               </Button>
