@@ -7,6 +7,7 @@ import { ArrowLeft, Loader2, ShieldCheck, ShieldAlert } from "lucide-react";
 
 type CSData = {
   id: string;
+  name: string;
   embed_url: string;
   config: Record<string, unknown>;
   services: { name: string; type: string };
