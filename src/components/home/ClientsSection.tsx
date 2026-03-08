@@ -1,39 +1,42 @@
 import { useRef, useEffect, useState } from "react";
-import logoVP from "@/assets/logo-vernalha-pereira.png";
-import logoSofae from "@/assets/logo-sofae.png";
-import logoFL from "@/assets/logo-future-law.png";
-import logoVT from "@/assets/logo-vt-advogados.png";
-import logoSeleme from "@/assets/logo-seleme.png";
-import logoOAB from "@/assets/logo-oab-parana.png";
-import logoLA from "@/assets/logo-luis-albert.png";
-import logoFebrapo from "@/assets/logo-febrapo.png";
-import logoC3 from "@/assets/logo-c3.png";
-import logoEBDA from "@/assets/logo-ebda.png";
-import logoMS from "@/assets/logo-ms.png";
+import logoVP from "@/assets/logo-vernalha-pereira.webp";
+import logoSofaNN from "@/assets/logo-sofa-novo-de-novo.webp";
+import logoFL from "@/assets/logo-future-law.webp";
+import logoValera from "@/assets/logo-valera-advogados.webp";
+import logoSeleme from "@/assets/logo-seleme.webp";
+import logoOAB from "@/assets/logo-oab-parana.webp";
+import logoLegalTrade from "@/assets/logo-legaltrade.webp";
+import logoBDA from "@/assets/logo-bda.webp";
 
 const clients = [
   { name: "Vernalha Pereira", logo: logoVP },
-  { name: "SOFAE", logo: logoSofae },
+  { name: "Sofá Novo de Novo", logo: logoSofaNN },
   { name: "Future Law", logo: logoFL },
-  { name: "VT Advogados", logo: logoVT },
-  { name: "Seleme", logo: logoSeleme },
+  { name: "Valera Advogados", logo: logoValera },
+  { name: "Seleme Advocacia", logo: logoSeleme },
   { name: "OAB Paraná", logo: logoOAB },
-  { name: "Luis Albert Advogados", logo: logoLA },
-  { name: "FEBRAPO", logo: logoFebrapo },
-  { name: "C3", logo: logoC3 },
-  { name: "EBDA", logo: logoEBDA },
-  { name: "MS", logo: logoMS },
+  { name: "LegalTrade", logo: logoLegalTrade },
+  { name: "BDA Gestão Jurídica", logo: logoBDA },
 ];
 
 export function ClientsSection() {
   const trackRef = useRef<HTMLDivElement>(null);
-  const [halfWidth, setHalfWidth] = useState(0);
+  const [singleSetWidth, setSingleSetWidth] = useState(0);
 
   useEffect(() => {
     const measure = () => {
       if (trackRef.current) {
-        // Half = width of the first set of logos
-        setHalfWidth(trackRef.current.scrollWidth / 2);
+        // Measure width of one complete set of logos (including gaps)
+        const firstChild = trackRef.current.firstElementChild;
+        if (firstChild) {
+          const childrenCount = trackRef.current.children.length / 3; // We have 3 copies
+          let width = 0;
+          for (let i = 0; i < childrenCount; i++) {
+            const child = trackRef.current.children[i] as HTMLElement;
+            width += child.offsetWidth;
+          }
+          setSingleSetWidth(width);
+        }
       }
     };
     measure();
@@ -50,25 +53,23 @@ export function ClientsSection() {
       </div>
 
       <div className="relative w-full overflow-hidden">
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-muted/80 to-transparent z-10" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-muted/80 to-transparent z-10" />
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-muted/80 to-transparent z-10" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-muted/80 to-transparent z-10" />
 
         <div
           ref={trackRef}
-          className="flex items-center gap-16 w-max"
+          className="flex items-center gap-20 w-max py-4"
           style={{
-            animation: halfWidth ? `scroll-left ${25}s linear infinite` : undefined,
-            // CSS custom property for the keyframe
-            ["--scroll-distance" as string]: `-${halfWidth}px`,
+            animation: singleSetWidth ? `scroll-left ${50}s linear infinite` : undefined,
           }}
         >
-          {[...clients, ...clients].map((client, i) => (
-            <div key={i} className="flex items-center whitespace-nowrap select-none px-2">
+          {[...clients, ...clients, ...clients].map((client, i) => (
+            <div key={i} className="flex items-center justify-center whitespace-nowrap select-none px-4">
               <img
                 src={client.logo}
                 alt={client.name}
                 loading="lazy"
-                className="h-16 w-auto object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+                className="h-20 w-auto max-w-[180px] object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-300 filter drop-shadow-sm"
               />
             </div>
           ))}
@@ -77,8 +78,12 @@ export function ClientsSection() {
 
       <style>{`
         @keyframes scroll-left {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(var(--scroll-distance)); }
+          0% { 
+            transform: translateX(0); 
+          }
+          100% { 
+            transform: translateX(calc(-100% / 3)); 
+          }
         }
       `}</style>
     </section>
