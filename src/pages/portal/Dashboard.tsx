@@ -13,6 +13,7 @@ export default function Dashboard() {
   const [ticketCount, setTicketCount] = useState(0);
   const [openTickets, setOpenTickets] = useState(0);
   const [docCount, setDocCount] = useState(0);
+  const [serviceCount, setServiceCount] = useState(0);
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -31,6 +32,12 @@ export default function Dashboard() {
         .from("documents")
         .select("*", { count: "exact", head: true });
       setDocCount(docs ?? 0);
+
+      const { count: svcs } = await supabase
+        .from("company_services")
+        .select("*", { count: "exact", head: true })
+        .eq("is_active", true);
+      setServiceCount(svcs ?? 0);
     };
     fetchStats();
   }, []);
