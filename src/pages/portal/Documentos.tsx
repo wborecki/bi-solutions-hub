@@ -452,8 +452,30 @@ export default function Documentos() {
               </Card>
             ) : subFolders.length === 0 ? (
               <Card>
-                <CardContent className="py-12 text-center text-muted-foreground">
-                  Pasta vazia. Faça upload de um arquivo ou crie uma subpasta.
+                <CardContent className="py-12 flex flex-col items-center gap-4 text-center text-muted-foreground">
+                  <p>Pasta vazia. Faça upload de um arquivo ou crie uma subpasta.</p>
+                  <div className="flex gap-3">
+                    <Button
+                      variant="outline"
+                      onClick={() => document.getElementById("empty-upload")?.click()}
+                      disabled={!uploadCompanyId}
+                    >
+                      <Upload className="h-4 w-4 mr-2" /> Upload de arquivo
+                    </Button>
+                    <input
+                      id="empty-upload"
+                      type="file"
+                      multiple
+                      className="hidden"
+                      onChange={handleUpload}
+                    />
+                    <Button
+                      variant="outline"
+                      onClick={() => setShowFolderInput(true)}
+                    >
+                      <FolderPlus className="h-4 w-4 mr-2" /> Criar subpasta
+                    </Button>
+                  </div>
                 </CardContent>
               </Card>
             ) : null}
