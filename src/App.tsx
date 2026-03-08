@@ -23,16 +23,16 @@ const Terms = lazy(() => import("./pages/Terms"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const BiaPreview = lazy(() => import("./pages/BiaPreview"));
 
-// Portal pages
-const PortalLogin = lazy(() => import("./pages/portal/Login"));
-const ResetPassword = lazy(() => import("./pages/portal/ResetPassword"));
-const PortalDashboard = lazy(() => import("./pages/portal/Dashboard"));
-const Chamados = lazy(() => import("./pages/portal/Chamados"));
-const ChamadoDetalhe = lazy(() => import("./pages/portal/ChamadoDetalhe"));
-const Documentos = lazy(() => import("./pages/portal/Documentos"));
-const Perfil = lazy(() => import("./pages/portal/Perfil"));
-const AdminEmpresas = lazy(() => import("./pages/portal/admin/Empresas"));
-const AdminUsuarios = lazy(() => import("./pages/portal/admin/Usuarios"));
+// Portal pages — eagerly imported to avoid loading flicker on sidebar navigation
+import PortalLogin from "./pages/portal/Login";
+import ResetPassword from "./pages/portal/ResetPassword";
+import PortalDashboard from "./pages/portal/Dashboard";
+import Chamados from "./pages/portal/Chamados";
+import ChamadoDetalhe from "./pages/portal/ChamadoDetalhe";
+import Documentos from "./pages/portal/Documentos";
+import Perfil from "./pages/portal/Perfil";
+import AdminEmpresas from "./pages/portal/admin/Empresas";
+import AdminUsuarios from "./pages/portal/admin/Usuarios";
 
 // Preload main pages after initial render
 function usePreloadPages() {
