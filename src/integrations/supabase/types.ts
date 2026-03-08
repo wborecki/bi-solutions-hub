@@ -35,6 +35,51 @@ export type Database = {
         }
         Relationships: []
       }
+      company_services: {
+        Row: {
+          company_id: string
+          config: Json
+          created_at: string
+          embed_url: string
+          id: string
+          is_active: boolean
+          service_id: string
+        }
+        Insert: {
+          company_id: string
+          config?: Json
+          created_at?: string
+          embed_url?: string
+          id?: string
+          is_active?: boolean
+          service_id: string
+        }
+        Update: {
+          company_id?: string
+          config?: Json
+          created_at?: string
+          embed_url?: string
+          id?: string
+          is_active?: boolean
+          service_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "company_services_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "company_services_service_id_fkey"
+            columns: ["service_id"]
+            isOneToOne: false
+            referencedRelation: "services"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       documents: {
         Row: {
           company_id: string
@@ -113,6 +158,36 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      services: {
+        Row: {
+          created_at: string
+          description: string
+          icon: string
+          id: string
+          name: string
+          slug: string
+          type: Database["public"]["Enums"]["service_type"]
+        }
+        Insert: {
+          created_at?: string
+          description?: string
+          icon?: string
+          id?: string
+          name: string
+          slug: string
+          type?: Database["public"]["Enums"]["service_type"]
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          icon?: string
+          id?: string
+          name?: string
+          slug?: string
+          type?: Database["public"]["Enums"]["service_type"]
+        }
+        Relationships: []
       }
       ticket_messages: {
         Row: {
@@ -224,6 +299,7 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "client"
+      service_type: "bi_embed" | "looker_embed" | "document" | "custom"
       ticket_priority: "baixa" | "media" | "alta" | "urgente"
       ticket_status: "aberto" | "em_andamento" | "resolvido" | "fechado"
     }
@@ -354,6 +430,7 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "client"],
+      service_type: ["bi_embed", "looker_embed", "document", "custom"],
       ticket_priority: ["baixa", "media", "alta", "urgente"],
       ticket_status: ["aberto", "em_andamento", "resolvido", "fechado"],
     },
