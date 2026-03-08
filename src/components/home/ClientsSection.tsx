@@ -5,40 +5,67 @@ import logoFL from "@/assets/logo-future-law.png";
 import logoVT from "@/assets/logo-vt-advogados.png";
 import logoSeleme from "@/assets/logo-seleme.png";
 import logoOAB from "@/assets/logo-oab-parana.png";
-import logoLA from "@/assets/logo-luis-albert.png";
-import logoFebrapo from "@/assets/logo-febrapo.png";
-import logoC3 from "@/assets/logo-c3.png";
-import logoEBDA from "@/assets/logo-ebda.png";
-import logoMS from "@/assets/logo-ms.png";
+import logoOthree from "@/assets/logo-c3.png";
+import logoBDA from "@/assets/logo-ebda.png";
 
 const clients = [
   { name: "Vernalha Pereira", logo: logoVP },
-  { name: "SOFAE", logo: logoSofae },
-  { name: "Future Law", logo: logoFL },
-  { name: "VT Advogados", logo: logoVT },
-  { name: "Seleme", logo: logoSeleme },
+  { name: "Sofá Novo de Novo", logo: logoSofae },
+  { name: "FutureLaw", logo: logoFL },
+  { name: "Valera & Tavares", logo: logoVT },
+  { name: "Seleme Advocacia", logo: logoSeleme },
   { name: "OAB Paraná", logo: logoOAB },
-  { name: "Luis Albert Advogados", logo: logoLA },
-  { name: "FEBRAPO", logo: logoFebrapo },
-  { name: "C3", logo: logoC3 },
-  { name: "EBDA", logo: logoEBDA },
-  { name: "MS", logo: logoMS },
+  { name: "O'three", logo: logoOthree },
+  { name: "BDA Gestão Jurídica", logo: logoBDA },
 ];
 
 export function ClientsSection() {
   const trackRef = useRef<HTMLDivElement>(null);
-  const [halfWidth, setHalfWidth] = useState(0);
+  const [singleSetWidth, setSingleSetWidth] = useState(0);
 
   useEffect(() => {
     const measure = () => {
-      if (trackRef.current) {
-        // Half = width of the first set of logos
-        setHalfWidth(trackRef.current.scrollWidth / 2);
+      if (!trackRef.current) return;
+      // Measure one set of logos (the first N children)
+      const children = trackRef.current.children;
+      const count = clients.length;
+      let width = 0;
+      for (let i = 0; i < count && i < children.length; i++) {
+        const child = children[i] as HTMLElement;
+        width += child.offsetWidth;
       }
+      // Add gaps: gap-14 = 3.5rem = 56px, count gaps between items in one set
+      width += (count - 1) * 56;
+      // Add the gap after the last item of the first set (before second set starts)
+      width += 56;
+      setSingleSetWidth(width);
     };
-    measure();
+
+    // Wait for images to load before measuring
+    const images = trackRef.current?.querySelectorAll("img") ?? [];
+    let loaded = 0;
+    const total = images.length;
+
+    const onLoad = () => {
+      loaded++;
+      if (loaded >= total) measure();
+    };
+
+    images.forEach((img) => {
+      if (img.complete) {
+        loaded++;
+      } else {
+        img.addEventListener("load", onLoad);
+      }
+    });
+
+    if (loaded >= total) measure();
+
     window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
+    return () => {
+      window.removeEventListener("resize", measure);
+      images.forEach((img) => img.removeEventListener("load", onLoad));
+    };
   }, []);
 
   return (
@@ -55,20 +82,25 @@ export function ClientsSection() {
 
         <div
           ref={trackRef}
-          className="flex items-center gap-16 w-max"
+          className="flex items-center gap-14 w-max"
           style={{
-            animation: halfWidth ? `scroll-left ${25}s linear infinite` : undefined,
-            // CSS custom property for the keyframe
-            ["--scroll-distance" as string]: `-${halfWidth}px`,
+            animation: singleSetWidth
+              ? `carousel-scroll ${30}s linear infinite`
+              : undefined,
           }}
         >
-          {[...clients, ...clients].map((client, i) => (
-            <div key={i} className="flex items-center whitespace-nowrap select-none px-2">
+          {/* Render 3 copies for seamless infinite loop */}
+          {[...clients, ...clients, ...clients].map((client, i) => (
+            <div
+              key={`${client.name}-${i}`}
+              className="flex-shrink-0 flex items-center justify-center select-none"
+              style={{ width: 160, height: 80 }}
+            >
               <img
                 src={client.logo}
                 alt={client.name}
                 loading="lazy"
-                className="h-16 w-auto object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+                className="max-h-14 max-w-[140px] w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
               />
             </div>
           ))}
@@ -76,9 +108,9 @@ export function ClientsSection() {
       </div>
 
       <style>{`
-        @keyframes scroll-left {
+        @keyframes carousel-scroll {
           0% { transform: translateX(0); }
-          100% { transform: translateX(var(--scroll-distance)); }
+          100% { transform: translateX(-${singleSetWidth}px); }
         }
       `}</style>
     </section>
