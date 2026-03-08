@@ -12,6 +12,7 @@ const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
 
 type ClientService = {
   id: string;
+  name: string;
   service_id: string;
   embed_url: string;
   is_active: boolean;
