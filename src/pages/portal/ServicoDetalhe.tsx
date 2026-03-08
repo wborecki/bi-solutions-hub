@@ -36,7 +36,7 @@ export default function ServicoDetalhe() {
       const [csRes, userRes] = await Promise.all([
         supabase
           .from("company_services")
-          .select("id, embed_url, config, services(name, type)")
+          .select("id, name, embed_url, config, services(name, type)")
           .eq("id", id)
           .single(),
         supabase.auth.getUser(),
