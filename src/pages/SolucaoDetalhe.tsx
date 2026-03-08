@@ -16,6 +16,7 @@ import illustrationConsultoria from "@/assets/illustration-consultoria.png";
 import illustrationImplantacao from "@/assets/illustration-implantacao.png";
 import illustrationMentoria from "@/assets/illustration-mentoria.png";
 import illustrationColeta from "@/assets/illustration-coleta.png";
+import solutionJurimetriaPhoto from "@/assets/solution-jurimetria.jpg";
 
 const solutionsData = {
   "business-intelligence": {
@@ -319,6 +320,48 @@ const SolucaoDetalhe = () => {
           </div>
         </div>
       </section>
+
+      {slug === "jurimetria" && (
+        <section className="py-16 md:py-20 bg-muted/20">
+          <div className="container mx-auto px-4">
+            <div className="grid lg:grid-cols-2 gap-10 items-center max-w-5xl mx-auto">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="rounded-2xl overflow-hidden border border-border shadow-sm"
+              >
+                <img
+                  src={solutionJurimetriaPhoto}
+                  alt="Visualização de dados jurídicos em painel de jurimetria"
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                className="space-y-4"
+              >
+                <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground">
+                  Como interpretar este painel jurimétrico
+                </h2>
+                <p className="text-muted-foreground leading-relaxed">
+                  Esta visualização representa o uso da jurimetria para transformar histórico processual em
+                  inteligência prática. Os blocos e indicadores mostram padrões de decisões, comportamento
+                  por tribunal e tendências por tema, ajudando a orientar estratégia com base em evidências.
+                </p>
+                <p className="text-muted-foreground leading-relaxed">
+                  Com essa leitura, sua equipe consegue estimar cenários com mais precisão, priorizar ações
+                  de maior impacto e reduzir incertezas na condução dos casos.
+                </p>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Features */}
       <section className="py-24 bg-muted/30" ref={featuresRef}>
