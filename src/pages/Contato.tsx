@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { CTASection } from "@/components/home/CTASection";
+import { supabase } from "@/integrations/supabase/client";
 
 
 const contactInfo = [
@@ -37,10 +38,35 @@ const Contato = () => {
     }
 
     setIsSubmitting(true);
-    await new Promise((r) => setTimeout(r, 1500));
-    toast.success("Mensagem enviada! Entraremos em contato em breve.");
-    setFormData({ name: "", email: "", phone: "", company: "", message: "" });
-    setIsSubmitting(false);
+    try {
+      const { error } = await supabase.from("contact_submissions").insert({
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        phone: formData.phone.trim() || null,
+        company: formData.company.trim() || null,
+        message: formData.message.trim(),
+      });
+
+      if (error) throw error;
+
+      // Dispara notificação por e-mail em background (não bloqueia a resposta ao usuário)
+      supabase.functions.invoke("notify-contact", {
+        body: {
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          phone: formData.phone.trim(),
+          company: formData.company.trim(),
+          message: formData.message.trim(),
+        },
+      });
+
+      toast.success("Mensagem enviada! Entraremos em contato em breve.");
+      setFormData({ name: "", email: "", phone: "", company: "", message: "" });
+    } catch {
+      toast.error("Erro ao enviar mensagem. Tente novamente.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (

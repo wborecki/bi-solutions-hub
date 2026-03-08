@@ -35,12 +35,6 @@ const solutions = [
     href: "/solucoes/jurimetria",
   },
   {
-    icon: LayoutDashboard,
-    title: "Dashboards",
-    description: "Painéis interativos e customizados para visualização de dados.",
-    href: "/solucoes/business-intelligence",
-  },
-  {
     icon: Plug,
     title: "Integrações",
     description: "Conecte seus sistemas e centralize informações automaticamente.",

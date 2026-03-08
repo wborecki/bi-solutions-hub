@@ -64,7 +64,6 @@ export function Footer() {
               {[
                 { label: "Automação de Fluxos", href: "/solucoes/automacao-ia" },
                 { label: "Business Intelligence", href: "/solucoes/business-intelligence" },
-                { label: "Dashboards", href: "/solucoes/dashboards" },
                 { label: "Implantação de Sistemas", href: "/solucoes/implantacao-sistemas" },
                 { label: "Mentoria Power BI", href: "/solucoes/mentoria-power-bi" },
                 { label: "Coleta de Dados", href: "/solucoes/coleta-de-dados" },

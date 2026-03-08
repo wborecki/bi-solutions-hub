@@ -11,7 +11,6 @@ const solutionCategories = [
     icon: TrendingUp,
     items: [
       { icon: BarChart3, label: "Business Intelligence", desc: "Relatórios e análises estratégicas", href: "/solucoes/business-intelligence" },
-      { icon: LayoutDashboard, label: "Dashboards", desc: "Painéis visuais e interativos", href: "/solucoes/dashboards" },
       { icon: Scale, label: "Jurimetria", desc: "Análise estatística de dados jurídicos", href: "/solucoes/jurimetria" },
       { icon: Database, label: "Coleta de Dados", desc: "Captura automatizada de informações", href: "/solucoes/coleta-de-dados" },
     ],

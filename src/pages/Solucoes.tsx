@@ -80,20 +80,6 @@ const solutions = [
     accent: "accent",
   },
   {
-    icon: LayoutDashboard,
-    title: "Dashboards",
-    description:
-      "Painéis interativos e customizados para visualização de dados.",
-    features: [
-      "Visualizações sob medida",
-      "Atualização contínua de dados",
-      "Acesso mobile e desktop",
-      "Drill-down e filtros dinâmicos",
-    ],
-    href: "/solucoes/business-intelligence",
-    accent: "primary",
-  },
-  {
     icon: Plug,
     title: "Integrações",
     description:

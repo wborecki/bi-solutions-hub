@@ -26,7 +26,8 @@ import {
   BarChart3,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import logoSbi from "@/assets/logo-solutionsinbi-portal-white.png";
+import logoSbi from "@/assets/logo-solutionsinbi-3-sidebar.png";
+import iconSbi from "@/assets/icone-solutionsinbi.png";
 
 const clientMenu = [
   { title: "Dashboard", url: "/portal", icon: LayoutDashboard },
@@ -45,6 +46,8 @@ const adminMenu = [
 function PortalSidebar() {
   const { isAdmin, signOut, profile } = useAuth();
   const location = useLocation();
+  const { state } = useSidebar();
+  const collapsed = state === "collapsed";
 
   const isActive = (path: string) =>
     path === "/portal"
@@ -54,10 +57,12 @@ function PortalSidebar() {
   return (
     <Sidebar collapsible="icon">
       <SidebarContent>
-        <div className="p-4 flex items-center gap-3">
-          <div className="rounded-md bg-primary-dark px-2 py-1.5">
-            <img src={logoSbi} alt="SBI" className="h-7 w-auto object-contain shrink-0" />
-          </div>
+        <div className="px-4 py-1 flex items-center gap-3">
+          {collapsed ? (
+            <img src={iconSbi} alt="SBI" className="h-8 w-8 object-cover rounded-md shrink-0" />
+          ) : (
+            <img src={logoSbi} alt="SBI" className="h-24 w-auto object-contain shrink-0" />
+          )}
         </div>
 
         <SidebarGroup>

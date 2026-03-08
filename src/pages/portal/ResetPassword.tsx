@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { Lock } from "lucide-react";
-import logoSbi from "@/assets/logo-solutionsinbi-portal-white.png";
+import logoSbi from "@/assets/logo-solutionsinbi-3.png";
 
 export default function ResetPassword() {
   const [password, setPassword] = useState("");
@@ -51,7 +51,7 @@ export default function ResetPassword() {
       <div className="w-full max-w-sm space-y-8">
         <div className="flex justify-center">
           <div className="rounded-lg bg-primary-dark px-3 py-2">
-            <img src={logoSbi} alt="SBI Logo" className="h-10 w-auto object-contain" />
+            <img src={logoSbi} alt="SBI Logo" className="h-10 w-auto object-contain brightness-0 invert" />
           </div>
         </div>
         <div className="space-y-2 text-center">

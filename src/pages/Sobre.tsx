@@ -34,14 +34,14 @@ const team = [
     role: "CEO & Co-Fundador",
     bio: "Especialista em Business Intelligence e análise de dados, com ampla experiência em soluções tecnológicas para o mercado jurídico e corporativo.",
     photo: teamWillian,
-    linkedin: "https://www.linkedin.com/in/willian-borecki",
+    linkedin: "https://www.linkedin.com/in/willian-borecki/",
   },
   {
     name: "Elisa Santin",
     role: "COO & Co-Fundadora",
     bio: "Profissional com sólida experiência em gestão de projetos e operações, responsável por garantir a excelência na entrega de cada solução.",
     photo: teamElisa,
-    linkedin: "https://www.linkedin.com/in/elisa-santin",
+    linkedin: "https://www.linkedin.com/in/elisa-santin-36488b167/",
   },
 ];
 
