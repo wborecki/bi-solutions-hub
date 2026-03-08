@@ -7,6 +7,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ScrollToTop } from "./components/ScrollToTop";
 import Index from "./pages/Index";
 import { Analytics } from "./components/Analytics";
+import { Analytics as VercelAnalytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import { Layout } from "./components/layout/Layout";
 import { AuthProvider } from "./contexts/AuthContext";
 import { ProtectedRoute } from "./components/portal/ProtectedRoute";
@@ -117,6 +119,8 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Analytics />
+        <VercelAnalytics />
+        <SpeedInsights />
         <ScrollToTop />
         <AuthProvider>
           <AppRoutes />
