@@ -8,6 +8,8 @@ import { ScrollToTop } from "./components/ScrollToTop";
 import Index from "./pages/Index";
 import { Analytics } from "./components/Analytics";
 import { Layout } from "./components/layout/Layout";
+import { AuthProvider } from "./contexts/AuthContext";
+import { ProtectedRoute } from "./components/portal/ProtectedRoute";
 
 const Solucoes = lazy(() => import("./pages/Solucoes"));
 const SolucaoDetalhe = lazy(() => import("./pages/SolucaoDetalhe"));
@@ -20,6 +22,17 @@ const Privacy = lazy(() => import("./pages/Privacy"));
 const Terms = lazy(() => import("./pages/Terms"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const BiaPreview = lazy(() => import("./pages/BiaPreview"));
+
+// Portal pages
+const PortalLogin = lazy(() => import("./pages/portal/Login"));
+const ResetPassword = lazy(() => import("./pages/portal/ResetPassword"));
+const PortalDashboard = lazy(() => import("./pages/portal/Dashboard"));
+const Chamados = lazy(() => import("./pages/portal/Chamados"));
+const ChamadoDetalhe = lazy(() => import("./pages/portal/ChamadoDetalhe"));
+const Documentos = lazy(() => import("./pages/portal/Documentos"));
+const Perfil = lazy(() => import("./pages/portal/Perfil"));
+const AdminEmpresas = lazy(() => import("./pages/portal/admin/Empresas"));
+const AdminUsuarios = lazy(() => import("./pages/portal/admin/Usuarios"));
 
 // Preload main pages after initial render
 function usePreloadPages() {
@@ -36,8 +49,14 @@ function usePreloadPages() {
 
 const queryClient = new QueryClient();
 
-// Minimal loading — keeps header/footer visible, shows only a subtle indicator
+// Minimal loading
 const Loading = () => (
+  <div className="min-h-screen flex items-center justify-center">
+    <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+  </div>
+);
+
+const SiteLoading = () => (
   <Layout>
     <div className="min-h-[60vh] flex items-center justify-center">
       <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
@@ -49,22 +68,37 @@ const AppRoutes = () => {
   usePreloadPages();
 
   return (
-    <Suspense fallback={<Loading />}>
-      <Routes>
-        <Route path="/" element={<Index />} />
-        <Route path="/solucoes" element={<Solucoes />} />
-        <Route path="/solucoes/:slug" element={<SolucaoDetalhe />} />
-        <Route path="/servicos" element={<Servicos />} />
-        <Route path="/sobre" element={<Sobre />} />
-        <Route path="/blog" element={<Blog />} />
-        <Route path="/blog/:slug" element={<BlogPost />} />
-        <Route path="/contato" element={<Contato />} />
-        <Route path="/privacy" element={<Privacy />} />
-        <Route path="/terms" element={<Terms />} />
-        <Route path="/bia-preview" element={<BiaPreview />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </Suspense>
+    <Routes>
+      {/* Public site */}
+      <Route path="/" element={<Suspense fallback={<SiteLoading />}><Index /></Suspense>} />
+      <Route path="/solucoes" element={<Suspense fallback={<SiteLoading />}><Solucoes /></Suspense>} />
+      <Route path="/solucoes/:slug" element={<Suspense fallback={<SiteLoading />}><SolucaoDetalhe /></Suspense>} />
+      <Route path="/servicos" element={<Suspense fallback={<SiteLoading />}><Servicos /></Suspense>} />
+      <Route path="/sobre" element={<Suspense fallback={<SiteLoading />}><Sobre /></Suspense>} />
+      <Route path="/blog" element={<Suspense fallback={<SiteLoading />}><Blog /></Suspense>} />
+      <Route path="/blog/:slug" element={<Suspense fallback={<SiteLoading />}><BlogPost /></Suspense>} />
+      <Route path="/contato" element={<Suspense fallback={<SiteLoading />}><Contato /></Suspense>} />
+      <Route path="/privacy" element={<Suspense fallback={<SiteLoading />}><Privacy /></Suspense>} />
+      <Route path="/terms" element={<Suspense fallback={<SiteLoading />}><Terms /></Suspense>} />
+      <Route path="/bia-preview" element={<Suspense fallback={<SiteLoading />}><BiaPreview /></Suspense>} />
+
+      {/* Portal - public */}
+      <Route path="/portal/login" element={<Suspense fallback={<Loading />}><PortalLogin /></Suspense>} />
+      <Route path="/portal/reset-password" element={<Suspense fallback={<Loading />}><ResetPassword /></Suspense>} />
+
+      {/* Portal - protected */}
+      <Route path="/portal" element={<Suspense fallback={<Loading />}><ProtectedRoute><PortalDashboard /></ProtectedRoute></Suspense>} />
+      <Route path="/portal/chamados" element={<Suspense fallback={<Loading />}><ProtectedRoute><Chamados /></ProtectedRoute></Suspense>} />
+      <Route path="/portal/chamados/:id" element={<Suspense fallback={<Loading />}><ProtectedRoute><ChamadoDetalhe /></ProtectedRoute></Suspense>} />
+      <Route path="/portal/documentos" element={<Suspense fallback={<Loading />}><ProtectedRoute><Documentos /></ProtectedRoute></Suspense>} />
+      <Route path="/portal/perfil" element={<Suspense fallback={<Loading />}><ProtectedRoute><Perfil /></ProtectedRoute></Suspense>} />
+
+      {/* Admin */}
+      <Route path="/portal/admin/empresas" element={<Suspense fallback={<Loading />}><ProtectedRoute adminOnly><AdminEmpresas /></ProtectedRoute></Suspense>} />
+      <Route path="/portal/admin/usuarios" element={<Suspense fallback={<Loading />}><ProtectedRoute adminOnly><AdminUsuarios /></ProtectedRoute></Suspense>} />
+
+      <Route path="*" element={<Suspense fallback={<SiteLoading />}><NotFound /></Suspense>} />
+    </Routes>
   );
 };
 
@@ -76,7 +110,9 @@ const App = () => (
       <BrowserRouter>
         <Analytics />
         <ScrollToTop />
-        <AppRoutes />
+        <AuthProvider>
+          <AppRoutes />
+        </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
