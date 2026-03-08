@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { Mail, Lock, ArrowRight, KeyRound } from "lucide-react";
+import { Mail, Lock, ArrowRight, KeyRound, Loader2 } from "lucide-react";
 import logoSbi from "@/assets/logo-sbi.png";
 
 type View = "login" | "forgot";
@@ -15,13 +15,26 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
-  const { signIn, resetPassword, user } = useAuth();
+  const { signIn, resetPassword, user, loading } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
 
   // Redirect if already logged in
+  useEffect(() => {
+    if (!loading && user) {
+      navigate("/portal", { replace: true });
+    }
+  }, [user, loading, navigate]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
+  }
+
   if (user) {
-    navigate("/portal", { replace: true });
     return null;
   }
 
