@@ -83,19 +83,19 @@ const AppRoutes = () => {
       <Route path="/bia-preview" element={<Suspense fallback={<SiteLoading />}><BiaPreview /></Suspense>} />
 
       {/* Portal - public */}
-      <Route path="/portal/login" element={<Suspense fallback={<Loading />}><PortalLogin /></Suspense>} />
-      <Route path="/portal/reset-password" element={<Suspense fallback={<Loading />}><ResetPassword /></Suspense>} />
+      <Route path="/portal/login" element={<PortalLogin />} />
+      <Route path="/portal/reset-password" element={<ResetPassword />} />
 
       {/* Portal - protected */}
-      <Route path="/portal" element={<Suspense fallback={<Loading />}><ProtectedRoute><PortalDashboard /></ProtectedRoute></Suspense>} />
-      <Route path="/portal/chamados" element={<Suspense fallback={<Loading />}><ProtectedRoute><Chamados /></ProtectedRoute></Suspense>} />
-      <Route path="/portal/chamados/:id" element={<Suspense fallback={<Loading />}><ProtectedRoute><ChamadoDetalhe /></ProtectedRoute></Suspense>} />
-      <Route path="/portal/documentos" element={<Suspense fallback={<Loading />}><ProtectedRoute><Documentos /></ProtectedRoute></Suspense>} />
-      <Route path="/portal/perfil" element={<Suspense fallback={<Loading />}><ProtectedRoute><Perfil /></ProtectedRoute></Suspense>} />
+      <Route path="/portal" element={<ProtectedRoute><PortalDashboard /></ProtectedRoute>} />
+      <Route path="/portal/chamados" element={<ProtectedRoute><Chamados /></ProtectedRoute>} />
+      <Route path="/portal/chamados/:id" element={<ProtectedRoute><ChamadoDetalhe /></ProtectedRoute>} />
+      <Route path="/portal/documentos" element={<ProtectedRoute><Documentos /></ProtectedRoute>} />
+      <Route path="/portal/perfil" element={<ProtectedRoute><Perfil /></ProtectedRoute>} />
 
       {/* Admin */}
-      <Route path="/portal/admin/empresas" element={<Suspense fallback={<Loading />}><ProtectedRoute adminOnly><AdminEmpresas /></ProtectedRoute></Suspense>} />
-      <Route path="/portal/admin/usuarios" element={<Suspense fallback={<Loading />}><ProtectedRoute adminOnly><AdminUsuarios /></ProtectedRoute></Suspense>} />
+      <Route path="/portal/admin/empresas" element={<ProtectedRoute adminOnly><AdminEmpresas /></ProtectedRoute>} />
+      <Route path="/portal/admin/usuarios" element={<ProtectedRoute adminOnly><AdminUsuarios /></ProtectedRoute>} />
 
       <Route path="*" element={<Suspense fallback={<SiteLoading />}><NotFound /></Suspense>} />
     </Routes>
