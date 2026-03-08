@@ -185,7 +185,10 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="hidden md:block">
+        <div className="hidden md:flex items-center gap-2">
+          <Button variant="outline" size="sm" asChild>
+            <Link to="/portal/login">Portal do Cliente</Link>
+          </Button>
           <Button asChild>
             <Link to="/contato">Fale Conosco</Link>
           </Button>
