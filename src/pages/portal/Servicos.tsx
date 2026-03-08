@@ -44,17 +44,15 @@ export default function PortalServicos() {
         return;
       }
 
-      const promises: Promise<any>[] = [
-        supabase
+      const csPromise = supabase
           .from("company_services")
           .select("id, name, service_id, embed_url, is_active, company_id, companies(name), services(id, name, slug, description, icon, type)")
-          .eq("is_active", true)
-          .then(r => r),
-      ];
+          .eq("is_active", true);
 
-      if (isAdmin) {
-        promises.push(supabase.from("companies").select("*").order("name").then(r => r));
-      }
+      const [csRes, companiesRes] = await Promise.all([
+        csPromise,
+        isAdmin ? supabase.from("companies").select("*").order("name") : Promise.resolve({ data: [] }),
+      ]);
 
       const results = await Promise.all(promises);
       let data = (results[0].data ?? []) as unknown as ClientService[];
