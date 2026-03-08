@@ -29,7 +29,7 @@ export default function PortalServicos() {
     if (!profile?.company_id) { setLoading(false); return; }
     supabase
       .from("company_services")
-      .select("id, service_id, embed_url, is_active, services(id, name, slug, description, icon, type)")
+      .select("id, name, service_id, embed_url, is_active, services(id, name, slug, description, icon, type)")
       .eq("company_id", profile.company_id)
       .eq("is_active", true)
       .then(({ data }) => {
