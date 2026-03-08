@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Sparkles, Clock } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import biaRobot from "@/assets/bia-v1.png";
+import biaRobot from "@/assets/bia-v1.webp";
 
 const apps = [
   {

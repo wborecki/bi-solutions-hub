@@ -4,9 +4,9 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
-import heroBi from "@/assets/hero-bi.jpg";
-import heroRobos from "@/assets/hero-robos.jpg";
-import heroJurimetria from "@/assets/hero-jurimetria.jpg";
+import heroBi from "@/assets/hero-bi.webp";
+import heroRobos from "@/assets/hero-robos.webp";
+import heroJurimetria from "@/assets/hero-jurimetria.webp";
 
 const slides = [
   {

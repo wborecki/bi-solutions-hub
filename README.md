@@ -1,73 +1,124 @@
-# Welcome to your Lovable project
+# Solutions in BI - Website Institucional
 
-## Project info
+Site institucional da Solutions in BI, especializada em Business Intelligence, automação de processos e soluções jurídicas.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## 🚀 Tecnologias
 
-## How can I edit this code?
+- **Vite** - Build tool e dev server
+- **React 18** - Framework UI
+- **TypeScript** - Type safety
+- **Tailwind CSS** - Estilização
+- **shadcn/ui** - Componentes UI
+- **Framer Motion** - Animações
+- **React Router** - Roteamento
+- **Vitest** - Testes
 
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+## 💻 Desenvolvimento Local
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+# Clone o repositório
+git clone https://github.com/Solutions-in-BI/bi-solutions-hub.git
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# Navegue até o diretório
+cd bi-solutions-hub
 
-# Step 3: Install the necessary dependencies.
-npm i
+# Instale as dependências
+npm install
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Inicie o servidor de desenvolvimento
 npm run dev
+
+# Preview do build de produção
+npm run preview
 ```
 
-**Edit a file directly in GitHub**
+## 🚢 Deploy na Vercel
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Deploy Automático (Recomendado)
 
-**Use GitHub Codespaces**
+1. **Faça fork ou push do repositório para o GitHub**
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+2. **Acesse [vercel.com](https://vercel.com)**
 
-## What technologies are used for this project?
+3. **Importe o projeto:**
+   - Clique em "New Project"
+   - Selecione o repositório `bi-solutions-hub`
+   - A Vercel detectará automaticamente as configurações do Vite
 
-This project is built with:
+4. **Configure (opcional):**
+   - Environment Variables: Nenhuma necessária por padrão
+   - Build Command: `npm run build` (já configurado)
+   - Output Directory: `dist` (já configurado)
+   - Root Directory: `./` (padrão)
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+5. **Deploy:**
+   - Clique em "Deploy"
+   - Aguarde o build (≈ 1-2 minutos)
+   - Seu site estará online! 🎉
 
-## How can I deploy this project?
+### Deploy via CLI
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+```sh
+# Instale a Vercel CLI globalmente
+npm i -g vercel
 
-## Can I connect a custom domain to my Lovable project?
+# Execute o deploy
+vercel
 
-Yes, you can!
+# Deploy para produção
+vercel --prod
+```
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+### Configurações Importantes
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+O arquivo `vercel.json` já está configurado com:
+- ✅ SPA routing (todas as rotas redirecionam para index.html)
+- ✅ Cache otimizado para assets estáticos (1 ano)
+- ✅ Headers de segurança (XSS, Frame Options, etc.)
+- ✅ Região Brasil (gru1 - São Paulo)
+
+## 📝 Scripts Disponíveis
+
+```sh
+npm run dev          # Servidor de desenvolvimento
+npm run build        # Build de produção
+npm run preview      # Preview do build
+npm run lint         # Verificar erros de código
+npm test             # Executar testes
+npm run test:watch   # Testes em watch mode
+npm run images:webp  # Converter imagens para WebP
+```
+
+## 🌐 Estrutura do Projeto
+
+```
+bi-solutions-hub/
+├── public/           # Arquivos estáticos (robots.txt, sitemap.xml)
+├── scripts/          # Scripts de automação
+├── src/
+│   ├── assets/       # Imagens e logos otimizados
+│   ├── components/   # Componentes React
+│   │   ├── home/     # Componentes da página inicial
+│   │   ├── layout/   # Layout (Header, Footer, etc)
+│   │   └── ui/       # Componentes UI reutilizáveis
+│   ├── hooks/        # Custom hooks
+│   ├── lib/          # Utilitários
+│   ├── pages/        # Páginas da aplicação
+│   └── test/         # Setup de testes
+├── vercel.json       # Configuração Vercel
+└── package.json      # Dependências e scripts
+```
+
+## 🔧 Otimizações Implementadas
+
+- ✅ Imagens convertidas para WebP (redução de 50-90% no tamanho)
+- ✅ Lazy loading de componentes e imagens
+- ✅ Code splitting automático
+- ✅ Compressão Gzip/Brotli (via Vercel)
+- ✅ Cache de assets estáticos
+- ✅ Headers de segurança
+- ✅ SEO otimizado com React Helmet
+
+## 📄 Licença
+
+© 2026 Solutions in BI - Todos os direitos reservados

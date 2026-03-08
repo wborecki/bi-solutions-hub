@@ -8,10 +8,10 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import {
   Shield, Sparkles, ArrowRight, Bot, BarChart3, LayoutDashboard,
-  Plug, Lightbulb, Search, Cpu, Rocket, Quote, Clock, GraduationCap, Monitor, Database,
+  Plug, Lightbulb, Search, Cpu, Rocket, Quote, Clock, GraduationCap, Monitor, Database, Scale, Workflow,
 } from "lucide-react";
 import { OptimizedImage } from "@/components/OptimizedImage";
-import heroIllustration from "@/assets/hero-dashboards-final.png";
+import heroIllustration from "@/assets/hero-dashboards-final.webp";
 
 import { StatsSection } from "@/components/home/StatsSection";
 import { BiaAnaliseSection } from "@/components/home/BiaAnaliseSection";
@@ -20,8 +20,10 @@ import { ClientsSection } from "@/components/home/ClientsSection";
 import { FAQSection } from "@/components/home/FAQSection";
 
 const solutions = [
-  { icon: Bot, title: "Automação de Fluxos", description: "Automatize processos e conecte seus sistemas com fluxos inteligentes." },
+  { icon: Workflow, title: "Automação de Fluxos", description: "Automatize processos e conecte seus sistemas com fluxos inteligentes." },
+  { icon: Bot, title: "Robôs Jurídicos", description: "Automatize consultas processuais e tarefas repetitivas para ganhar produtividade com segurança." },
   { icon: BarChart3, title: "Business Intelligence", description: "Relatórios e análises estratégicas para decisões baseadas em dados." },
+  { icon: Scale, title: "Jurimetria", description: "Análise estatística de dados jurídicos para previsibilidade e decisões estratégicas." },
   { icon: LayoutDashboard, title: "Dashboards", description: "Painéis interativos e customizados para visualização de dados." },
   { icon: Plug, title: "Integrações", description: "Conecte seus sistemas e centralize informações automaticamente." },
   { icon: Monitor, title: "Implantação de Sistemas", description: "Implantação e configuração de sistemas jurídicos sob medida." },
@@ -206,17 +208,19 @@ const Index = () => {
               const Icon = sol.icon;
               const slugMap: Record<string, string> = {
                 "Automação de Fluxos": "automacao-ia",
+                "Robôs Jurídicos": "robos-juridicos",
                 "Business Intelligence": "business-intelligence",
+                "Jurimetria": "jurimetria",
                 "Dashboards": "dashboards",
                 "Integrações": "integracoes",
                 "Implantação de Sistemas": "implantacao-sistemas",
                 "Mentoria Power BI": "mentoria-power-bi",
                 "Consultoria": "consultoria",
-                "Coleta de Dados": "coleta-dados",
+                "Coleta de Dados": "coleta-de-dados",
               };
               return (
                 <motion.div key={sol.title} variants={itemVariants} className="w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]">
-                  <Link to={`/solucoes/${slugMap[sol.title] || "automacao"}`} className="block h-full">
+                  <Link to={`/solucoes/${slugMap[sol.title] || "automacao-ia"}`} className="block h-full">
                     <Card className="rounded-xl border bg-card hover:shadow-md transition-shadow h-full group cursor-pointer">
                       <CardContent className="pt-6 pb-6 px-6 space-y-3">
                         <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import {
   ArrowRight, BarChart3, Bot, Scale, CheckCircle, Plug,
-  Lightbulb, LayoutDashboard, Zap, Shield, Users, GraduationCap, Monitor, Database,
+  Lightbulb, LayoutDashboard, Zap, Shield, Users, GraduationCap, Monitor, Database, Workflow,
 } from "lucide-react";
 import { CTASection } from "@/components/home/CTASection";
 import { Layout } from "@/components/layout/Layout";
@@ -12,11 +12,11 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { cn } from "@/lib/utils";
 import { OptimizedImage } from "@/components/OptimizedImage";
-import solutionsHero from "@/assets/solutions-hero.png";
+import solutionsHero from "@/assets/solutions-hero.webp";
 
 const solutions = [
   {
-    icon: Bot,
+    icon: Workflow,
     title: "Automação de Fluxos",
     description:
       "Automatize processos conectando seus sistemas em fluxos inteligentes. Elimine tarefas manuais e ganhe eficiência operacional.",
