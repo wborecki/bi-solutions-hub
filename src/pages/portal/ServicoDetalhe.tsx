@@ -141,7 +141,7 @@ export default function ServicoDetalhe() {
             <ArrowLeft className="h-4 w-4" />
           </Button>
           <h1 className="font-display text-xl font-bold text-foreground">
-            {data.services.name}
+            {data.name || data.services.name}
           </h1>
           {isSecureRls && (
             <span className="flex items-center gap-1 text-xs bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 px-2 py-0.5 rounded-full">

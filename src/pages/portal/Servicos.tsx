@@ -65,8 +65,8 @@ export default function PortalServicos() {
                     <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center">
                       <Icon className="h-6 w-6 text-primary" />
                     </div>
-                    <p className="font-medium text-foreground">{svc.name}</p>
-                    {svc.description && <p className="text-xs text-muted-foreground line-clamp-2">{svc.description}</p>}
+                    <p className="font-medium text-foreground">{cs.name || svc.name}</p>
+                    {cs.name && cs.name !== svc.name && <p className="text-xs text-muted-foreground">{svc.name}</p>}
                     {hasEmbed && <span className="text-xs text-primary font-medium">Abrir relatório →</span>}
                   </CardContent>
                 </Card>
