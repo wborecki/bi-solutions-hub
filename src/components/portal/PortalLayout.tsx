@@ -29,6 +29,7 @@ import logoSbi from "@/assets/logo-sbi.png";
 
 const clientMenu = [
   { title: "Dashboard", url: "/portal", icon: LayoutDashboard },
+  { title: "Serviços", url: "/portal/servicos", icon: BarChart3 },
   { title: "Chamados", url: "/portal/chamados", icon: Ticket },
   { title: "Documentos", url: "/portal/documentos", icon: FolderOpen },
   { title: "Perfil", url: "/portal/perfil", icon: User },
