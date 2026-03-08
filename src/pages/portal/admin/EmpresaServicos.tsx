@@ -105,7 +105,7 @@ export default function EmpresaServicos() {
       const svc = services.find((s) => s.id === serviceId);
 
       // Build config JSONB
-      const config: Record<string, string> = {};
+      const config: Record<string, string> = {} as Record<string, string>;
       if (svc?.type === "bi_embed") {
         if (state.workspace_id) config.workspace_id = state.workspace_id;
         if (state.report_id) config.report_id = state.report_id;
