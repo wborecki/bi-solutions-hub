@@ -23,16 +23,16 @@ const Terms = lazy(() => import("./pages/Terms"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const BiaPreview = lazy(() => import("./pages/BiaPreview"));
 
-// Portal pages
-const PortalLogin = lazy(() => import("./pages/portal/Login"));
-const ResetPassword = lazy(() => import("./pages/portal/ResetPassword"));
-const PortalDashboard = lazy(() => import("./pages/portal/Dashboard"));
-const Chamados = lazy(() => import("./pages/portal/Chamados"));
-const ChamadoDetalhe = lazy(() => import("./pages/portal/ChamadoDetalhe"));
-const Documentos = lazy(() => import("./pages/portal/Documentos"));
-const Perfil = lazy(() => import("./pages/portal/Perfil"));
-const AdminEmpresas = lazy(() => import("./pages/portal/admin/Empresas"));
-const AdminUsuarios = lazy(() => import("./pages/portal/admin/Usuarios"));
+// Portal pages — eagerly imported to avoid loading flicker on sidebar navigation
+import PortalLogin from "./pages/portal/Login";
+import ResetPassword from "./pages/portal/ResetPassword";
+import PortalDashboard from "./pages/portal/Dashboard";
+import Chamados from "./pages/portal/Chamados";
+import ChamadoDetalhe from "./pages/portal/ChamadoDetalhe";
+import Documentos from "./pages/portal/Documentos";
+import Perfil from "./pages/portal/Perfil";
+import AdminEmpresas from "./pages/portal/admin/Empresas";
+import AdminUsuarios from "./pages/portal/admin/Usuarios";
 
 // Preload main pages after initial render
 function usePreloadPages() {
@@ -83,19 +83,19 @@ const AppRoutes = () => {
       <Route path="/bia-preview" element={<Suspense fallback={<SiteLoading />}><BiaPreview /></Suspense>} />
 
       {/* Portal - public */}
-      <Route path="/portal/login" element={<Suspense fallback={<Loading />}><PortalLogin /></Suspense>} />
-      <Route path="/portal/reset-password" element={<Suspense fallback={<Loading />}><ResetPassword /></Suspense>} />
+      <Route path="/portal/login" element={<PortalLogin />} />
+      <Route path="/portal/reset-password" element={<ResetPassword />} />
 
       {/* Portal - protected */}
-      <Route path="/portal" element={<Suspense fallback={<Loading />}><ProtectedRoute><PortalDashboard /></ProtectedRoute></Suspense>} />
-      <Route path="/portal/chamados" element={<Suspense fallback={<Loading />}><ProtectedRoute><Chamados /></ProtectedRoute></Suspense>} />
-      <Route path="/portal/chamados/:id" element={<Suspense fallback={<Loading />}><ProtectedRoute><ChamadoDetalhe /></ProtectedRoute></Suspense>} />
-      <Route path="/portal/documentos" element={<Suspense fallback={<Loading />}><ProtectedRoute><Documentos /></ProtectedRoute></Suspense>} />
-      <Route path="/portal/perfil" element={<Suspense fallback={<Loading />}><ProtectedRoute><Perfil /></ProtectedRoute></Suspense>} />
+      <Route path="/portal" element={<ProtectedRoute><PortalDashboard /></ProtectedRoute>} />
+      <Route path="/portal/chamados" element={<ProtectedRoute><Chamados /></ProtectedRoute>} />
+      <Route path="/portal/chamados/:id" element={<ProtectedRoute><ChamadoDetalhe /></ProtectedRoute>} />
+      <Route path="/portal/documentos" element={<ProtectedRoute><Documentos /></ProtectedRoute>} />
+      <Route path="/portal/perfil" element={<ProtectedRoute><Perfil /></ProtectedRoute>} />
 
       {/* Admin */}
-      <Route path="/portal/admin/empresas" element={<Suspense fallback={<Loading />}><ProtectedRoute adminOnly><AdminEmpresas /></ProtectedRoute></Suspense>} />
-      <Route path="/portal/admin/usuarios" element={<Suspense fallback={<Loading />}><ProtectedRoute adminOnly><AdminUsuarios /></ProtectedRoute></Suspense>} />
+      <Route path="/portal/admin/empresas" element={<ProtectedRoute adminOnly><AdminEmpresas /></ProtectedRoute>} />
+      <Route path="/portal/admin/usuarios" element={<ProtectedRoute adminOnly><AdminUsuarios /></ProtectedRoute>} />
 
       <Route path="*" element={<Suspense fallback={<SiteLoading />}><NotFound /></Suspense>} />
     </Routes>
