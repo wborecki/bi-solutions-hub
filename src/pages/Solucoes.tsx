@@ -30,20 +30,6 @@ const solutions = [
     accent: "primary",
   },
   {
-    icon: Bot,
-    title: "Robôs Jurídicos",
-    description:
-      "Automação de consultas processuais e tarefas repetitivas em sistemas de tribunais para ganho de produtividade e redução de riscos operacionais.",
-    features: [
-      "Consultas automáticas em tribunais",
-      "Monitoramento processual contínuo",
-      "Extração estruturada de dados",
-      "Alertas inteligentes de movimentações",
-    ],
-    href: "/solucoes/robos-juridicos",
-    accent: "accent",
-  },
-  {
     icon: BarChart3,
     title: "Business Intelligence",
     description:
@@ -82,7 +68,7 @@ const solutions = [
       "Acesso mobile e desktop",
       "Drill-down e filtros dinâmicos",
     ],
-    href: "/solucoes/dashboards",
+    href: "/solucoes/business-intelligence",
     accent: "accent",
   },
   {
@@ -96,7 +82,7 @@ const solutions = [
       "Sincronização automática de dados",
       "Middleware e ETL avançado",
     ],
-    href: "/solucoes/integracoes",
+    href: "/contato",
     accent: "primary",
   },
   {
@@ -125,20 +111,6 @@ const solutions = [
       "Certificado de conclusão",
     ],
     href: "/solucoes/mentoria-power-bi",
-    accent: "accent",
-  },
-  {
-    icon: Lightbulb,
-    title: "Consultoria",
-    description:
-      "Diagnóstico e estratégia para transformação digital, com plano de ação personalizado para aumentar eficiência e resultados.",
-    features: [
-      "Diagnóstico de maturidade digital",
-      "Roadmap estratégico de implementação",
-      "Gestão de mudança e adoção",
-      "Capacitação de equipes",
-    ],
-    href: "/solucoes/consultoria",
     accent: "accent",
   },
   {

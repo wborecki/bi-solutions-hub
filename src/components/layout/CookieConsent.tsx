@@ -3,13 +3,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Cookie, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { getCookieConsent, setCookieConsent } from "@/lib/cookieConsent";
 
 export function CookieConsent() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const consent = getCookieConsent();
+    const consent = localStorage.getItem("cookie-consent");
     if (!consent) {
       const timer = setTimeout(() => setVisible(true), 1500);
       return () => clearTimeout(timer);
@@ -17,12 +16,12 @@ export function CookieConsent() {
   }, []);
 
   const handleAccept = () => {
-    setCookieConsent("accepted");
+    localStorage.setItem("cookie-consent", "accepted");
     setVisible(false);
   };
 
   const handleReject = () => {
-    setCookieConsent("rejected");
+    localStorage.setItem("cookie-consent", "rejected");
     setVisible(false);
   };
 

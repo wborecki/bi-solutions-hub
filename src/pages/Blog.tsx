@@ -170,6 +170,15 @@ const Blog = () => {
       />
       {/* Hero */}
       <section className="pt-28 md:pt-36 pb-16 bg-background relative overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.03]">
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `radial-gradient(circle at 1px 1px, hsl(var(--foreground)) 1px, transparent 0)`,
+              backgroundSize: "32px 32px",
+            }}
+          />
+        </div>
         <div className="container mx-auto px-4 relative z-10">
           <motion.div
             className="max-w-2xl"

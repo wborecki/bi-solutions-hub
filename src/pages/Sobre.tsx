@@ -76,7 +76,7 @@ const Sobre = () => {
       />
 
       {/* Hero */}
-      <section className="pt-28 md:pt-36 pb-20 bg-background relative overflow-hidden">
+      <section className="pt-28 md:pt-36 pb-20 bg-background relative overflow-hidden dot-pattern">
         <div className="container mx-auto px-4 relative z-10">
           <motion.div
             className="max-w-2xl"
@@ -185,7 +185,7 @@ const Sobre = () => {
       <div className="section-divider" />
 
       {/* Equipe */}
-      <section className="py-16 md:py-24 section-sand" ref={teamRef}>
+      <section className="py-16 md:py-24 section-sand dot-pattern" ref={teamRef}>
         <div className="container mx-auto px-4">
           <motion.div
             className="text-center mb-14"
