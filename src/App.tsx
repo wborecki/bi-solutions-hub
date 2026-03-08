@@ -23,7 +23,6 @@ const Contato = lazy(() => import("./pages/Contato"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const Terms = lazy(() => import("./pages/Terms"));
 const NotFound = lazy(() => import("./pages/NotFound"));
-const BiaPreview = lazy(() => import("./pages/BiaPreview"));
 
 // Portal pages - eagerly imported to avoid loading flicker on sidebar navigation
 import PortalLogin from "./pages/portal/Login";
@@ -86,7 +85,6 @@ const AppRoutes = () => {
       <Route path="/contato" element={<Suspense fallback={<SiteLoading />}><Contato /></Suspense>} />
       <Route path="/privacy" element={<Suspense fallback={<SiteLoading />}><Privacy /></Suspense>} />
       <Route path="/terms" element={<Suspense fallback={<SiteLoading />}><Terms /></Suspense>} />
-      <Route path="/bia-preview" element={<Suspense fallback={<SiteLoading />}><BiaPreview /></Suspense>} />
 
       {/* Portal - public */}
       <Route path="/portal/login" element={<PortalLogin />} />
