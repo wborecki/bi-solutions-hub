@@ -36,6 +36,7 @@ const clientMenu = [
 ];
 
 const adminMenu = [
+  { title: "Serviços", url: "/portal/admin/servicos", icon: BarChart3 },
   { title: "Empresas", url: "/portal/admin/empresas", icon: Building2 },
   { title: "Usuários", url: "/portal/admin/usuarios", icon: Users },
 ];
