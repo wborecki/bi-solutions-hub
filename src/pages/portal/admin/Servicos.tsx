@@ -8,7 +8,11 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { Plus, Trash2, Pencil } from "lucide-react";
+import { Plus, Trash2, Pencil, BarChart3, PieChart, LineChart, Activity, TrendingUp, Database, FileText, Bot, Scale, Briefcase } from "lucide-react";
+
+const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
+  BarChart3, PieChart, LineChart, Activity, TrendingUp, Database, FileText, Bot, Scale, Briefcase,
+};
 
 type Service = {
   id: string;
@@ -133,11 +137,24 @@ export default function Servicos() {
                   <div className="space-y-2">
                     <Label>Ícone</Label>
                     <Select value={form.icon} onValueChange={(v) => setForm({ ...form, icon: v })}>
-                      <SelectTrigger><SelectValue /></SelectTrigger>
+                      <SelectTrigger>
+                        <span className="flex items-center gap-2">
+                          {ICON_MAP[form.icon] && (() => { const I = ICON_MAP[form.icon]; return <I className="h-4 w-4" />; })()}
+                          <SelectValue />
+                        </span>
+                      </SelectTrigger>
                       <SelectContent>
-                        {ICON_OPTIONS.map((i) => (
-                          <SelectItem key={i} value={i}>{i}</SelectItem>
-                        ))}
+                        {ICON_OPTIONS.map((i) => {
+                          const IconComp = ICON_MAP[i];
+                          return (
+                            <SelectItem key={i} value={i}>
+                              <span className="flex items-center gap-2">
+                                {IconComp && <IconComp className="h-4 w-4" />}
+                                {i}
+                              </span>
+                            </SelectItem>
+                          );
+                        })}
                       </SelectContent>
                     </Select>
                   </div>
@@ -166,9 +183,12 @@ export default function Servicos() {
             {services.map((s) => (
               <Card key={s.id}>
                 <CardContent className="p-4 flex items-center justify-between">
-                  <div>
-                    <p className="font-medium text-foreground">{s.name}</p>
-                    <p className="text-xs text-muted-foreground">{typeLabel(s.type)} · {s.slug}</p>
+                  <div className="flex items-center gap-3">
+                    {(() => { const I = ICON_MAP[s.icon]; return I ? <div className="h-9 w-9 rounded-lg bg-primary/10 flex items-center justify-center"><I className="h-5 w-5 text-primary" /></div> : null; })()}
+                    <div>
+                      <p className="font-medium text-foreground">{s.name}</p>
+                      <p className="text-xs text-muted-foreground">{typeLabel(s.type)} · {s.slug}</p>
+                    </div>
                   </div>
                   <div className="flex gap-1">
                     <Button variant="ghost" size="icon" onClick={() => handleEdit(s)}>
