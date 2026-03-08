@@ -33,6 +33,10 @@ import Documentos from "./pages/portal/Documentos";
 import Perfil from "./pages/portal/Perfil";
 import AdminEmpresas from "./pages/portal/admin/Empresas";
 import AdminUsuarios from "./pages/portal/admin/Usuarios";
+import AdminServicos from "./pages/portal/admin/Servicos";
+import EmpresaServicos from "./pages/portal/admin/EmpresaServicos";
+import PortalServicos from "./pages/portal/Servicos";
+import ServicoDetalhe from "./pages/portal/ServicoDetalhe";
 
 // Preload main pages after initial render
 function usePreloadPages() {
