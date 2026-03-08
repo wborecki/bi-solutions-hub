@@ -5,9 +5,9 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import blogBi from "@/assets/blog-bi.webp";
-import blogJurimetria from "@/assets/blog-jurimetria.webp";
-import blogAutomacao from "@/assets/blog-automacao.webp";
+import blogBi from "@/assets/blog-bi.jpg";
+import blogJurimetria from "@/assets/blog-jurimetria.jpg";
+import blogAutomacao from "@/assets/blog-automacao.jpg";
 
 const featuredPosts = [
   {

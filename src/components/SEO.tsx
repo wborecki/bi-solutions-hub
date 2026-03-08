@@ -22,7 +22,7 @@ const BASE_URL = "https://solutionsinbi.com";
 export function SEO({ title, description, canonical, ogImage, type = "website", jsonLd, noIndex, article }: SEOProps) {
   const fullTitle = `${title} | Solutions in BI`;
   const url = canonical ? `${BASE_URL}${canonical}` : BASE_URL;
-  const image = ogImage || `${BASE_URL}/og-image.webp`;
+  const image = ogImage || `${BASE_URL}/og-image.png`;
 
   return (
     <Helmet>

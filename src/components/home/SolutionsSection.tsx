@@ -6,9 +6,9 @@ import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
-import solutionBi from "@/assets/solution-bi.webp";
-import solutionRobos from "@/assets/solution-robos.webp";
-import solutionJurimetria from "@/assets/solution-jurimetria.webp";
+import solutionBi from "@/assets/solution-bi.jpg";
+import solutionRobos from "@/assets/solution-robos.jpg";
+import solutionJurimetria from "@/assets/solution-jurimetria.jpg";
 
 const solutions = [
   {

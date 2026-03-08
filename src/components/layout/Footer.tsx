@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Linkedin, Instagram } from "lucide-react";
-import logoSbi from "@/assets/logo-sbi-transparent.webp";
+import logoSbi from "@/assets/logo-sbi-transparent.png";
 
 export function Footer() {
   return (

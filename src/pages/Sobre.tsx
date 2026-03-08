@@ -5,10 +5,10 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Target, Eye, Lightbulb, Shield, Heart, Award, Users, CheckCircle, Linkedin } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import logoSbi from "@/assets/logo-sbi.webp";
-import teamWillian from "@/assets/team-willian-photo.webp";
-import teamElisa from "@/assets/team-elisa-photo.webp";
-import heroSobreIllustration from "@/assets/hero-sobre-illustration.webp";
+import logoSbi from "@/assets/logo-sbi.png";
+import teamWillian from "@/assets/team-willian-photo.jpg";
+import teamElisa from "@/assets/team-elisa-photo.jpg";
+import heroSobreIllustration from "@/assets/hero-sobre-illustration.png";
 import { OptimizedImage } from "@/components/OptimizedImage";
 
 const values = [
@@ -220,9 +220,9 @@ const Sobre = () => {
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                   </div>
-                  <CardContent className="p-6 h-full flex flex-col gap-3">
-                    <div className="flex items-start justify-between gap-3 min-h-[56px]">
-                      <div className="min-w-0">
+                  <CardContent className="p-6 space-y-3">
+                    <div className="flex items-center justify-between">
+                      <div>
                         <h3 className="text-lg font-display font-bold text-foreground">{member.name}</h3>
                         <p className="text-sm font-medium text-primary">{member.role}</p>
                       </div>

@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, ChevronDown, Bot, BarChart3, LayoutDashboard, Plug, Lightbulb, GraduationCap, Monitor, Database, TrendingUp, Settings, BookOpen, Scale } from "lucide-react";
+import { Menu, X, ChevronDown, Bot, BarChart3, LayoutDashboard, Plug, Lightbulb, GraduationCap, Monitor, Database, TrendingUp, Settings, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import logoSbi from "@/assets/logo-sbi.png";
@@ -11,7 +11,6 @@ const solutionCategories = [
     icon: TrendingUp,
     items: [
       { icon: BarChart3, label: "Business Intelligence", desc: "Relatórios e análises estratégicas", href: "/solucoes/business-intelligence" },
-      { icon: Scale, label: "Jurimetria", desc: "Análise estatística jurídica", href: "/solucoes/jurimetria" },
       { icon: LayoutDashboard, label: "Dashboards", desc: "Painéis visuais e interativos", href: "/solucoes/dashboards" },
       { icon: Database, label: "Coleta de Dados", desc: "Captura automatizada de informações", href: "/solucoes/coleta-de-dados" },
     ],

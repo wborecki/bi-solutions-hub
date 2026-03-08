@@ -1,15 +1,15 @@
 import { useRef, useEffect, useState } from "react";
 import logoVP from "@/assets/logo-vernalha-pereira.png";
-import logoSofae from "@/assets/logo-sofae.webp";
+import logoSofae from "@/assets/logo-sofae.png";
 import logoFL from "@/assets/logo-future-law.png";
-import logoVT from "@/assets/logo-vt-advogados.webp";
+import logoVT from "@/assets/logo-vt-advogados.png";
 import logoSeleme from "@/assets/logo-seleme.png";
 import logoOAB from "@/assets/logo-oab-parana.png";
-import logoLA from "@/assets/logo-luis-albert.webp";
-import logoFebrapo from "@/assets/logo-febrapo.webp";
-import logoC3 from "@/assets/logo-c3.webp";
-import logoEBDA from "@/assets/logo-ebda.webp";
-import logoMS from "@/assets/logo-ms.webp";
+import logoLA from "@/assets/logo-luis-albert.png";
+import logoFebrapo from "@/assets/logo-febrapo.png";
+import logoC3 from "@/assets/logo-c3.png";
+import logoEBDA from "@/assets/logo-ebda.png";
+import logoMS from "@/assets/logo-ms.png";
 
 const clients = [
   { name: "Vernalha Pereira", logo: logoVP },

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import {
   ArrowRight, BarChart3, Bot, Scale, CheckCircle, Plug,
-  Lightbulb, LayoutDashboard, Zap, Shield, Users, GraduationCap, Monitor, Database, Workflow,
+  Lightbulb, LayoutDashboard, Zap, Shield, Users, GraduationCap, Monitor, Database,
 } from "lucide-react";
 import { CTASection } from "@/components/home/CTASection";
 import { Layout } from "@/components/layout/Layout";
@@ -12,11 +12,11 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { cn } from "@/lib/utils";
 import { OptimizedImage } from "@/components/OptimizedImage";
-import solutionsHero from "@/assets/solutions-hero.webp";
+import solutionsHero from "@/assets/solutions-hero.png";
 
 const solutions = [
   {
-    icon: Workflow,
+    icon: Bot,
     title: "Automação de Fluxos",
     description:
       "Automatize processos conectando seus sistemas em fluxos inteligentes. Elimine tarefas manuais e ganhe eficiência operacional.",
@@ -28,20 +28,6 @@ const solutions = [
     ],
     href: "/solucoes/automacao-ia",
     accent: "primary",
-  },
-  {
-    icon: Bot,
-    title: "Robôs Jurídicos",
-    description:
-      "Automação de consultas processuais e tarefas repetitivas em sistemas de tribunais para ganho de produtividade e redução de riscos operacionais.",
-    features: [
-      "Consultas automáticas em tribunais",
-      "Monitoramento processual contínuo",
-      "Extração estruturada de dados",
-      "Alertas inteligentes de movimentações",
-    ],
-    href: "/solucoes/robos-juridicos",
-    accent: "accent",
   },
   {
     icon: BarChart3,
@@ -82,7 +68,7 @@ const solutions = [
       "Acesso mobile e desktop",
       "Drill-down e filtros dinâmicos",
     ],
-    href: "/solucoes/dashboards",
+    href: "/solucoes/business-intelligence",
     accent: "accent",
   },
   {
@@ -96,7 +82,7 @@ const solutions = [
       "Sincronização automática de dados",
       "Middleware e ETL avançado",
     ],
-    href: "/solucoes/integracoes",
+    href: "/contato",
     accent: "primary",
   },
   {
@@ -125,20 +111,6 @@ const solutions = [
       "Certificado de conclusão",
     ],
     href: "/solucoes/mentoria-power-bi",
-    accent: "accent",
-  },
-  {
-    icon: Lightbulb,
-    title: "Consultoria",
-    description:
-      "Diagnóstico e estratégia para transformação digital, com plano de ação personalizado para aumentar eficiência e resultados.",
-    features: [
-      "Diagnóstico de maturidade digital",
-      "Roadmap estratégico de implementação",
-      "Gestão de mudança e adoção",
-      "Capacitação de equipes",
-    ],
-    href: "/solucoes/consultoria",
     accent: "accent",
   },
   {
