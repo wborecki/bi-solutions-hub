@@ -105,7 +105,7 @@ export default function EmpresaServicos() {
       const svc = services.find((s) => s.id === serviceId);
 
       // Build config JSONB
-      const config: Record<string, string> = {} as Record<string, string>;
+      const config: Record<string, Json> = {};
       if (svc?.type === "bi_embed") {
         if (state.workspace_id) config.workspace_id = state.workspace_id;
         if (state.report_id) config.report_id = state.report_id;
@@ -114,7 +114,7 @@ export default function EmpresaServicos() {
       }
       if (svc?.type === "looker_embed" && state.looker_filters) {
         try {
-          config.looker_filters = JSON.parse(state.looker_filters);
+          config.looker_filters = JSON.parse(state.looker_filters) as Json;
         } catch {
           /* ignore invalid JSON */
         }
@@ -125,7 +125,7 @@ export default function EmpresaServicos() {
           await supabase.from("company_services").update({
             embed_url: state.embed_url,
             is_active: true,
-            config,
+            config: config as unknown as Json,
           }).eq("id", existing.id);
         } else {
           await supabase.from("company_services").insert({
@@ -133,7 +133,7 @@ export default function EmpresaServicos() {
             service_id: serviceId,
             embed_url: state.embed_url,
             is_active: true,
-            config,
+            config: config as unknown as Json,
           });
         }
       } else if (existing) {
