@@ -1,1 +1,4 @@
 project_id = "vwtopjultghxrqofexng"
+
+[functions.generate-pbi-token]
+verify_jwt = false
