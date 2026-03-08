@@ -23,18 +23,21 @@ import {
   Building2,
   Users,
   LogOut,
+  BarChart3,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import logoSbi from "@/assets/logo-sbi.png";
 
 const clientMenu = [
   { title: "Dashboard", url: "/portal", icon: LayoutDashboard },
+  { title: "Serviços", url: "/portal/servicos", icon: BarChart3 },
   { title: "Chamados", url: "/portal/chamados", icon: Ticket },
   { title: "Documentos", url: "/portal/documentos", icon: FolderOpen },
   { title: "Perfil", url: "/portal/perfil", icon: User },
 ];
 
 const adminMenu = [
+  { title: "Serviços", url: "/portal/admin/servicos", icon: BarChart3 },
   { title: "Empresas", url: "/portal/admin/empresas", icon: Building2 },
   { title: "Usuários", url: "/portal/admin/usuarios", icon: Users },
 ];

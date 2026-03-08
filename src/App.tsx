@@ -33,6 +33,10 @@ import Documentos from "./pages/portal/Documentos";
 import Perfil from "./pages/portal/Perfil";
 import AdminEmpresas from "./pages/portal/admin/Empresas";
 import AdminUsuarios from "./pages/portal/admin/Usuarios";
+import AdminServicos from "./pages/portal/admin/Servicos";
+import EmpresaServicos from "./pages/portal/admin/EmpresaServicos";
+import PortalServicos from "./pages/portal/Servicos";
+import ServicoDetalhe from "./pages/portal/ServicoDetalhe";
 
 // Preload main pages after initial render
 function usePreloadPages() {
@@ -92,9 +96,13 @@ const AppRoutes = () => {
       <Route path="/portal/chamados/:id" element={<ProtectedRoute><ChamadoDetalhe /></ProtectedRoute>} />
       <Route path="/portal/documentos" element={<ProtectedRoute><Documentos /></ProtectedRoute>} />
       <Route path="/portal/perfil" element={<ProtectedRoute><Perfil /></ProtectedRoute>} />
+      <Route path="/portal/servicos" element={<ProtectedRoute><PortalServicos /></ProtectedRoute>} />
+      <Route path="/portal/servicos/:id" element={<ProtectedRoute><ServicoDetalhe /></ProtectedRoute>} />
 
       {/* Admin */}
+      <Route path="/portal/admin/servicos" element={<ProtectedRoute adminOnly><AdminServicos /></ProtectedRoute>} />
       <Route path="/portal/admin/empresas" element={<ProtectedRoute adminOnly><AdminEmpresas /></ProtectedRoute>} />
+      <Route path="/portal/admin/empresas/:id/servicos" element={<ProtectedRoute adminOnly><EmpresaServicos /></ProtectedRoute>} />
       <Route path="/portal/admin/usuarios" element={<ProtectedRoute adminOnly><AdminUsuarios /></ProtectedRoute>} />
 
       <Route path="*" element={<Suspense fallback={<SiteLoading />}><NotFound /></Suspense>} />

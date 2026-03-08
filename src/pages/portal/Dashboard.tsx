@@ -5,7 +5,7 @@ import { PortalLayout } from "@/components/portal/PortalLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { Ticket, FolderOpen, Plus, Clock } from "lucide-react";
+import { Ticket, FolderOpen, Plus, Clock, BarChart3 } from "lucide-react";
 
 export default function Dashboard() {
   const { profile, isAdmin } = useAuth();
@@ -13,6 +13,7 @@ export default function Dashboard() {
   const [ticketCount, setTicketCount] = useState(0);
   const [openTickets, setOpenTickets] = useState(0);
   const [docCount, setDocCount] = useState(0);
+  const [serviceCount, setServiceCount] = useState(0);
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -31,6 +32,12 @@ export default function Dashboard() {
         .from("documents")
         .select("*", { count: "exact", head: true });
       setDocCount(docs ?? 0);
+
+      const { count: svcs } = await supabase
+        .from("company_services")
+        .select("*", { count: "exact", head: true })
+        .eq("is_active", true);
+      setServiceCount(svcs ?? 0);
     };
     fetchStats();
   }, []);
@@ -47,7 +54,7 @@ export default function Dashboard() {
           </p>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-3">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-sm font-medium text-muted-foreground">Total de Chamados</CardTitle>
@@ -73,6 +80,15 @@ export default function Dashboard() {
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold text-foreground">{docCount}</div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardTitle className="text-sm font-medium text-muted-foreground">Serviços Ativos</CardTitle>
+              <BarChart3 className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-3xl font-bold text-foreground">{serviceCount}</div>
             </CardContent>
           </Card>
         </div>
