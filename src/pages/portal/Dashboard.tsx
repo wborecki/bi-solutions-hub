@@ -82,6 +82,15 @@ export default function Dashboard() {
               <div className="text-3xl font-bold text-foreground">{docCount}</div>
             </CardContent>
           </Card>
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardTitle className="text-sm font-medium text-muted-foreground">Serviços Ativos</CardTitle>
+              <BarChart3 className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-3xl font-bold text-foreground">{serviceCount}</div>
+            </CardContent>
+          </Card>
         </div>
 
         <div className="flex gap-3">

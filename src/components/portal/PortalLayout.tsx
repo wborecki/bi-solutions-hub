@@ -23,6 +23,7 @@ import {
   Building2,
   Users,
   LogOut,
+  BarChart3,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import logoSbi from "@/assets/logo-sbi.png";
