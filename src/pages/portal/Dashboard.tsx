@@ -5,7 +5,7 @@ import { PortalLayout } from "@/components/portal/PortalLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { Ticket, FolderOpen, Plus, Clock } from "lucide-react";
+import { Ticket, FolderOpen, Plus, Clock, BarChart3 } from "lucide-react";
 
 export default function Dashboard() {
   const { profile, isAdmin } = useAuth();
