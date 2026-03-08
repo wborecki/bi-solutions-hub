@@ -12,14 +12,28 @@ serve(async (req) => {
   }
 
   try {
-    const { email, password, full_name, company_id, role } = await req.json();
+    const body = await req.json();
 
     const supabaseAdmin = createClient(
       Deno.env.get("SUPABASE_URL")!,
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
     );
 
-    // Create user
+    // DELETE action
+    if (body.action === "delete" && body.user_id) {
+      // Delete profile, roles, then auth user
+      await supabaseAdmin.from("user_roles").delete().eq("user_id", body.user_id);
+      await supabaseAdmin.from("profiles").delete().eq("id", body.user_id);
+      const { error } = await supabaseAdmin.auth.admin.deleteUser(body.user_id);
+      if (error) throw error;
+      return new Response(JSON.stringify({ success: true }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    // CREATE action
+    const { email, password, full_name, company_id, role } = body;
+
     const { data: userData, error: createError } = await supabaseAdmin.auth.admin.createUser({
       email,
       password,
@@ -31,12 +45,10 @@ serve(async (req) => {
 
     const userId = userData.user.id;
 
-    // Update profile with company if provided
     if (company_id) {
       await supabaseAdmin.from("profiles").update({ company_id }).eq("id", userId);
     }
 
-    // Assign role
     if (role) {
       await supabaseAdmin.from("user_roles").insert({ user_id: userId, role });
     }
