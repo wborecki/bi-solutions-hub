@@ -5,8 +5,8 @@ import { Analytics as VercelAnalytics } from "@vercel/analytics/react";
 // Adicionando tipagem para os objetos globais do GTM e GA4
 declare global {
   interface Window {
-    dataLayer: any[];
-    gtag: (...args: any[]) => void;
+    dataLayer: unknown[];
+    gtag: (...args: unknown[]) => void;
   }
 }
 
@@ -44,8 +44,8 @@ const loadGA4 = () => {
   document.head.appendChild(script1);
 
   window.dataLayer = window.dataLayer || [];
-  window.gtag = function() {
-    window.dataLayer.push(arguments);
+  window.gtag = function(...args: unknown[]) {
+    window.dataLayer.push(args);
   };
   window.gtag("js", new Date());
   window.gtag("config", GA4_ID);
