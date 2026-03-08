@@ -23,7 +23,7 @@ const Terms = lazy(() => import("./pages/Terms"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const BiaPreview = lazy(() => import("./pages/BiaPreview"));
 
-// Portal pages — eagerly imported to avoid loading flicker on sidebar navigation
+// Portal pages - eagerly imported to avoid loading flicker on sidebar navigation
 import PortalLogin from "./pages/portal/Login";
 import ResetPassword from "./pages/portal/ResetPassword";
 import PortalDashboard from "./pages/portal/Dashboard";

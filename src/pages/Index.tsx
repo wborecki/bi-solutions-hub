@@ -116,12 +116,7 @@ const Index = () => {
       <Section className="pt-32 md:pt-44 pb-20 md:pb-32">
         <div className="max-w-6xl mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <motion.div
-              className="space-y-6"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-            >
+            <div className="space-y-6">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold leading-tight text-primary-dark">
                 Transformamos dados jurídicos em{" "}
                 <span className="text-gradient">decisões inteligentes</span>
@@ -139,14 +134,9 @@ const Index = () => {
                   <Link to="/solucoes">Ver Soluções</Link>
                 </Button>
               </div>
-            </motion.div>
+            </div>
 
-            <motion.div
-              className="flex items-center justify-center"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.7, delay: 0.2 }}
-            >
+            <div className="flex items-center justify-center">
               <OptimizedImage
                 src={heroIllustration}
                 webpSrc={heroIllustrationWebp}
@@ -157,7 +147,7 @@ const Index = () => {
                 className="w-64 md:w-80 lg:w-[480px] h-auto"
                 loading="eager"
               />
-            </motion.div>
+            </div>
           </div>
         </div>
       </Section>

@@ -303,7 +303,7 @@ export default function Documentos() {
             <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
           </div>
         ) : searchTerm ? (
-          /* Search results — flat table */
+          /* Search results - flat table */
           filteredDocs.length === 0 ? (
             <Card>
               <CardContent className="py-12 text-center text-muted-foreground">
@@ -339,7 +339,7 @@ export default function Documentos() {
                           </TableCell>
                           {isAdmin && (
                             <TableCell className="text-sm text-muted-foreground">
-                              {companyMap.get(doc.company_id) || "—"}
+                              {companyMap.get(doc.company_id) || "-"}
                             </TableCell>
                           )}
                           <TableCell className="text-sm text-muted-foreground">
@@ -422,7 +422,7 @@ export default function Documentos() {
                             </TableCell>
                             {isAdmin && (
                               <TableCell className="text-sm text-muted-foreground">
-                                {companyMap.get(doc.company_id) || "—"}
+                                {companyMap.get(doc.company_id) || "-"}
                               </TableCell>
                             )}
                             <TableCell className="text-right text-sm text-muted-foreground">

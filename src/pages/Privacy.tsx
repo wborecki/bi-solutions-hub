@@ -9,7 +9,7 @@ const Privacy = () => (
         <h1 className="text-4xl font-display font-bold mb-6 text-primary-dark">Política de Privacidade</h1>
         <div className="prose prose-sm text-muted-foreground space-y-4">
           <p>Última atualização: Março de 2026</p>
-          <p>A Solutions in BI ("nós", "nosso") leva a privacidade dos seus dados a sério. Esta Política descreve como coletamos, usamos, armazenamos e protegemos suas informações pessoais, em conformidade com a Lei Geral de Proteção de Dados (LGPD — Lei nº 13.709/2018).</p>
+          <p>A Solutions in BI ("nós", "nosso") leva a privacidade dos seus dados a sério. Esta Política descreve como coletamos, usamos, armazenamos e protegemos suas informações pessoais, em conformidade com a Lei Geral de Proteção de Dados (LGPD - Lei nº 13.709/2018).</p>
 
           <h2 className="text-xl font-display font-bold text-foreground mt-8">1. Dados Coletados</h2>
           <p><strong>Dados fornecidos por você:</strong> nome, e-mail, telefone e mensagem, por meio dos formulários de contato.</p>

@@ -174,7 +174,7 @@ export default function ServicoDetalhe() {
           </div>
         )}
 
-        {/* Power BI with RLS — use iframe with token in post message */}
+        {/* Power BI with RLS - use iframe with token in post message */}
         {isSecureRls && pbiEmbed && !pbiLoading && (
           <div className="flex-1 min-h-[70vh] rounded-lg overflow-hidden border bg-background">
             <iframe
@@ -212,7 +212,7 @@ export default function ServicoDetalhe() {
           </div>
         )}
 
-        {/* Fallback for PBI error — show public URL if available */}
+        {/* Fallback for PBI error - show public URL if available */}
         {isSecureRls && pbiError && data.embed_url && (
           <div className="flex-1 min-h-[70vh] rounded-lg overflow-hidden border bg-background">
             <iframe

@@ -67,7 +67,7 @@ export default function Login() {
 
   return (
     <div className="min-h-screen flex">
-      {/* Left side — branding */}
+      {/* Left side - branding */}
       <div className="hidden lg:flex lg:w-1/2 bg-primary-dark relative flex-col justify-center items-center p-12 text-primary-foreground">
         <div className="absolute top-8 left-8">
           <Link to="/" aria-label="Ir para a página inicial" className="inline-block">
@@ -79,7 +79,7 @@ export default function Login() {
             Portal do Cliente
           </h1>
           <p className="text-lg opacity-90 leading-relaxed">
-            Acesse seus dashboards, abra chamados de suporte e gerencie documentos — tudo em um único lugar.
+            Acesse seus dashboards, abra chamados de suporte e gerencie documentos - tudo em um único lugar.
           </p>
           <div className="space-y-4 pt-4">
             {[
@@ -97,7 +97,7 @@ export default function Login() {
         </div>
       </div>
 
-      {/* Right side — form */}
+      {/* Right side - form */}
       <div className="flex-1 flex items-center justify-center p-8 bg-background">
         <div className="w-full max-w-sm space-y-8">
           <div className="lg:hidden flex justify-center mb-4">

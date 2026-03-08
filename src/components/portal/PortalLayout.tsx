@@ -103,19 +103,20 @@ function PortalSidebar() {
           </SidebarGroup>
         )}
 
-        <div className="mt-auto p-4 space-y-2">
-          <p className="text-xs text-muted-foreground truncate">
-            {profile?.full_name || profile?.email}
-          </p>
-          <Button
-            variant="ghost"
-            size="sm"
-            className="w-full justify-start text-muted-foreground"
-            onClick={signOut}
-          >
-            <LogOut className="h-4 w-4 mr-2" />
-            Sair
-          </Button>
+        <div className="mt-auto p-2">
+          {!collapsed && (
+            <p className="text-xs text-muted-foreground truncate px-2 mb-1">
+              {profile?.full_name || profile?.email}
+            </p>
+          )}
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton onClick={signOut} tooltip="Sair">
+                <LogOut className="h-4 w-4" />
+                <span>Sair</span>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
         </div>
       </SidebarContent>
     </Sidebar>

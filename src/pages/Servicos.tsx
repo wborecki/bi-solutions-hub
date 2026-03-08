@@ -158,12 +158,7 @@ export default function Servicos() {
         </div>
         
         <div className="container mx-auto px-4 relative">
-          <motion.div 
-            className="max-w-3xl mx-auto text-center"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
+          <div className="max-w-3xl mx-auto text-center">
             <span className="inline-block px-4 py-1.5 rounded-full bg-accent/20 text-accent-foreground text-sm font-medium mb-6">
               Serviços Especializados
             </span>
@@ -186,7 +181,7 @@ export default function Servicos() {
                 <Link to="/solucoes">Ver Soluções</Link>
               </Button>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 

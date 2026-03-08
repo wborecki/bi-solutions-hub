@@ -189,7 +189,7 @@ export default function EmpresaServicos() {
             <ArrowLeft className="h-4 w-4" />
           </Button>
           <div>
-            <h1 className="font-display text-2xl font-bold text-foreground">Serviços — {companyName}</h1>
+            <h1 className="font-display text-2xl font-bold text-foreground">Serviços - {companyName}</h1>
             <p className="text-sm text-muted-foreground">Configure múltiplos relatórios por tipo de serviço</p>
           </div>
         </div>

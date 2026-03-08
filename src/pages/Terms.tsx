@@ -18,7 +18,7 @@ const Terms = () => (
           <p>A Solutions in BI oferece soluções de Business Intelligence, Jurimetria, Automação, Robôs Jurídicos, Dashboards, Integrações, Mentoria, Implantação de Sistemas, Consultoria e Coleta de Dados. Os serviços são prestados mediante proposta comercial e contrato específico.</p>
 
           <h2 className="text-xl font-display font-bold text-foreground mt-8">3. Propriedade Intelectual</h2>
-          <p>Todo o conteúdo deste site — incluindo textos, imagens, logotipos, layouts, código-fonte e materiais visuais — é de propriedade exclusiva da Solutions in BI e protegido pela legislação brasileira de direitos autorais (Lei nº 9.610/1998).</p>
+          <p>Todo o conteúdo deste site - incluindo textos, imagens, logotipos, layouts, código-fonte e materiais visuais - é de propriedade exclusiva da Solutions in BI e protegido pela legislação brasileira de direitos autorais (Lei nº 9.610/1998).</p>
           <p>É proibida a reprodução, distribuição ou modificação de qualquer conteúdo sem autorização prévia por escrito.</p>
 
           <h2 className="text-xl font-display font-bold text-foreground mt-8">4. Uso Permitido</h2>

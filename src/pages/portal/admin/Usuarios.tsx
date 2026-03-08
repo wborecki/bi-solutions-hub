@@ -59,7 +59,7 @@ export default function Usuarios() {
       (profilesData ?? []).map((p) => ({
         ...p,
         role: roleMap.get(p.id) ?? "sem role",
-        company_name: p.company_id ? companyMap.get(p.company_id) ?? "—" : "—",
+        company_name: p.company_id ? companyMap.get(p.company_id) ?? "-" : "-",
       }))
     );
     setLoading(false);
@@ -248,7 +248,7 @@ export default function Usuarios() {
                 <TableBody>
                   {filtered.map((p) => (
                     <TableRow key={p.id}>
-                      <TableCell className="font-medium">{p.full_name || "—"}</TableCell>
+                      <TableCell className="font-medium">{p.full_name || "-"}</TableCell>
                       <TableCell className="text-muted-foreground">{p.email}</TableCell>
                       <TableCell>{p.company_name}</TableCell>
                       <TableCell>

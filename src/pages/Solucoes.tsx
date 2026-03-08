@@ -186,12 +186,7 @@ const Solucoes = () => {
       <section className="pt-28 pb-16 md:pt-36 md:pb-20">
         <div className="max-w-6xl mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <motion.div
-              className="space-y-6"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-            >
+            <div className="space-y-6">
               <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-semibold">
                 Nossas Soluções
               </span>
@@ -216,14 +211,9 @@ const Solucoes = () => {
                   </a>
                 </Button>
               </div>
-            </motion.div>
+            </div>
 
-            <motion.div
-              className="hidden lg:flex items-center justify-center"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.7, delay: 0.2 }}
-            >
+            <div className="hidden lg:flex items-center justify-center">
               <OptimizedImage
                 src={solutionsHero}
                 webpSrc={solutionsHeroWebp}
@@ -234,7 +224,7 @@ const Solucoes = () => {
                 className="w-[480px] h-auto"
                 loading="eager"
               />
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>

@@ -92,32 +92,18 @@ export function HeroCarousel() {
               className="space-y-6"
             >
               {/* Title */}
-              <motion.h1
-                className="text-5xl md:text-6xl lg:text-7xl font-display font-bold leading-tight"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 }}
-              >
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold leading-tight">
                 <span className="text-white">{slide.title} </span>
                 <span className="text-accent">{slide.titleHighlight}</span>
-              </motion.h1>
+              </h1>
 
               {/* Description */}
-              <motion.p
-                className="text-lg md:text-xl text-white/80 leading-relaxed max-w-xl"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-              >
+              <p className="text-lg md:text-xl text-white/80 leading-relaxed max-w-xl">
                 {slide.description}
-              </motion.p>
+              </p>
 
               {/* Buttons */}
-              <motion.div
-                className="flex flex-wrap gap-4 pt-4"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
+              <div className="flex flex-wrap gap-4 pt-4">
               >
                 <Button 
                   asChild 
@@ -137,7 +123,7 @@ export function HeroCarousel() {
                 >
                   <Link to="/contato">Fale Conosco</Link>
                 </Button>
-              </motion.div>
+              </div>
             </motion.div>
           </AnimatePresence>
         </div>

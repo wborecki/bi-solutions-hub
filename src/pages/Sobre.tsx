@@ -31,14 +31,14 @@ const diferenciais = [
 const team = [
   {
     name: "Willian Borecki",
-    role: "CEO & Co-Fundador",
+    role: "Fundador",
     bio: "Especialista em Business Intelligence e análise de dados, com ampla experiência em soluções tecnológicas para o mercado jurídico e corporativo.",
     photo: teamWillian,
     linkedin: "https://www.linkedin.com/in/willian-borecki/",
   },
   {
     name: "Elisa Santin",
-    role: "COO & Co-Fundadora",
+    role: "Fundadora",
     bio: "Profissional com sólida experiência em gestão de projetos e operações, responsável por garantir a excelência na entrega de cada solução.",
     photo: teamElisa,
     linkedin: "https://www.linkedin.com/in/elisa-santin-36488b167/",
@@ -79,12 +79,7 @@ const Sobre = () => {
       {/* Hero */}
       <section className="pt-28 md:pt-36 pb-20 bg-background relative overflow-hidden">
         <div className="container mx-auto px-4 relative z-10">
-          <motion.div
-            className="max-w-2xl"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
+          <div className="max-w-2xl">
             <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
               Sobre Nós
             </span>
@@ -97,7 +92,7 @@ const Sobre = () => {
               Inteligência Artificial para o mercado jurídico e corporativo, transformando
               dados em decisões estratégicas.
             </p>
-          </motion.div>
+          </div>
         </div>
       </section>
 

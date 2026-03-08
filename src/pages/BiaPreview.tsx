@@ -41,7 +41,7 @@ const variants = [
   { src: biaV18, label: "V18", desc: "Ovo branco, antena esférica, olhos roxos" },
   { src: biaV19, label: "V19", desc: "Roxo metálico, circuitos teal, asas laterais" },
   { src: biaV20, label: "V20", desc: "Branco Pixar, lupa, pose de analista/detetive" },
-  { src: biaV21, label: "V21", desc: "Premium: cápsula branca, visor amplo, olhos teal, detalhes roxo/teal, acenando — estilo Pixar HD" },
+  { src: biaV21, label: "V21", desc: "Premium: cápsula branca, visor amplo, olhos teal, detalhes roxo/teal, acenando - estilo Pixar HD" },
 ];
 
 export default function BiaPreview() {
@@ -49,7 +49,7 @@ export default function BiaPreview() {
     <div className="min-h-screen bg-background p-8">
       <div className="max-w-6xl mx-auto">
         <h1 className="text-3xl font-bold text-center mb-2">Escolha a Bia</h1>
-        <p className="text-muted-foreground text-center mb-10">Todas as 21 variações — qual será a mascote oficial?</p>
+        <p className="text-muted-foreground text-center mb-10">Todas as 21 variações - qual será a mascote oficial?</p>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
           {variants.map((v) => (
             <div key={v.label} className="flex flex-col items-center gap-3 p-4 rounded-xl border bg-card hover:shadow-lg transition-shadow">

@@ -21,7 +21,7 @@ export const faqs = [
   {
     question: "Preciso ter um sistema de gestão para usar BI?",
     answer:
-      "Não necessariamente. Trabalhamos com diversas fontes de dados, incluindo planilhas, bancos de dados, APIs de tribunais e sistemas variados. O importante é ter dados — nós cuidamos de organizá-los e transformá-los em insights.",
+      "Não necessariamente. Trabalhamos com diversas fontes de dados, incluindo planilhas, bancos de dados, APIs de tribunais e sistemas variados. O importante é ter dados - nós cuidamos de organizá-los e transformá-los em insights.",
   },
   {
     question: "Como funciona o suporte após a entrega do projeto?",

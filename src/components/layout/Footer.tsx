@@ -20,7 +20,7 @@ export function Footer() {
             </p>
             <div className="flex gap-3 pt-1">
               <a
-                href="https://www.linkedin.com/company/solutionsinbi"
+                href="https://www.linkedin.com/company/solutions-in-bi/"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn da Solutions in BI"
