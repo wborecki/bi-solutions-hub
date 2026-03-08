@@ -54,8 +54,7 @@ export default function PortalServicos() {
         isAdmin ? supabase.from("companies").select("*").order("name") : Promise.resolve({ data: [] }),
       ]);
 
-      const results = await Promise.all(promises);
-      let data = (results[0].data ?? []) as unknown as ClientService[];
+      let data = (csRes.data ?? []) as unknown as ClientService[];
 
       if (!isAdmin) {
         data = data.filter(d => d.company_id === profile!.company_id);
@@ -63,8 +62,8 @@ export default function PortalServicos() {
 
       setItems(data);
 
-      if (isAdmin && results[1]) {
-        setCompanies(results[1].data ?? []);
+      if (isAdmin) {
+        setCompanies((companiesRes.data ?? []) as Tables<"companies">[]);
       }
 
       setLoading(false);

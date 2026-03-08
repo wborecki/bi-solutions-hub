@@ -54,18 +54,14 @@ export default function Chamados() {
   const [filterCompany, setFilterCompany] = useState<string>("all");
 
   const fetchTickets = async () => {
-    const promises: Promise<any>[] = [
-      supabase.from("tickets").select("*, companies(name)").order("created_at", { ascending: false }).then(r => r),
-    ];
+    const [ticketsRes, companiesRes] = await Promise.all([
+      supabase.from("tickets").select("*, companies(name)").order("created_at", { ascending: false }),
+      isAdmin ? supabase.from("companies").select("*").order("name") : Promise.resolve({ data: [] }),
+    ]);
 
+    setTickets((ticketsRes.data ?? []) as TicketWithCompany[]);
     if (isAdmin) {
-      promises.push(supabase.from("companies").select("*").order("name").then(r => r));
-    }
-
-    const results = await Promise.all(promises);
-    setTickets((results[0].data ?? []) as TicketWithCompany[]);
-    if (isAdmin && results[1]) {
-      setCompanies(results[1].data ?? []);
+      setCompanies((companiesRes.data ?? []) as Tables<"companies">[]);
     }
     setLoading(false);
   };
