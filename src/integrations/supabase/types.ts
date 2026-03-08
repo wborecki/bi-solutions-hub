@@ -43,6 +43,7 @@ export type Database = {
           embed_url: string
           id: string
           is_active: boolean
+          name: string
           service_id: string
         }
         Insert: {
@@ -52,6 +53,7 @@ export type Database = {
           embed_url?: string
           id?: string
           is_active?: boolean
+          name?: string
           service_id: string
         }
         Update: {
@@ -61,6 +63,7 @@ export type Database = {
           embed_url?: string
           id?: string
           is_active?: boolean
+          name?: string
           service_id?: string
         }
         Relationships: [
