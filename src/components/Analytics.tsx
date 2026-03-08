@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { Analytics as VercelAnalytics } from "@vercel/analytics/react";
 
 // Adicionando tipagem para os objetos globais do GTM e GA4
 declare global {
@@ -97,5 +98,5 @@ export function Analytics() {
     }
   }, [location]);
 
-  return null;
+  return <VercelAnalytics />;
 }
