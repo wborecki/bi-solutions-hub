@@ -18,6 +18,7 @@ export default function Empresas() {
   const [name, setName] = useState("");
   const [slug, setSlug] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const navigate = useNavigate();
 
   const fetchCompanies = async () => {
     const { data } = await supabase.from("companies").select("*").order("name");
