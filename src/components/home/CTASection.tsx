@@ -89,7 +89,7 @@ export function CTASection() {
                 className="bg-primary-foreground text-primary-dark hover:bg-primary-foreground/90 border border-primary-foreground/30 font-semibold shadow-lg"
               >
                 <a 
-                  href="https://wa.me/551151920925?text=Olá! Gostaria de saber mais sobre as soluções da Solutions in BI." 
+                  href="https://wa.me/5511945418626?text=Olá! Gostaria de saber mais sobre as soluções da Solutions in BI." 
                   target="_blank" 
                   rel="noopener noreferrer"
                 >

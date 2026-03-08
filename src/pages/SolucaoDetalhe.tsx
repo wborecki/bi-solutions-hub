@@ -1,28 +1,42 @@
 import { useParams, Link } from "react-router-dom";
 import { ArrowRight, CheckCircle, BarChart3, Bot, Scale, Cpu, LayoutDashboard, Plug, Lightbulb, GraduationCap, Monitor, Database } from "lucide-react";
 import { OptimizedImage } from "@/components/OptimizedImage";
+import { SEO } from "@/components/SEO";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { CTASection } from "@/components/home/CTASection";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import illustrationBI from "@/assets/illustration-bi.png";
-import illustrationRobos from "@/assets/illustration-robos.png";
-import illustrationJurimetria from "@/assets/illustration-jurimetria.png";
-import illustrationAutomacao from "@/assets/illustration-automacao.png";
-import illustrationDashboards from "@/assets/illustration-dashboards.png";
-import illustrationIntegracoes from "@/assets/illustration-integracoes.png";
-import illustrationConsultoria from "@/assets/illustration-consultoria.png";
-import illustrationImplantacao from "@/assets/illustration-implantacao.png";
-import illustrationMentoria from "@/assets/illustration-mentoria.png";
-import illustrationColeta from "@/assets/illustration-coleta.png";
+import illustrationBI from "@/assets/illustration-bi.webp";
+import illustrationBIWebp from "@/assets/illustration-bi.webp";
+import illustrationRobos from "@/assets/bia-v1.webp";
+import illustrationRobosWebp from "@/assets/bia-v1.webp";
+import illustrationJurimetria from "@/assets/illustration-jurimetria.webp";
+import illustrationJurimetriaWebp from "@/assets/illustration-jurimetria.webp";
+import solutionJurimetria from "@/assets/solution-jurimetria.webp";
+import illustrationAutomacao from "@/assets/illustration-automacao.webp";
+import illustrationAutomacaoWebp from "@/assets/illustration-automacao.webp";
+import illustrationDashboards from "@/assets/illustration-dashboards.webp";
+import illustrationDashboardsWebp from "@/assets/illustration-dashboards.webp";
+import illustrationIntegracoes from "@/assets/illustration-integracoes.webp";
+import illustrationIntegracoesWebp from "@/assets/illustration-integracoes.webp";
+import illustrationConsultoria from "@/assets/illustration-consultoria.webp";
+import illustrationConsultoriaWebp from "@/assets/illustration-consultoria.webp";
+import illustrationImplantacao from "@/assets/illustration-implantacao.webp";
+import illustrationImplantacaoWebp from "@/assets/illustration-implantacao.webp";
+import illustrationMentoria from "@/assets/illustration-mentoria.webp";
+import illustrationMentoriaWebp from "@/assets/illustration-mentoria.webp";
+import illustrationColeta from "@/assets/illustration-coleta.webp";
+import illustrationColetaWebp from "@/assets/illustration-coleta.webp";
 
 const solutionsData = {
   "business-intelligence": {
     illustration: illustrationBI,
+    illustrationWebp: illustrationBIWebp,
     icon: BarChart3,
     title: "Business Intelligence",
     subtitle: "Dashboards e Relatórios Customizados",
+    keywords: "business intelligence jurídico, Power BI, dashboards jurídicos, relatórios automatizados, KPIs jurídicos, CPJ, PROJuris, ADVBOX, BI para escritórios de advocacia",
     longDescription: `A Solutions in BI oferece soluções completas de Business Intelligence, transformando dados brutos em insights estratégicos para seu negócio. Nossa equipe especializada desenvolve dashboards personalizados que permitem visualizar KPIs críticos, identificar tendências e tomar decisões baseadas em dados confiáveis.`,
     features: [
       { title: "Dashboards Interativos", description: "Criação de painéis visuais em Power BI com navegação intuitiva e dados atualizados." },
@@ -41,12 +55,14 @@ const solutionsData = {
   },
   "robos-juridicos": {
     illustration: illustrationRobos,
+    illustrationWebp: illustrationRobosWebp,
     icon: Bot,
     title: "Robôs Jurídicos",
     subtitle: "Automação de Consultas e Processos",
-    longDescription: `Nossa solução de automação jurídica elimina o trabalho manual e repetitivo das equipes, permitindo que advogados e gestores foquem em atividades estratégicas. Os robôs realizam consultas automáticas em tribunais como TJ-SP, TJ-RJ, TJ-MG, TJ-PR, TJ-RS, TRF1, TRF2, TRF3, TRF4, TRF5, TRT1 a TRT24, TST, STJ e STF, monitoram processos e extraem informações de forma contínua e confiável.`,
+    keywords: "robôs jurídicos, automação PJe, robô ESAJ, consulta TJSP, TJPR, TJRJ, TJMG, TJRS, TRT, TST, STJ, TRF, PROJUDI, e-SAJ, Tucujuris, Eproc, CPJ, PROJuris, ADVBOX, consulta processual automatizada",
+    longDescription: `Nossa solução de automação jurídica elimina o trabalho manual e repetitivo das equipes, permitindo que advogados e gestores foquem em atividades estratégicas. Os robôs realizam consultas automáticas nos principais tribunais estaduais, federais, trabalhistas e superiores, monitoram processos e extraem informações de forma contínua e confiável.`,
     features: [
-      { title: "Consultas Automáticas", description: "Robôs que consultam automaticamente sistemas de tribunais (TJ, TRF, TRT, TST, STJ, STF) e órgãos públicos." },
+      { title: "Consultas Automáticas", description: "Robôs que consultam automaticamente sistemas dos principais tribunais e órgãos públicos." },
       { title: "Monitoramento Contínuo", description: "Acompanhamento 24/7 de processos em todos os tribunais com alertas de movimentações importantes." },
       { title: "Extração de Dados", description: "Captura automatizada de informações de documentos e sistemas jurídicos de todo o país." },
       { title: "Integração com Sistemas", description: "Conexão com ERPs e sistemas de gestão jurídica como CPJ-SAJ, PROJuris e ADVBOX." },
@@ -62,12 +78,14 @@ const solutionsData = {
   },
   "jurimetria": {
     illustration: illustrationJurimetria,
+    illustrationWebp: illustrationJurimetriaWebp,
     icon: Scale,
     title: "Jurimetria",
     subtitle: "Inteligência Jurídica Baseada em Dados",
-    longDescription: `A Jurimetria transforma a prática jurídica ao aplicar métodos estatísticos para análise de processos judiciais. Com nossa solução, escritórios e empresas podem prever resultados, calcular probabilidades e desenvolver estratégias mais eficazes com base em dados de tribunais como TJ-SP, TJ-RJ, TJ-MG, TRF1, TRF2, TRF3, TRF4, TRF5, TRT, TST, STJ e STF.`,
+    keywords: "jurimetria, análise jurimétrica, parecer jurimétrico, TJSP, TJPR, TJRJ, TJMG, TRT, TST, STJ, STF, provisionamento jurídico, probabilidade de êxito, análise estatística processual, jurisprudência dados",
+    longDescription: `A Jurimetria transforma a prática jurídica ao aplicar métodos estatísticos para análise de processos judiciais. Com nossa solução, escritórios e empresas podem prever resultados, calcular probabilidades e desenvolver estratégias mais eficazes com base em dados de tribunais estaduais, federais, trabalhistas e superiores.`,
     features: [
-      { title: "Análise Estatística", description: "Modelos estatísticos que analisam resultados processuais em tribunais de todo o Brasil (TJ, TRF, TRT, TST, STJ, STF)." },
+      { title: "Análise Estatística", description: "Modelos estatísticos que analisam resultados processuais em tribunais de todo o Brasil." },
       { title: "Pareceres Jurimétricos", description: "Relatórios detalhados com análise de jurisprudência e tendências por tribunal e relator." },
       { title: "Gestão de Riscos", description: "Avaliação quantitativa de riscos processuais para tomada de decisão estratégica." },
       { title: "Análise de Tendências", description: "Identificação de padrões em decisões por tribunal, vara, relator e matéria." },
@@ -80,12 +98,25 @@ const solutionsData = {
       "Identificação de padrões judiciais",
       "Diferencial competitivo no mercado",
     ],
+    showcase: {
+      image: solutionJurimetria,
+      title: "Pareceres Jurimétricos",
+      description: "Nossos pareceres jurimétricos combinam análise estatística rigorosa com inteligência de dados para oferecer uma visão clara e objetiva sobre o cenário processual. Cada parecer é personalizado para o caso do cliente, trazendo probabilidades de êxito, valores estimados, tempo de tramitação e comparativos por tribunal e relator.",
+      highlights: [
+        "Análise estatística de casos similares com probabilidade de êxito",
+        "Estimativa de valores de condenação com base em dados reais",
+        "Comparativo de decisões por tribunal, vara e relator",
+        "Relatório visual e executivo para tomada de decisão",
+      ],
+    },
   },
   "automacao-ia": {
     illustration: illustrationAutomacao,
+    illustrationWebp: illustrationAutomacaoWebp,
     icon: Cpu,
     title: "Automação de Fluxos",
     subtitle: "Automatize Processos e Ganhe Eficiência",
+    keywords: "automação jurídica, automação de fluxos, integração CPJ, PROJuris, ADVBOX, Themis, SAJ, automação e-mail jurídico, RPA jurídico, automação escritório advocacia",
     longDescription: `Criamos fluxos automatizados que conectam seus sistemas, eliminam tarefas manuais e aceleram processos do início ao fim. Nossa plataforma de automação permite integrar e-mails, planilhas, CRMs, ERPs e sistemas jurídicos em fluxos inteligentes que rodam de forma autônoma, 24 horas por dia.`,
     features: [
       { title: "Fluxos Automatizados", description: "Crie sequências de ações automáticas que conectam diferentes sistemas e etapas do processo." },
@@ -104,9 +135,11 @@ const solutionsData = {
   },
   "dashboards": {
     illustration: illustrationDashboards,
+    illustrationWebp: illustrationDashboardsWebp,
     icon: LayoutDashboard,
     title: "Dashboards",
     subtitle: "Visualização de Dados Estratégicos",
+    keywords: "dashboards jurídicos, Power BI, painel gerencial jurídico, KPIs escritório advocacia, dashboard produtividade jurídica, relatórios visuais, CPJ dashboard, PROJuris relatórios",
     longDescription: `Criamos dashboards interativos e responsivos que transformam dados complexos em visualizações claras e acionáveis. Nossos painéis são projetados para diferentes perfis de usuário, desde analistas até executivos, garantindo que cada stakeholder tenha acesso às informações relevantes.`,
     features: [
       { title: "Painéis Executivos", description: "Visão consolidada dos principais indicadores para tomada de decisão rápida." },
@@ -125,9 +158,11 @@ const solutionsData = {
   },
   "integracoes": {
     illustration: illustrationIntegracoes,
+    illustrationWebp: illustrationIntegracoesWebp,
     icon: Plug,
     title: "Integrações",
     subtitle: "Conexão entre Sistemas e Plataformas",
+    keywords: "integração sistemas jurídicos, API tribunais, integração CPJ, PROJuris, ADVBOX, SAJ, Themis, ERP jurídico, integração PJe, ESAJ, ETL jurídico, middleware jurídico",
     longDescription: `Conectamos seus sistemas, bancos de dados e plataformas em um ecossistema integrado e eficiente. Eliminamos silos de informação e criamos fluxos de dados automatizados entre ERPs, CRMs, sistemas jurídicos e ferramentas de BI.`,
     features: [
       { title: "APIs e Conectores", description: "Desenvolvimento de APIs customizadas e conectores para sistemas legados." },
@@ -146,9 +181,11 @@ const solutionsData = {
   },
   "mentoria-power-bi": {
     illustration: illustrationMentoria,
+    illustrationWebp: illustrationMentoriaWebp,
     icon: GraduationCap,
     title: "Mentoria de Power BI",
     subtitle: "Aprenda com Especialistas",
+    keywords: "mentoria Power BI, curso Power BI jurídico, treinamento Power BI, DAX, dashboard jurídico, aprender Power BI, capacitação BI, Power BI para advogados",
     longDescription: `Nossa mentoria de Power BI é um programa personalizado para profissionais que desejam dominar a criação de dashboards, relatórios e análises de dados. Com acompanhamento individual e projetos práticos, você aprende a transformar dados em insights estratégicos para seu negócio.`,
     features: [
       { title: "Aulas Práticas", description: "Sessões hands-on com dados reais do seu negócio para aprendizado aplicado." },
@@ -167,9 +204,11 @@ const solutionsData = {
   },
   "implantacao-sistemas": {
     illustration: illustrationImplantacao,
+    illustrationWebp: illustrationImplantacaoWebp,
     icon: Monitor,
     title: "Implantação de Sistemas Jurídicos",
     subtitle: "Sistemas Sob Medida para sua Operação",
+    keywords: "implantação CPJ, implantação PROJuris, implantação ADVBOX, implantação SAJ, implantação Themis, sistema jurídico, migração de dados jurídicos, implantação software jurídico",
     longDescription: `Realizamos a implantação completa dos principais sistemas jurídicos do mercado. Desde a configuração inicial até o treinamento da equipe, cuidamos da migração de dados, personalização de funcionalidades e acompanhamento para garantir que o sistema funcione perfeitamente no dia a dia do seu escritório ou departamento jurídico.`,
     features: [
       { title: "Configuração Personalizada", description: "Adaptamos o sistema jurídico às necessidades específicas do seu escritório ou departamento." },
@@ -188,9 +227,11 @@ const solutionsData = {
   },
   "consultoria": {
     illustration: illustrationConsultoria,
+    illustrationWebp: illustrationConsultoriaWebp,
     icon: Lightbulb,
     title: "Consultoria",
     subtitle: "Estratégia e Transformação Digital",
+    keywords: "consultoria jurídica tecnologia, transformação digital escritório advocacia, consultoria BI, diagnóstico digital jurídico, CPJ, PROJuris, ADVBOX, gestão jurídica",
     longDescription: `Nossa consultoria combina expertise técnica com visão estratégica para guiar sua empresa na jornada de transformação digital. Analisamos processos, identificamos oportunidades e desenhamos roadmaps personalizados para maximizar o retorno dos investimentos em tecnologia.`,
     features: [
       { title: "Diagnóstico Digital", description: "Avaliação completa da maturidade digital e identificação de gaps." },
@@ -209,9 +250,11 @@ const solutionsData = {
   },
   "coleta-de-dados": {
     illustration: illustrationColeta,
+    illustrationWebp: illustrationColetaWebp,
     icon: Database,
     title: "Coleta de Dados",
     subtitle: "Captura e Organização de Informações",
+    keywords: "coleta dados tribunais, web scraping jurídico, dados PJe, dados ESAJ, TJSP, TJPR, TJRJ, TRT, dados públicos jurídicos, extração dados processuais, captura dados portais tribunais",
     longDescription: `Oferecemos soluções de coleta automatizada de dados de diversas fontes públicas e privadas. Nosso serviço captura, organiza e entrega informações estruturadas prontas para alimentar seus dashboards, relatórios e análises estratégicas, economizando tempo e garantindo precisão.`,
     features: [
       { title: "Coleta Automatizada", description: "Captura periódica e programada de dados de sites, portais e sistemas públicos." },
@@ -234,8 +277,10 @@ const SolucaoDetalhe = () => {
   const { slug } = useParams<{ slug: string }>();
   const solution = solutionsData[slug as keyof typeof solutionsData];
   const featuresRef = useRef(null);
+  const showcaseRef = useRef(null);
   const benefitsRef = useRef(null);
   const featuresInView = useInView(featuresRef, { once: true, margin: "-80px" });
+  const showcaseInView = useInView(showcaseRef, { once: true, margin: "-80px" });
   const benefitsInView = useInView(benefitsRef, { once: true, margin: "-80px" });
 
   if (!solution) {
@@ -253,8 +298,35 @@ const SolucaoDetalhe = () => {
     );
   }
 
+  const serviceJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: solution.title,
+    description: solution.longDescription,
+    provider: {
+      "@type": "Organization",
+      name: "Solutions in BI",
+      url: "https://solutionsinbi.com",
+    },
+    areaServed: {
+      "@type": "Country",
+      name: "Brasil",
+    },
+    serviceType: solution.subtitle,
+    url: `https://solutionsinbi.com/solucoes/${slug}`,
+  };
+
+  const showcase = "showcase" in solution ? (solution as any).showcase as { image: string; title: string; description: string; highlights: string[] } : null;
+
   return (
     <Layout>
+      <SEO
+        title={`${solution.title} | Soluções Jurídicas`}
+        description={solution.longDescription.length > 155 ? solution.longDescription.slice(0, 152) + "..." : solution.longDescription}
+        canonical={`/solucoes/${slug}`}
+        keywords={solution.keywords}
+        jsonLd={serviceJsonLd}
+      />
       {/* Hero */}
       <section className="pt-28 md:pt-36 pb-20 bg-background relative overflow-hidden">
         <div className="absolute inset-0 opacity-[0.03]">
@@ -292,7 +364,7 @@ const SolucaoDetalhe = () => {
                 <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
                   <Button asChild size="lg" variant="outline">
                     <a
-                      href={`https://wa.me/551151920925?text=Olá! Gostaria de saber mais sobre a solução de ${solution.title}.`}
+                      href={`https://wa.me/5511945418626?text=Olá! Gostaria de saber mais sobre a solução de ${solution.title}.`}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -311,6 +383,8 @@ const SolucaoDetalhe = () => {
             >
               <OptimizedImage
                 src={solution.illustration}
+                webpSrc={solution.illustrationWebp}
+                sizes="(max-width: 1024px) 320px, 384px"
                 alt={`Ilustração ${solution.title}`}
                 className="w-96 h-96"
                 loading="eager"
@@ -360,6 +434,48 @@ const SolucaoDetalhe = () => {
           </div>
         </div>
       </section>
+
+      {/* Showcase (Pareceres Jurimétricos) */}
+      {showcase && (
+        <section className="py-24 bg-background" ref={showcaseRef}>
+          <div className="container mx-auto px-4">
+            <div className="grid lg:grid-cols-2 gap-12 items-center max-w-5xl mx-auto">
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                animate={showcaseInView ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.6 }}
+              >
+                <img
+                  src={showcase.image}
+                  alt={showcase.title}
+                  className="w-full rounded-2xl shadow-lg border border-border"
+                  loading="lazy"
+                />
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                animate={showcaseInView ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.6, delay: 0.15 }}
+              >
+                <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-4">
+                  {showcase.title}
+                </h2>
+                <p className="text-muted-foreground leading-relaxed mb-6">
+                  {showcase.description}
+                </p>
+                <ul className="space-y-3">
+                  {showcase.highlights.map((item: string) => (
+                    <li key={item} className="flex items-start gap-3">
+                      <CheckCircle className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+                      <span className="text-sm text-foreground">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Benefits */}
       <section className="py-24" ref={benefitsRef}>

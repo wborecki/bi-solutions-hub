@@ -8,30 +8,30 @@ import { ArrowLeft, Clock, Calendar, Share2, Linkedin, Twitter, Facebook, ArrowR
 import { CTASection } from "@/components/home/CTASection";
 import { motion } from "framer-motion";
 
-import blogBi from "@/assets/blog-il-bi.png";
-import blogJurimetria from "@/assets/blog-il-jurimetria.png";
-import blogAutomacao from "@/assets/blog-il-automacao.png";
-import blogIntegracoes from "@/assets/blog-il-integracoes.png";
-import blogColeta from "@/assets/blog-il-coleta.png";
-import blogTendencias from "@/assets/blog-il-tendencias.png";
-import blogMentoria from "@/assets/blog-il-mentoria.png";
-import blogEtl from "@/assets/blog-il-etl.png";
-import blogPowerBiTableau from "@/assets/blog-power-bi-tableau.png";
-import blogKpis from "@/assets/blog-kpis.png";
-import blogDashboardProd from "@/assets/blog-dashboard-prod.png";
-import blogProvisionamento from "@/assets/blog-provisionamento.png";
-import blogTrabalhista from "@/assets/blog-trabalhista.png";
-import blogCivel from "@/assets/blog-civel.png";
-import blog5processos from "@/assets/blog-5processos.png";
-import blogFluxosEmail from "@/assets/blog-fluxos-email.png";
-import blogRoi from "@/assets/blog-roi.png";
-import blogApis from "@/assets/blog-apis.png";
-import blogDadosPublicos from "@/assets/blog-dados-publicos.png";
-import blogAprenderPbi from "@/assets/blog-aprender-pbi.png";
-import blogDax from "@/assets/blog-dax.png";
-import blogIaJuridico from "@/assets/blog-ia-juridico.png";
-import blogFuturoGestao from "@/assets/blog-futuro-gestao.png";
-import blogTransformacao from "@/assets/blog-transformacao.png";
+import blogBi from "@/assets/blog-il-bi.webp";
+import blogJurimetria from "@/assets/blog-il-jurimetria.webp";
+import blogAutomacao from "@/assets/blog-il-automacao.webp";
+import blogIntegracoes from "@/assets/blog-il-integracoes.webp";
+import blogColeta from "@/assets/blog-il-coleta.webp";
+import blogTendencias from "@/assets/blog-il-tendencias.webp";
+import blogMentoria from "@/assets/blog-il-mentoria.webp";
+import blogEtl from "@/assets/blog-il-etl.webp";
+import blogPowerBiTableau from "@/assets/blog-power-bi-tableau.webp";
+import blogKpis from "@/assets/blog-kpis.webp";
+import blogDashboardProd from "@/assets/blog-dashboard-prod.webp";
+import blogProvisionamento from "@/assets/blog-provisionamento.webp";
+import blogTrabalhista from "@/assets/blog-trabalhista.webp";
+import blogCivel from "@/assets/blog-civel.webp";
+import blog5processos from "@/assets/blog-5processos.webp";
+import blogFluxosEmail from "@/assets/blog-fluxos-email.webp";
+import blogRoi from "@/assets/blog-roi.webp";
+import blogApis from "@/assets/blog-apis.webp";
+import blogDadosPublicos from "@/assets/blog-dados-publicos.webp";
+import blogAprenderPbi from "@/assets/blog-aprender-pbi.webp";
+import blogDax from "@/assets/blog-dax.webp";
+import blogIaJuridico from "@/assets/blog-ia-juridico.webp";
+import blogFuturoGestao from "@/assets/blog-futuro-gestao.webp";
+import blogTransformacao from "@/assets/blog-transformacao.webp";
 
 const imageMap: Record<string, string> = {
   "bi-escritorio-juridico": blogBi,
@@ -89,7 +89,7 @@ const postsData: Record<string, {
     readTime: "7 min",
     content: [
       "A Jurimetria representa uma revolução na forma como o Direito é praticado, aplicando métodos estatísticos para análise de decisões judiciais e previsão de resultados processuais.",
-      "Com a análise de milhares de decisões em tribunais como TJ-SP, TJ-RJ, TRF1 a TRF5, TRT e tribunais superiores, é possível identificar padrões de julgamento por tribunal, turma e magistrado.",
+      "Com a análise de milhares de decisões dos principais tribunais do país, é possível identificar padrões de julgamento por tribunal, turma e magistrado.",
       "Um dos principais benefícios da Jurimetria é a capacidade de calcular probabilidades de sucesso em diferentes cenários, permitindo que advogados orientem seus clientes com maior precisão sobre riscos e expectativas.",
       "A gestão de provisionamento também é beneficiada: com análises mais precisas, empresas podem ajustar suas reservas financeiras para contingências jurídicas de forma mais assertiva.",
       "No contexto trabalhista, análises jurimétricas podem revelar tendências específicas por vara, região e tipo de demanda, permitindo estratégias mais direcionadas.",
@@ -104,7 +104,7 @@ const postsData: Record<string, {
     readTime: "4 min",
     content: [
       "A automação de processos repetitivos através de robôs jurídicos está transformando a rotina de escritórios de advocacia e departamentos jurídicos em todo o Brasil.",
-      "Consultas em tribunais como TJ-SP, TJ-RJ, TJ-MG, TRF1 a TRF5, TST e STJ que antes demandavam horas de trabalho manual agora são realizadas automaticamente, 24 horas por dia.",
+      "Consultas em tribunais de diferentes esferas, que antes demandavam horas de trabalho manual, agora são realizadas automaticamente, 24 horas por dia.",
       "Os robôs podem ser configurados para realizar diversas tarefas: consultas de processos, download de documentos, monitoramento de publicações em diários oficiais e muito mais.",
       "Um dos principais benefícios é a redução drástica de erros humanos. Tarefas repetitivas são propensas a falhas, e a automação elimina esse risco ao mesmo tempo que libera profissionais para atividades de maior valor.",
       "A implementação de robôs jurídicos pode resultar em economia de até 80% do tempo gasto em atividades operacionais, permitindo que a equipe foque em estratégia e atendimento ao cliente.",
@@ -205,7 +205,7 @@ const postsData: Record<string, {
     readTime: "7 min",
     content: [
       "O contencioso trabalhista é uma das áreas onde a jurimetria mostra maior potencial, dado o alto volume de processos e a recorrência de temas específicos.",
-      "Analisando dados dos TRTs e do TST, é possível identificar tendências claras: quais pedidos têm maior probabilidade de procedência, quais valores são tipicamente arbitrados e como cada tribunal se posiciona.",
+      "Analisando dados da Justiça do Trabalho em primeira e segunda instância, além dos tribunais superiores, é possível identificar tendências claras: quais pedidos têm maior probabilidade de procedência, quais valores são tipicamente arbitrados e como cada tribunal se posiciona.",
       "A análise por relator é particularmente valiosa no âmbito trabalhista. Alguns magistrados têm padrões consistentes em determinadas matérias, e conhecer esses padrões permite ajustar a estratégia.",
       "Dados sobre tempo de tramitação ajudam a prever quando cada fase processual será concluída, permitindo melhor planejamento de recursos e expectativas do cliente.",
       "A jurimetria trabalhista também auxilia na decisão entre acordo e continuidade do processo, calculando o custo-benefício de cada cenário com base em dados estatísticos reais.",
@@ -296,7 +296,7 @@ const postsData: Record<string, {
     content: [
       "Muitos tribunais brasileiros já disponibilizam APIs para consulta de processos e movimentações. Aproveitar esses recursos pode automatizar significativamente a gestão processual.",
       "O DataJud, iniciativa do CNJ, consolidou dados processuais de diversos tribunais em uma base única e acessível, facilitando consultas e análises em escala nacional.",
-      "APIs de tribunais como TJ-SP (e-SAJ), TRFs e TRTs permitem consultas automatizadas de processos, partes, movimentações e documentos, eliminando a necessidade de acesso manual.",
+      "APIs dos principais tribunais do país permitem consultas automatizadas de processos, partes, movimentações e documentos, eliminando a necessidade de acesso manual.",
       "Para aproveitar essas APIs, é necessário desenvolver integrações que conectem os dados dos tribunais ao seu sistema de gestão jurídica, mantendo informações sempre atualizadas.",
       "A segurança é fundamental: integrações devem seguir as políticas de acesso dos tribunais e garantir que dados sensíveis sejam tratados conforme a LGPD.",
       "Escritórios que investem em integrações com tribunais ganham agilidade, precisão e capacidade de atender mais clientes sem aumentar a equipe operacional.",
@@ -413,6 +413,34 @@ const postsData: Record<string, {
 // Helper: get all slugs as array for related posts
 const allSlugs = Object.keys(postsData);
 
+function parsePtBrDateToIso(dateStr: string) {
+  const months: Record<string, string> = {
+    janeiro: "01",
+    fevereiro: "02",
+    marco: "03",
+    março: "03",
+    abril: "04",
+    maio: "05",
+    junho: "06",
+    julho: "07",
+    agosto: "08",
+    setembro: "09",
+    outubro: "10",
+    novembro: "11",
+    dezembro: "12",
+  };
+
+  const parts = dateStr.toLowerCase().split(" ");
+  if (parts.length !== 3) return undefined;
+
+  const [dayRaw, monthRaw, year] = parts;
+  const day = dayRaw.padStart(2, "0");
+  const month = months[monthRaw];
+
+  if (!month) return undefined;
+  return `${year}-${month}-${day}`;
+}
+
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
   const post = slug ? postsData[slug] : null;
@@ -458,6 +486,7 @@ const BlogPost = () => {
 
   const heroImage = slug ? imageMap[slug] : undefined;
   const shareUrl = typeof window !== "undefined" ? window.location.href : "";
+  const publishedIsoDate = parsePtBrDateToIso(post.date);
 
   return (
     <Layout>
@@ -466,13 +495,35 @@ const BlogPost = () => {
         description={post.excerpt}
         canonical={`/blog/${slug}`}
         type="article"
+        keywords={`${post.category}, business intelligence jurídico, Solutions in BI, Power BI, PJe, ESAJ, TJSP, CPJ, PROJuris, jurimetria, automação jurídica`}
+        article={{
+          publishedTime: publishedIsoDate,
+          section: post.category,
+          author: "Solutions in BI",
+        }}
         jsonLd={{
           "@context": "https://schema.org",
-          "@type": "Article",
-          "headline": post.title,
-          "description": post.excerpt,
-          "datePublished": post.date,
-          "publisher": { "@type": "Organization", "name": "Solutions in BI" },
+          "@type": "BlogPosting",
+          headline: post.title,
+          description: post.excerpt,
+          datePublished: publishedIsoDate,
+          dateModified: publishedIsoDate,
+          articleSection: post.category,
+          wordCount: post.content.join(" ").split(/\s+/).length,
+          mainEntityOfPage: `https://solutionsinbi.com/blog/${slug}`,
+          image: heroImage ? `https://solutionsinbi.com${heroImage}` : "https://solutionsinbi.com/og-image.png",
+          author: {
+            "@type": "Organization",
+            name: "Solutions in BI",
+          },
+          publisher: {
+            "@type": "Organization",
+            name: "Solutions in BI",
+            logo: {
+              "@type": "ImageObject",
+              url: "https://solutionsinbi.com/favicon.png",
+            },
+          },
         }}
       />
 

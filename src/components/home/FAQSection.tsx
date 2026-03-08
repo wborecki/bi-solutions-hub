@@ -7,7 +7,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-const faqs = [
+export const faqs = [
   {
     question: "Quanto tempo leva um projeto de BI ou automação?",
     answer:

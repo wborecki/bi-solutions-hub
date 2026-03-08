@@ -18,11 +18,15 @@ export function CookieConsent() {
   const handleAccept = () => {
     localStorage.setItem("cookie-consent", "accepted");
     setVisible(false);
+    // Disparar evento customizado para notificar outros componentes
+    window.dispatchEvent(new Event("cookie-consent-changed"));
   };
 
   const handleReject = () => {
     localStorage.setItem("cookie-consent", "rejected");
     setVisible(false);
+    // Disparar evento customizado para notificar outros componentes
+    window.dispatchEvent(new Event("cookie-consent-changed"));
   };
 
   return (

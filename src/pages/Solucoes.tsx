@@ -13,7 +13,14 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { cn } from "@/lib/utils";
 import { OptimizedImage } from "@/components/OptimizedImage";
-import solutionsHero from "@/assets/solutions-hero.png";
+import solutionsHero from "@/assets/solutions-hero.webp";
+import solutionsHeroWebp from "@/assets/solutions-hero.webp";
+import solutionsHero480 from "@/assets/solutions-hero-480.webp";
+import solutionsHero768 from "@/assets/solutions-hero-768.webp";
+import solutionsHero1200 from "@/assets/solutions-hero-1200.webp";
+import solutionsHeroWebp480 from "@/assets/solutions-hero-480.webp";
+import solutionsHeroWebp768 from "@/assets/solutions-hero-768.webp";
+import solutionsHeroWebp1200 from "@/assets/solutions-hero-1200.webp";
 
 const solutions = [
   {
@@ -185,8 +192,9 @@ const Solucoes = () => {
     <Layout>
       <SEO
         title="Soluções em BI, Automação e Jurimetria"
-        description="Conheça nossas soluções em Business Intelligence, automação de processos, jurimetria e integrações para o mercado jurídico e corporativo."
+        description="Soluções de Business Intelligence, robôs jurídicos, jurimetria, dashboards Power BI e automação para o mercado jurídico e corporativo."
         canonical="/solucoes"
+        keywords="soluções business intelligence, robôs jurídicos, jurimetria, dashboards jurídicos, automação jurídica, coleta de dados, Power BI, integração de sistemas, PJe, ESAJ, CPJ, PROJuris, ADVBOX, SAJ, Themis"
       />
       {/* Hero */}
       <section className="pt-28 pb-16 md:pt-36 md:pb-20">
@@ -217,7 +225,7 @@ const Solucoes = () => {
                   </Link>
                 </Button>
                 <Button asChild size="lg" variant="outline">
-                  <a href="https://wa.me/551151920925" target="_blank" rel="noopener noreferrer">
+                  <a href="https://wa.me/5511945418626" target="_blank" rel="noopener noreferrer">
                     Falar no WhatsApp
                   </a>
                 </Button>
@@ -232,6 +240,10 @@ const Solucoes = () => {
             >
               <OptimizedImage
                 src={solutionsHero}
+                webpSrc={solutionsHeroWebp}
+                srcSet={`${solutionsHero480} 480w, ${solutionsHero768} 768w, ${solutionsHero1200} 1200w`}
+                webpSrcSet={`${solutionsHeroWebp480} 480w, ${solutionsHeroWebp768} 768w, ${solutionsHeroWebp1200} 1200w`}
+                sizes="(max-width: 768px) 320px, (max-width: 1024px) 420px, 480px"
                 alt="Ilustração de soluções em automação e Business Intelligence"
                 className="w-[480px] h-auto"
                 loading="eager"
@@ -251,7 +263,7 @@ const Solucoes = () => {
             transition={{ duration: 0.5 }}
           >
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-3">
-              O que <span className="text-gradient">oferecemos</span>
+              Soluções em BI e <span className="text-gradient">Automação Jurídica</span>
             </h2>
             <p className="text-muted-foreground text-lg">
               Cada solução é desenhada para resolver desafios reais e gerar impacto mensurável.

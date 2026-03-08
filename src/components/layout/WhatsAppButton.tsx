@@ -8,7 +8,7 @@ interface WhatsAppButtonProps {
 }
 
 export function WhatsAppButton({
-  phoneNumber = "551151920925",
+  phoneNumber = "5511945418626",
   message = "Olá! Gostaria de saber mais sobre as soluções da Solutions in BI.",
   className,
 }: WhatsAppButtonProps) {

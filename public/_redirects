@@ -1,0 +1,4 @@
+# Redirect rules for SPA (Netlify/Vercel)
+# All non-file requests go to index.html
+
+/*    /index.html   200

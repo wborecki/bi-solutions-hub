@@ -3,6 +3,10 @@ import { cn } from "@/lib/utils";
 
 interface OptimizedImageProps {
   src: string;
+  webpSrc?: string;
+  srcSet?: string;
+  webpSrcSet?: string;
+  sizes?: string;
   alt: string;
   className?: string;
   loading?: "lazy" | "eager";
@@ -12,6 +16,10 @@ interface OptimizedImageProps {
 
 export function OptimizedImage({
   src,
+  webpSrc,
+  srcSet,
+  webpSrcSet,
+  sizes,
   alt,
   className = "",
   loading = "lazy",
@@ -44,17 +52,29 @@ export function OptimizedImage({
         <div className="absolute inset-0 bg-muted animate-pulse rounded-inherit" />
       )}
       {isInView && (
-        <img
-          src={src}
-          alt={alt}
-          width={width}
-          height={height}
-          onLoad={() => setIsLoaded(true)}
-          className={cn(
-            "w-full h-full object-contain transition-opacity duration-500",
-            isLoaded ? "opacity-100" : "opacity-0"
+        <picture>
+          {(webpSrcSet || webpSrc) && (
+            <source
+              type="image/webp"
+              srcSet={webpSrcSet || webpSrc}
+              sizes={sizes}
+            />
           )}
-        />
+          <img
+            src={src}
+            srcSet={srcSet}
+            sizes={sizes}
+            alt={alt}
+            width={width}
+            height={height}
+            decoding="async"
+            onLoad={() => setIsLoaded(true)}
+            className={cn(
+              "w-full h-full object-contain transition-opacity duration-500",
+              isLoaded ? "opacity-100" : "opacity-0"
+            )}
+          />
+        </picture>
       )}
     </div>
   );

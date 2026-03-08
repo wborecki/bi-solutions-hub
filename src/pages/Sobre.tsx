@@ -5,10 +5,10 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Target, Eye, Lightbulb, Shield, Heart, Award, Users, CheckCircle, Linkedin } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import logoSbi from "@/assets/logo-sbi.png";
-import teamWillian from "@/assets/team-willian-photo.jpg";
-import teamElisa from "@/assets/team-elisa-photo.jpg";
-import heroSobreIllustration from "@/assets/hero-sobre-illustration.png";
+import logoSbi from "@/assets/logo-solutionsinbi-3.png";
+import teamWillian from "@/assets/team-willian-photo.webp";
+import teamElisa from "@/assets/team-elisa-photo.webp";
+import heroSobreIllustration from "@/assets/hero-sobre-illustration.webp";
 import { OptimizedImage } from "@/components/OptimizedImage";
 
 const values = [
@@ -30,18 +30,18 @@ const diferenciais = [
 
 const team = [
   {
-    name: "Willian Ribeiro",
+    name: "Willian Borecki",
     role: "CEO & Co-Fundador",
     bio: "Especialista em Business Intelligence e análise de dados, com ampla experiência em soluções tecnológicas para o mercado jurídico e corporativo.",
     photo: teamWillian,
-    linkedin: "https://www.linkedin.com/in/willian-ribeiro",
+    linkedin: "https://www.linkedin.com/in/willian-borecki",
   },
   {
-    name: "Elisa Ribeiro",
+    name: "Elisa Santin",
     role: "COO & Co-Fundadora",
     bio: "Profissional com sólida experiência em gestão de projetos e operações, responsável por garantir a excelência na entrega de cada solução.",
     photo: teamElisa,
-    linkedin: "https://www.linkedin.com/in/elisa-ribeiro",
+    linkedin: "https://www.linkedin.com/in/elisa-santin",
   },
 ];
 
@@ -70,13 +70,14 @@ const Sobre = () => {
   return (
     <Layout>
       <SEO
-        title="Sobre Nós - Especialistas em Inteligência de Dados"
-        description="Conheça a Solutions in BI: valores e missão. Especialistas em Business Intelligence, automação e jurimetria para o mercado jurídico."
+        title="Sobre Nós - Especialistas em BI e Jurimetria"
+        description="Conheça a Solutions in BI: especialistas em Business Intelligence, automação jurídica e jurimetria para o mercado jurídico e corporativo."
         canonical="/sobre"
+        keywords="sobre solutions in bi, especialistas business intelligence, consultoria jurimetria, equipe BI jurídico"
       />
 
       {/* Hero */}
-      <section className="pt-28 md:pt-36 pb-20 bg-background relative overflow-hidden dot-pattern">
+      <section className="pt-28 md:pt-36 pb-20 bg-background relative overflow-hidden">
         <div className="container mx-auto px-4 relative z-10">
           <motion.div
             className="max-w-2xl"
@@ -110,7 +111,7 @@ const Sobre = () => {
               animate={aboutInView ? { opacity: 1, scale: 1 } : {}}
               transition={{ duration: 0.5 }}
             >
-              <img src={logoSbi} alt="Solutions in BI" className="w-48 md:w-56 h-auto object-contain mix-blend-multiply" />
+              <img src={logoSbi} alt="Solutions in BI" className="w-48 md:w-56 h-auto object-contain" />
             </motion.div>
             <motion.div
               className="space-y-4"
@@ -185,7 +186,7 @@ const Sobre = () => {
       <div className="section-divider" />
 
       {/* Equipe */}
-      <section className="py-16 md:py-24 section-sand dot-pattern" ref={teamRef}>
+      <section className="py-16 md:py-24 section-sand" ref={teamRef}>
         <div className="container mx-auto px-4">
           <motion.div
             className="text-center mb-14"
@@ -213,11 +214,11 @@ const Sobre = () => {
             {team.map((member) => (
               <motion.div key={member.name} variants={itemVariants}>
                 <Card className="rounded-2xl border bg-card overflow-hidden hover:shadow-lg transition-shadow group">
-                  <div className="aspect-[4/3] overflow-hidden">
+                  <div className="aspect-square overflow-hidden">
                     <img
                       src={member.photo}
                       alt={member.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
                     />
                   </div>
                   <CardContent className="p-6 space-y-3">

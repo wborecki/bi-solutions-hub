@@ -1,12 +1,13 @@
 import { useRef, useEffect, useState } from "react";
-import logoVP from "@/assets/logo-vernalha-pereira.png";
-import logoSofae from "@/assets/logo-sofae.png";
-import logoFL from "@/assets/logo-future-law.png";
-import logoVT from "@/assets/logo-vt-advogados.png";
-import logoSeleme from "@/assets/logo-seleme.png";
-import logoOAB from "@/assets/logo-oab-parana.png";
-import logoOthree from "@/assets/logo-c3.png";
-import logoBDA from "@/assets/logo-ebda.png";
+import logoVP from "@/assets/logo-vernalha-pereira.webp";
+import logoSofae from "@/assets/logo-sofae.webp";
+import logoFL from "@/assets/logo-future-law.webp";
+import logoVT from "@/assets/logo-vt-advogados.webp";
+import logoSeleme from "@/assets/logo-seleme.webp";
+import logoOAB from "@/assets/logo-oab-parana.webp";
+import logoOthree from "@/assets/logo-c3.webp";
+import logoBDA from "@/assets/logo-ebda.webp";
+import logoLegalTrade from "@/assets/logo-legaltrade.webp";
 
 const clients = [
   { name: "Vernalha Pereira", logo: logoVP },
@@ -17,6 +18,7 @@ const clients = [
   { name: "OAB Paraná", logo: logoOAB },
   { name: "O'three", logo: logoOthree },
   { name: "BDA Gestão Jurídica", logo: logoBDA },
+  { name: "LegalTrade", logo: logoLegalTrade },
 ];
 
 export function ClientsSection() {
@@ -94,13 +96,13 @@ export function ClientsSection() {
             <div
               key={`${client.name}-${i}`}
               className="flex-shrink-0 flex items-center justify-center select-none"
-              style={{ width: 160, height: 80 }}
+              style={{ width: 200, height: 100 }}
             >
               <img
                 src={client.logo}
                 alt={client.name}
                 loading="lazy"
-                className="max-h-14 max-w-[140px] w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+                className="max-h-20 max-w-[180px] w-auto object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 drop-shadow-sm transition-all duration-300"
               />
             </div>
           ))}

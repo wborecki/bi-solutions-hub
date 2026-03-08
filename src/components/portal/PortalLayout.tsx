@@ -26,7 +26,7 @@ import {
   BarChart3,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import logoSbi from "@/assets/logo-sbi.png";
+import logoSbi from "@/assets/logo-solutionsinbi-portal-white.png";
 
 const clientMenu = [
   { title: "Dashboard", url: "/portal", icon: LayoutDashboard },
@@ -55,7 +55,9 @@ function PortalSidebar() {
     <Sidebar collapsible="icon">
       <SidebarContent>
         <div className="p-4 flex items-center gap-3">
-          <img src={logoSbi} alt="SBI" className="h-8 w-auto shrink-0" />
+          <div className="rounded-md bg-primary-dark px-2 py-1.5">
+            <img src={logoSbi} alt="SBI" className="h-7 w-auto object-contain shrink-0" />
+          </div>
         </div>
 
         <SidebarGroup>

@@ -145,9 +145,10 @@ export default function Servicos() {
   return (
     <Layout>
       <SEO
-        title="Serviços de Consultoria e Implementação"
-        description="Serviços especializados em consultoria, implementação de BI, automação de processos e treinamentos para empresas jurídicas e corporativas."
+        title="Serviços de Consultoria em BI e Automação Jurídica"
+        description="Consultoria, implementação de BI, automação jurídica, mentoria Power BI e treinamentos para escritórios e departamentos jurídicos."
         canonical="/servicos"
+        keywords="consultoria business intelligence, implementação BI, automação jurídica, mentoria Power BI, transformação digital jurídica, implantação CPJ, PROJuris, ADVBOX, SAJ, Themis"
       />
       {/* Hero */}
       <section className="relative pt-32 pb-20 bg-gradient-to-b from-primary via-primary/95 to-background overflow-hidden">
@@ -199,7 +200,7 @@ export default function Servicos() {
             transition={{ duration: 0.5 }}
           >
             <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-4">
-              Nossos <span className="text-gradient">Serviços</span>
+              Serviços de Consultoria e <span className="text-gradient">Automação</span>
             </h2>
             <p className="text-lg text-muted-foreground">
               Soluções completas para cada etapa da transformação digital do seu escritório.

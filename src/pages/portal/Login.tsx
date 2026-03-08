@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { Mail, Lock, ArrowRight, KeyRound, Loader2 } from "lucide-react";
-import logoSbi from "@/assets/logo-sbi.png";
+import logoSbi from "@/assets/logo-solutionsinbi-3.png";
 
 type View = "login" | "forgot";
 
@@ -68,9 +68,13 @@ export default function Login() {
   return (
     <div className="min-h-screen flex">
       {/* Left side — branding */}
-      <div className="hidden lg:flex lg:w-1/2 bg-primary-dark flex-col justify-center items-center p-12 text-primary-foreground">
+      <div className="hidden lg:flex lg:w-1/2 bg-primary-dark relative flex-col justify-center items-center p-12 text-primary-foreground">
+        <div className="absolute top-8 left-8">
+          <Link to="/" aria-label="Ir para a página inicial" className="inline-block">
+            <img src={logoSbi} alt="SBI Logo" className="w-[220px] h-auto object-contain brightness-0 invert" />
+          </Link>
+        </div>
         <div className="max-w-md space-y-8">
-          <img src={logoSbi} alt="SBI Logo" className="h-16 w-auto brightness-0 invert" />
           <h1 className="font-display text-4xl font-bold leading-tight">
             Portal do Cliente
           </h1>
@@ -97,7 +101,11 @@ export default function Login() {
       <div className="flex-1 flex items-center justify-center p-8 bg-background">
         <div className="w-full max-w-sm space-y-8">
           <div className="lg:hidden flex justify-center mb-4">
-            <img src={logoSbi} alt="SBI Logo" className="h-12 w-auto" />
+            <div className="rounded-lg bg-primary-dark px-3 py-2">
+              <Link to="/" aria-label="Ir para a página inicial" className="inline-block">
+                <img src={logoSbi} alt="SBI Logo" className="w-[180px] h-auto object-contain brightness-0 invert" />
+              </Link>
+            </div>
           </div>
 
           {view === "login" ? (

@@ -8,20 +8,29 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import {
   Shield, Sparkles, ArrowRight, Bot, BarChart3, LayoutDashboard,
-  Plug, Lightbulb, Search, Cpu, Rocket, Quote, Clock, GraduationCap, Monitor, Database,
+  Plug, Lightbulb, Search, Cpu, Rocket, Quote, Clock, GraduationCap, Monitor, Database, Scale, Workflow,
 } from "lucide-react";
 import { OptimizedImage } from "@/components/OptimizedImage";
-import heroIllustration from "@/assets/hero-dashboards-final.png";
+import heroIllustration from "@/assets/hero-dashboards-final.webp";
+import heroIllustrationWebp from "@/assets/hero-dashboards-final.webp";
+import heroIllustration480 from "@/assets/hero-dashboards-final-480.webp";
+import heroIllustration768 from "@/assets/hero-dashboards-final-768.webp";
+import heroIllustration1200 from "@/assets/hero-dashboards-final-1200.webp";
+import heroIllustrationWebp480 from "@/assets/hero-dashboards-final-480.webp";
+import heroIllustrationWebp768 from "@/assets/hero-dashboards-final-768.webp";
+import heroIllustrationWebp1200 from "@/assets/hero-dashboards-final-1200.webp";
 
 import { StatsSection } from "@/components/home/StatsSection";
 import { BiaAnaliseSection } from "@/components/home/BiaAnaliseSection";
 import { CTASection } from "@/components/home/CTASection";
 import { ClientsSection } from "@/components/home/ClientsSection";
-import { FAQSection } from "@/components/home/FAQSection";
+import { FAQSection, faqs } from "@/components/home/FAQSection";
 
 const solutions = [
-  { icon: Bot, title: "Automação de Fluxos", description: "Automatize processos e conecte seus sistemas com fluxos inteligentes." },
+  { icon: Workflow, title: "Automação de Fluxos", description: "Automatize processos e conecte seus sistemas com fluxos inteligentes." },
+  { icon: Bot, title: "Robôs Jurídicos", description: "Automatize consultas processuais e tarefas repetitivas para ganhar produtividade." },
   { icon: BarChart3, title: "Business Intelligence", description: "Relatórios e análises estratégicas para decisões baseadas em dados." },
+  { icon: Scale, title: "Jurimetria", description: "Análise estatística de dados jurídicos para previsibilidade e decisões estratégicas." },
   { icon: LayoutDashboard, title: "Dashboards", description: "Painéis interativos e customizados para visualização de dados." },
   { icon: Plug, title: "Integrações", description: "Conecte seus sistemas e centralize informações automaticamente." },
   { icon: Monitor, title: "Implantação de Sistemas", description: "Implantação e configuração de sistemas jurídicos sob medida." },
@@ -82,12 +91,27 @@ const Index = () => {
   const stepsInView = useInView(stepsRef, { once: true, margin: "-100px" });
   const testimonialsInView = useInView(testimonialsRef, { once: true, margin: "-100px" });
 
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
+  };
+
   return (
     <Layout>
       <SEO
         title="Business Intelligence, Automação e Jurimetria"
-        description="Soluções em BI, Jurimetria, Automação e IA para o mercado jurídico e corporativo. Transformamos dados em decisões estratégicas."
+        description="Soluções em Business Intelligence, Jurimetria, Power BI e Automação para o mercado jurídico. Dashboards, robôs jurídicos e coleta de dados."
         canonical="/"
+        keywords="business intelligence jurídico, jurimetria, automação jurídica, Power BI, dashboards jurídicos, robôs jurídicos, coleta de dados, integração de sistemas, PJe, ESAJ, CPJ, PROJuris, ADVBOX, TJSP, TJPR, TRT, TST, STJ"
+        jsonLd={faqJsonLd}
       />
       {/* Hero */}
       <Section className="pt-32 md:pt-44 pb-20 md:pb-32">
@@ -100,7 +124,7 @@ const Index = () => {
               transition={{ duration: 0.6 }}
             >
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold leading-tight text-primary-dark">
-                Transformamos dados em{" "}
+                Transformamos dados jurídicos em{" "}
                 <span className="text-gradient">decisões inteligentes</span>
               </h1>
               <p className="text-lg text-muted-foreground leading-relaxed max-w-lg">
@@ -126,6 +150,10 @@ const Index = () => {
             >
               <OptimizedImage
                 src={heroIllustration}
+                webpSrc={heroIllustrationWebp}
+                srcSet={`${heroIllustration480} 480w, ${heroIllustration768} 768w, ${heroIllustration1200} 1200w`}
+                webpSrcSet={`${heroIllustrationWebp480} 480w, ${heroIllustrationWebp768} 768w, ${heroIllustrationWebp1200} 1200w`}
+                sizes="(max-width: 768px) 256px, (max-width: 1024px) 320px, 480px"
                 alt="Ilustração de Business Intelligence e análise de dados"
                 className="w-64 md:w-80 lg:w-[480px] h-auto"
                 loading="eager"
@@ -192,7 +220,7 @@ const Index = () => {
             transition={{ duration: 0.5 }}
           >
             <span className="bg-primary text-primary-foreground text-xs font-semibold px-3 py-1 rounded-full">Soluções</span>
-            <h2 className="text-3xl md:text-4xl font-display font-bold mt-4 mb-3">O que oferecemos</h2>
+            <h2 className="text-3xl md:text-4xl font-display font-bold mt-4 mb-3">Nossas soluções em BI, Automação e Jurimetria</h2>
             <p className="text-muted-foreground">Tecnologia de ponta para cada necessidade do seu negócio.</p>
           </motion.div>
 
@@ -206,13 +234,15 @@ const Index = () => {
               const Icon = sol.icon;
               const slugMap: Record<string, string> = {
                 "Automação de Fluxos": "automacao-ia",
+                "Robôs Jurídicos": "robos-juridicos",
                 "Business Intelligence": "business-intelligence",
+                "Jurimetria": "jurimetria",
                 "Dashboards": "dashboards",
                 "Integrações": "integracoes",
                 "Implantação de Sistemas": "implantacao-sistemas",
                 "Mentoria Power BI": "mentoria-power-bi",
                 "Consultoria": "consultoria",
-                "Coleta de Dados": "coleta-dados",
+                "Coleta de Dados": "coleta-de-dados",
               };
               return (
                 <motion.div key={sol.title} variants={itemVariants} className="w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]">

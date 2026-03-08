@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Linkedin, Instagram } from "lucide-react";
-import logoSbi from "@/assets/logo-sbi-transparent.png";
+import logoSbi from "@/assets/logo-sbi-transparent.webp";
 
 export function Footer() {
   return (
@@ -82,8 +82,9 @@ export function Footer() {
             <h4 className="font-display font-semibold mb-4 text-primary-foreground/90">Contato</h4>
             <ul className="space-y-2.5">
               <li className="text-sm text-primary-foreground/60">contato@solutionsinbi.com</li>
-              <li className="text-sm text-primary-foreground/60">+55 (11) 5192-0925</li>
-              <li className="text-sm text-primary-foreground/60">São Paulo - SP</li>
+              <li className="text-sm text-primary-foreground/60">+55 (11) 94541-8626</li>
+              <li className="text-sm text-primary-foreground/60">Rua Pedro Américo, 68, 8º andar</li>
+              <li className="text-sm text-primary-foreground/60">República, São Paulo - SP, 01045-010</li>
             </ul>
           </div>
         </div>

@@ -13,8 +13,8 @@ import { CTASection } from "@/components/home/CTASection";
 
 
 const contactInfo = [
-  { icon: MapPin, label: "Endereço", value: "Rua Pamplona, 145, Cj 703\nSão Paulo - SP", href: undefined },
-  { icon: Phone, label: "Telefone", value: "+55 (11) 5192-0925", href: "tel:+551151920925" },
+  { icon: MapPin, label: "Endereço", value: "Rua Pedro Américo, 68, 8º andar\nRepública, São Paulo - SP, 01045-010", href: undefined },
+  { icon: Phone, label: "Telefone", value: "+55 (11) 94541-8626", href: "tel:+5511945418626" },
   { icon: Mail, label: "E-mail", value: "contato@solutionsinbi.com", href: "mailto:contato@solutionsinbi.com" },
 ];
 
@@ -46,18 +46,13 @@ const Contato = () => {
   return (
     <Layout>
       <SEO
-        title="Contato - Fale com Nossos Especialistas"
-        description="Entre em contato com a Solutions in BI. Solicite um diagnóstico gratuito e descubra como transformar dados em resultados para sua empresa."
+        title="Contato - Fale com Nossos Especialistas em BI e Automação"
+        description="Entre em contato com a Solutions in BI. Solicite um diagnóstico gratuito em Business Intelligence, jurimetria e automação jurídica."
+        keywords="contato solutions in bi, consultoria BI, diagnóstico gratuito, automação jurídica, jurimetria"
         canonical="/contato"
       />
       {/* Hero */}
       <section className="pt-28 md:pt-36 pb-16 bg-background relative overflow-hidden">
-        <div className="absolute inset-0 opacity-[0.03]">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `radial-gradient(circle at 1px 1px, hsl(var(--foreground)) 1px, transparent 0)`,
-            backgroundSize: '32px 32px'
-          }} />
-        </div>
         <div className="container mx-auto px-4 relative z-10">
           <motion.div
             className="max-w-2xl mx-auto text-center"
@@ -69,7 +64,7 @@ const Contato = () => {
               Contato
             </span>
             <h1 className="text-4xl md:text-5xl font-display font-bold text-primary-dark mb-6 leading-tight">
-              Vamos conversar sobre <span className="text-gradient">seu projeto</span>
+              Consultoria em BI e <span className="text-gradient">Automação Jurídica</span>
             </h1>
             <p className="text-lg text-muted-foreground leading-relaxed mb-8">
               Entre em contato e descubra como podemos transformar dados em resultados para sua empresa.
@@ -77,7 +72,7 @@ const Contato = () => {
             <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} className="inline-block">
               <Button asChild size="lg" variant="outline">
                 <a
-                  href="https://wa.me/551151920925?text=Olá! Gostaria de saber mais sobre as soluções da Solutions in BI."
+                  href="https://wa.me/5511945418626?text=Olá! Gostaria de saber mais sobre as soluções da Solutions in BI."
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -223,7 +218,7 @@ const Contato = () => {
               {/* Map */}
               <div className="rounded-2xl overflow-hidden border border-border">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3657.1975868462297!2d-46.65476542466963!3d-23.561823178795256!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59c8da0aa315%3A0xd59f9431f2c9776a!2sR.%20Pamplona%2C%20145%20-%20Bela%20Vista%2C%20S%C3%A3o%20Paulo%20-%20SP%2C%2001405-001!5e0!3m2!1spt-BR!2sbr!4v1706893614567!5m2!1spt-BR!2sbr"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3657.2!2d-46.6426!3d-23.5444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce584e50f4dbe5%3A0x9c6b3ed63ca7c8c7!2sR.%20Pedro%20Am%C3%A9rico%2C%2068%20-%20Rep%C3%BAblica%2C%20S%C3%A3o%20Paulo%20-%20SP%2C%2001045-010!5e0!3m2!1spt-BR!2sbr!4v1709000000000!5m2!1spt-BR!2sbr"
                   width="100%"
                   height="200"
                   style={{ border: 0 }}

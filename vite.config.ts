@@ -19,4 +19,28 @@ export default defineConfig(({ mode }) => ({
     },
     dedupe: ["react", "react-dom", "react/jsx-runtime"],
   },
+  build: {
+    // Otimizações de performance
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+          'ui-vendor': ['framer-motion', 'lucide-react'],
+          'form-vendor': ['react-hook-form', 'zod', '@hookform/resolvers'],
+        },
+      },
+    },
+    // Aumenta o limite de warning para chunks grandes
+    chunkSizeWarningLimit: 1000,
+    // Otimizações adicionais
+    minify: "esbuild",
+    target: "es2020",
+    cssMinify: true,
+    reportCompressedSize: true,
+  },
+  esbuild: {
+    drop: mode === "production" ? ["console", "debugger"] : [],
+  },
+  // Otimização de imagens
+  assetsInlineLimit: 4096, // Inline assets < 4kb
 }));

@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, ChevronDown, Bot, BarChart3, LayoutDashboard, Plug, Lightbulb, GraduationCap, Monitor, Database, TrendingUp, Settings, BookOpen } from "lucide-react";
+import { Menu, X, ChevronDown, Bot, BarChart3, LayoutDashboard, Plug, Lightbulb, GraduationCap, Monitor, Database, TrendingUp, Settings, BookOpen, Scale, Workflow } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import logoSbi from "@/assets/logo-sbi.png";
+import logoSbi from "@/assets/icone-solutionsinbi.png";
 
 const solutionCategories = [
   {
@@ -12,6 +12,7 @@ const solutionCategories = [
     items: [
       { icon: BarChart3, label: "Business Intelligence", desc: "Relatórios e análises estratégicas", href: "/solucoes/business-intelligence" },
       { icon: LayoutDashboard, label: "Dashboards", desc: "Painéis visuais e interativos", href: "/solucoes/dashboards" },
+      { icon: Scale, label: "Jurimetria", desc: "Análise estatística de dados jurídicos", href: "/solucoes/jurimetria" },
       { icon: Database, label: "Coleta de Dados", desc: "Captura automatizada de informações", href: "/solucoes/coleta-de-dados" },
     ],
   },
@@ -19,7 +20,8 @@ const solutionCategories = [
     category: "Automação & Sistemas",
     icon: Settings,
     items: [
-      { icon: Bot, label: "Automação de Fluxos", desc: "Automatize processos e integre sistemas", href: "/solucoes/automacao-ia" },
+      { icon: Workflow, label: "Automação de Fluxos", desc: "Automatize processos e integre sistemas", href: "/solucoes/automacao-ia" },
+      { icon: Bot, label: "Robôs Jurídicos", desc: "Consultas processuais automatizadas", href: "/solucoes/robos-juridicos" },
       { icon: Plug, label: "Integrações", desc: "Conecte seus sistemas", href: "/solucoes/integracoes" },
       { icon: Monitor, label: "Implantação de Sistemas", desc: "Sistemas jurídicos sob medida", href: "/solucoes/implantacao-sistemas" },
     ],
@@ -69,7 +71,7 @@ export function Header() {
     >
       <div className="max-w-6xl mx-auto px-4 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2.5">
-          <img src={logoSbi} alt="Solutions in BI" className="h-10 w-auto object-contain" />
+          <img src={logoSbi} alt="Solutions in BI" className="h-10 w-10 object-cover rounded-md" />
           <span className="hidden lg:block text-xs font-display text-muted-foreground/60 italic border-l border-border pl-2.5">
             Facilitando processos
           </span>

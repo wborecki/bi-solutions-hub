@@ -44,7 +44,7 @@ const solutions = [
     icon: Plug,
     title: "Integrações",
     description: "Conecte seus sistemas e centralize informações automaticamente.",
-    href: "/contato",
+    href: "/solucoes/integracoes",
   },
   {
     icon: Monitor,
@@ -62,7 +62,7 @@ const solutions = [
     icon: Compass,
     title: "Consultoria",
     description: "Orientação especializada para transformação digital do seu negócio.",
-    href: "/contato",
+    href: "/solucoes/consultoria",
   },
   {
     icon: Database,

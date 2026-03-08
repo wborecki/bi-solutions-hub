@@ -8,30 +8,30 @@ import { CTASection } from "@/components/home/CTASection";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
-import blogBi from "@/assets/blog-il-bi.png";
-import blogJurimetria from "@/assets/blog-il-jurimetria.png";
-import blogAutomacao from "@/assets/blog-il-automacao.png";
-import blogIntegracoes from "@/assets/blog-il-integracoes.png";
-import blogColeta from "@/assets/blog-il-coleta.png";
-import blogTendencias from "@/assets/blog-il-tendencias.png";
-import blogMentoria from "@/assets/blog-il-mentoria.png";
-import blogEtl from "@/assets/blog-il-etl.png";
-import blogPowerBiTableau from "@/assets/blog-power-bi-tableau.png";
-import blogKpis from "@/assets/blog-kpis.png";
-import blogDashboardProd from "@/assets/blog-dashboard-prod.png";
-import blogProvisionamento from "@/assets/blog-provisionamento.png";
-import blogTrabalhista from "@/assets/blog-trabalhista.png";
-import blogCivel from "@/assets/blog-civel.png";
-import blog5processos from "@/assets/blog-5processos.png";
-import blogFluxosEmail from "@/assets/blog-fluxos-email.png";
-import blogRoi from "@/assets/blog-roi.png";
-import blogApis from "@/assets/blog-apis.png";
-import blogDadosPublicos from "@/assets/blog-dados-publicos.png";
-import blogAprenderPbi from "@/assets/blog-aprender-pbi.png";
-import blogDax from "@/assets/blog-dax.png";
-import blogIaJuridico from "@/assets/blog-ia-juridico.png";
-import blogFuturoGestao from "@/assets/blog-futuro-gestao.png";
-import blogTransformacao from "@/assets/blog-transformacao.png";
+import blogBi from "@/assets/blog-il-bi.webp";
+import blogJurimetria from "@/assets/blog-il-jurimetria.webp";
+import blogAutomacao from "@/assets/blog-il-automacao.webp";
+import blogIntegracoes from "@/assets/blog-il-integracoes.webp";
+import blogColeta from "@/assets/blog-il-coleta.webp";
+import blogTendencias from "@/assets/blog-il-tendencias.webp";
+import blogMentoria from "@/assets/blog-il-mentoria.webp";
+import blogEtl from "@/assets/blog-il-etl.webp";
+import blogPowerBiTableau from "@/assets/blog-power-bi-tableau.webp";
+import blogKpis from "@/assets/blog-kpis.webp";
+import blogDashboardProd from "@/assets/blog-dashboard-prod.webp";
+import blogProvisionamento from "@/assets/blog-provisionamento.webp";
+import blogTrabalhista from "@/assets/blog-trabalhista.webp";
+import blogCivel from "@/assets/blog-civel.webp";
+import blog5processos from "@/assets/blog-5processos.webp";
+import blogFluxosEmail from "@/assets/blog-fluxos-email.webp";
+import blogRoi from "@/assets/blog-roi.webp";
+import blogApis from "@/assets/blog-apis.webp";
+import blogDadosPublicos from "@/assets/blog-dados-publicos.webp";
+import blogAprenderPbi from "@/assets/blog-aprender-pbi.webp";
+import blogDax from "@/assets/blog-dax.webp";
+import blogIaJuridico from "@/assets/blog-ia-juridico.webp";
+import blogFuturoGestao from "@/assets/blog-futuro-gestao.webp";
+import blogTransformacao from "@/assets/blog-transformacao.webp";
 
 const categories = ["Todos", "Business Intelligence", "Jurimetria", "Automação", "Integrações", "Coleta de Dados", "Mentoria", "Tendências"];
 
@@ -165,20 +165,12 @@ const Blog = () => {
     <Layout>
       <SEO
         title="Blog - Artigos sobre BI, Jurimetria e Automação"
-        description="Leia artigos e insights sobre Business Intelligence, jurimetria, automação de processos e tendências do mercado jurídico."
+        description="Artigos sobre Business Intelligence, jurimetria, automação jurídica, Power BI, dashboards e tendências do mercado jurídico."
         canonical="/blog"
+        keywords="blog business intelligence, artigos jurimetria, automação jurídica, Power BI, dashboards jurídicos, tendências BI"
       />
       {/* Hero */}
       <section className="pt-28 md:pt-36 pb-16 bg-background relative overflow-hidden">
-        <div className="absolute inset-0 opacity-[0.03]">
-          <div
-            className="absolute inset-0"
-            style={{
-              backgroundImage: `radial-gradient(circle at 1px 1px, hsl(var(--foreground)) 1px, transparent 0)`,
-              backgroundSize: "32px 32px",
-            }}
-          />
-        </div>
         <div className="container mx-auto px-4 relative z-10">
           <motion.div
             className="max-w-2xl"
@@ -190,7 +182,7 @@ const Blog = () => {
               Blog
             </span>
             <h1 className="text-4xl md:text-5xl font-display font-bold text-primary-dark mb-6 leading-tight">
-              Artigos e <span className="text-gradient">insights</span>
+              Artigos sobre BI, Jurimetria e <span className="text-gradient">Automação</span>
             </h1>
             <p className="text-lg text-muted-foreground leading-relaxed">
               Conteúdo sobre Business Intelligence, Jurimetria, automação e tecnologia
