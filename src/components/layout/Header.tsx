@@ -39,7 +39,6 @@ const allSolutionItems = solutionCategories.flatMap((cat) => cat.items);
 
 const navLinks = [
   { label: "Sobre", href: "/sobre" },
-  { label: "Loja", href: "/loja" },
   { label: "Blog", href: "/blog" },
   { label: "Contato", href: "/contato" },
 ];
