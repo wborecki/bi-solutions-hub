@@ -8,9 +8,18 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowLeft, Save, ShieldCheck, ShieldAlert, Plus, Trash2 } from "lucide-react";
+import { ArrowLeft, Save, ShieldCheck, ShieldAlert, Plus, Trash2, Table2, ExternalLink, DatabaseZap } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 type Service = { id: string; name: string; slug: string; type: string };
+
+type ColumnDef = {
+  key: string;
+  label: string;
+  type: "text" | "number" | "date" | "boolean";
+  filterable?: boolean;
+  sortable?: boolean;
+};
 
 type InstanceEntry = {
   dbId?: string; // existing company_services row id
@@ -22,6 +31,21 @@ type InstanceEntry = {
   dataset_id: string;
   rls_role: string;
   looker_filters: string;
+  // data_table fields
+  dt_columns: ColumnDef[];
+  dt_row_limit: number;
+  dt_page_size: number;
+  dt_allow_export: boolean;
+  // external_db fields
+  dt_source: "manual" | "external_db";
+  dt_db_host: string;
+  dt_db_port: number;
+  dt_db_name: string;
+  dt_db_user: string;
+  dt_db_password: string;
+  dt_db_query: string;
+  dt_db_ssl: boolean;
+  dt_cache_ttl_minutes: number;
   _deleted?: boolean;
 };
 
@@ -34,6 +58,19 @@ const emptyInstance = (serviceName: string, index: number): InstanceEntry => ({
   dataset_id: "",
   rls_role: "Reader",
   looker_filters: "",
+  dt_columns: [],
+  dt_row_limit: 5000,
+  dt_page_size: 25,
+  dt_allow_export: false,
+  dt_source: "external_db",
+  dt_db_host: "",
+  dt_db_port: 5432,
+  dt_db_name: "",
+  dt_db_user: "",
+  dt_db_password: "",
+  dt_db_query: "",
+  dt_db_ssl: true,
+  dt_cache_ttl_minutes: 15,
 });
 
 export default function EmpresaServicos() {
@@ -73,6 +110,19 @@ export default function EmpresaServicos() {
           dataset_id: (cfg?.dataset_id as string) || "",
           rls_role: (cfg?.rls_role as string) || "Reader",
           looker_filters: cfg?.looker_filters ? JSON.stringify(cfg.looker_filters, null, 2) : "",
+          dt_columns: Array.isArray(cfg?.columns) ? (cfg.columns as ColumnDef[]) : [],
+          dt_row_limit: typeof cfg?.row_limit === "number" ? cfg.row_limit : 5000,
+          dt_page_size: typeof cfg?.page_size === "number" ? cfg.page_size : 25,
+          dt_allow_export: !!cfg?.allow_export,
+          dt_source: (cfg?.source as string) === "external_db" ? "external_db" : "manual",
+          dt_db_host: (cfg?.db_host as string) || "",
+          dt_db_port: typeof cfg?.db_port === "number" ? cfg.db_port : 5432,
+          dt_db_name: (cfg?.db_name as string) || "",
+          dt_db_user: (cfg?.db_user as string) || "",
+          dt_db_password: (cfg?.db_password as string) || "",
+          dt_db_query: (cfg?.db_query as string) || "",
+          dt_db_ssl: cfg?.db_ssl !== false,
+          dt_cache_ttl_minutes: typeof cfg?.cache_ttl_minutes === "number" ? cfg.cache_ttl_minutes : 15,
         };
         const arr = map.get(cs.service_id) ?? [];
         arr.push(entry);
@@ -142,6 +192,23 @@ export default function EmpresaServicos() {
         if (svc?.type === "looker_embed" && inst.looker_filters) {
           try { config.looker_filters = JSON.parse(inst.looker_filters) as Json; } catch { /* ignore */ }
         }
+        if (svc?.type === "data_table") {
+          config.columns = inst.dt_columns as unknown as Json;
+          config.row_limit = inst.dt_row_limit;
+          config.page_size = inst.dt_page_size;
+          config.allow_export = inst.dt_allow_export;
+          config.source = inst.dt_source;
+          if (inst.dt_source === "external_db") {
+            config.db_host = inst.dt_db_host;
+            config.db_port = inst.dt_db_port;
+            config.db_name = inst.dt_db_name;
+            config.db_user = inst.dt_db_user;
+            config.db_password = inst.dt_db_password;
+            config.db_query = inst.dt_db_query;
+            config.db_ssl = inst.dt_db_ssl;
+            config.cache_ttl_minutes = inst.dt_cache_ttl_minutes;
+          }
+        }
 
         if (inst._deleted && inst.dbId) {
           await supabase.from("company_services").delete().eq("id", inst.dbId);
@@ -206,6 +273,7 @@ export default function EmpresaServicos() {
               const instances = (instancesMap.get(s.id) ?? []).filter((i) => !i._deleted);
               const isPbi = s.type === "bi_embed";
               const isLooker = s.type === "looker_embed";
+              const isDataTable = s.type === "data_table";
               const showEmbed = isPbi || isLooker;
 
               return (
@@ -214,11 +282,11 @@ export default function EmpresaServicos() {
                     <div className="flex items-center justify-between">
                       <div>
                         <p className="font-medium text-foreground">{s.name}</p>
-                        <p className="text-xs text-muted-foreground">{s.type} · {instances.length} relatório(s)</p>
+                        <p className="text-xs text-muted-foreground">{s.type} · {instances.length} instância(s)</p>
                       </div>
-                      {showEmbed && (
+                      {(showEmbed || isDataTable) && (
                         <Button variant="outline" size="sm" onClick={() => addInstance(s.id)}>
-                          <Plus className="h-3.5 w-3.5 mr-1" /> Adicionar relatório
+                          <Plus className="h-3.5 w-3.5 mr-1" /> {isDataTable ? "Adicionar tabela" : "Adicionar relatório"}
                         </Button>
                       )}
                     </div>
@@ -343,6 +411,334 @@ export default function EmpresaServicos() {
                                       />
                                     </div>
                                   )}
+                                </div>
+                              )}
+
+                              {/* Data Table config */}
+                              {isDataTable && (
+                                <div className="space-y-3">
+                                  <div className="border rounded-lg p-3 space-y-3 bg-background/50">
+                                    <p className="text-xs font-medium flex items-center gap-1">
+                                      <Table2 className="h-3 w-3" /> Configuração da Tabela de Dados
+                                    </p>
+
+                                    {/* Source selector */}
+                                    <div className="space-y-1">
+                                      <Label className="text-xs">Fonte dos dados</Label>
+                                      <Select
+                                        value={inst.dt_source}
+                                        onValueChange={(v) => {
+                                          const allInst = instancesMap.get(s.id) ?? [];
+                                          const newArr = [...allInst];
+                                          newArr[actualIdx] = { ...newArr[actualIdx], dt_source: v as "manual" | "external_db" };
+                                          setInstancesMap((prev) => { const n = new Map(prev); n.set(s.id, newArr); return n; });
+                                        }}
+                                      >
+                                        <SelectTrigger className="text-xs w-[280px] h-8">
+                                          <SelectValue />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                          <SelectItem value="manual">Manual (CSV / entrada manual)</SelectItem>
+                                          <SelectItem value="external_db">PostgreSQL externo (banco do cliente)</SelectItem>
+                                        </SelectContent>
+                                      </Select>
+                                    </div>
+
+                                    {/* External DB config */}
+                                    {inst.dt_source === "external_db" && (
+                                      <div className="border rounded-lg p-3 space-y-2 bg-blue-50/50 dark:bg-blue-950/20">
+                                        <p className="text-xs font-medium flex items-center gap-1">
+                                          <DatabaseZap className="h-3 w-3" /> Conexão PostgreSQL
+                                        </p>
+                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+                                          <div className="space-y-1 md:col-span-2">
+                                            <Label className="text-xs">Host</Label>
+                                            <Input
+                                              placeholder="db.cliente.com.br"
+                                              value={inst.dt_db_host}
+                                              onChange={(e) => {
+                                                const allInst = instancesMap.get(s.id) ?? [];
+                                                const newArr = [...allInst];
+                                                newArr[actualIdx] = { ...newArr[actualIdx], dt_db_host: e.target.value };
+                                                setInstancesMap((prev) => { const n = new Map(prev); n.set(s.id, newArr); return n; });
+                                              }}
+                                              className="text-xs"
+                                            />
+                                          </div>
+                                          <div className="space-y-1">
+                                            <Label className="text-xs">Porta</Label>
+                                            <Input
+                                              type="number"
+                                              value={inst.dt_db_port}
+                                              onChange={(e) => {
+                                                const allInst = instancesMap.get(s.id) ?? [];
+                                                const newArr = [...allInst];
+                                                newArr[actualIdx] = { ...newArr[actualIdx], dt_db_port: Number(e.target.value) || 5432 };
+                                                setInstancesMap((prev) => { const n = new Map(prev); n.set(s.id, newArr); return n; });
+                                              }}
+                                              className="text-xs"
+                                            />
+                                          </div>
+                                        </div>
+                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+                                          <div className="space-y-1">
+                                            <Label className="text-xs">Database</Label>
+                                            <Input
+                                              placeholder="nome_do_banco"
+                                              value={inst.dt_db_name}
+                                              onChange={(e) => {
+                                                const allInst = instancesMap.get(s.id) ?? [];
+                                                const newArr = [...allInst];
+                                                newArr[actualIdx] = { ...newArr[actualIdx], dt_db_name: e.target.value };
+                                                setInstancesMap((prev) => { const n = new Map(prev); n.set(s.id, newArr); return n; });
+                                              }}
+                                              className="text-xs"
+                                            />
+                                          </div>
+                                          <div className="space-y-1">
+                                            <Label className="text-xs">Usuário</Label>
+                                            <Input
+                                              placeholder="readonly_user"
+                                              value={inst.dt_db_user}
+                                              onChange={(e) => {
+                                                const allInst = instancesMap.get(s.id) ?? [];
+                                                const newArr = [...allInst];
+                                                newArr[actualIdx] = { ...newArr[actualIdx], dt_db_user: e.target.value };
+                                                setInstancesMap((prev) => { const n = new Map(prev); n.set(s.id, newArr); return n; });
+                                              }}
+                                              className="text-xs"
+                                            />
+                                          </div>
+                                          <div className="space-y-1">
+                                            <Label className="text-xs">Senha</Label>
+                                            <Input
+                                              type="password"
+                                              placeholder="••••••••"
+                                              value={inst.dt_db_password}
+                                              onChange={(e) => {
+                                                const allInst = instancesMap.get(s.id) ?? [];
+                                                const newArr = [...allInst];
+                                                newArr[actualIdx] = { ...newArr[actualIdx], dt_db_password: e.target.value };
+                                                setInstancesMap((prev) => { const n = new Map(prev); n.set(s.id, newArr); return n; });
+                                              }}
+                                              className="text-xs"
+                                            />
+                                          </div>
+                                        </div>
+                                        <div className="space-y-1">
+                                          <Label className="text-xs">Query SQL</Label>
+                                          <Input
+                                            placeholder="SELECT * FROM advogados_ativos WHERE status = 'ativo'"
+                                            value={inst.dt_db_query}
+                                            onChange={(e) => {
+                                              const allInst = instancesMap.get(s.id) ?? [];
+                                              const newArr = [...allInst];
+                                              newArr[actualIdx] = { ...newArr[actualIdx], dt_db_query: e.target.value };
+                                              setInstancesMap((prev) => { const n = new Map(prev); n.set(s.id, newArr); return n; });
+                                            }}
+                                            className="text-xs font-mono"
+                                          />
+                                        </div>
+                                        <div className="flex items-center gap-4">
+                                          <div className="space-y-1">
+                                            <Label className="text-xs">Cache (minutos)</Label>
+                                            <Input
+                                              type="number"
+                                              value={inst.dt_cache_ttl_minutes}
+                                              onChange={(e) => {
+                                                const allInst = instancesMap.get(s.id) ?? [];
+                                                const newArr = [...allInst];
+                                                newArr[actualIdx] = { ...newArr[actualIdx], dt_cache_ttl_minutes: Number(e.target.value) || 15 };
+                                                setInstancesMap((prev) => { const n = new Map(prev); n.set(s.id, newArr); return n; });
+                                              }}
+                                              className="text-xs w-[100px]"
+                                            />
+                                          </div>
+                                          <label className="flex items-center gap-2 text-xs mt-5">
+                                            <input
+                                              type="checkbox"
+                                              checked={inst.dt_db_ssl}
+                                              onChange={(e) => {
+                                                const allInst = instancesMap.get(s.id) ?? [];
+                                                const newArr = [...allInst];
+                                                newArr[actualIdx] = { ...newArr[actualIdx], dt_db_ssl: e.target.checked };
+                                                setInstancesMap((prev) => { const n = new Map(prev); n.set(s.id, newArr); return n; });
+                                              }}
+                                              className="accent-primary"
+                                            />
+                                            SSL
+                                          </label>
+                                        </div>
+                                      </div>
+                                    )}
+
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+                                      <div className="space-y-1">
+                                        <Label className="text-xs">Limite de linhas</Label>
+                                        <Input
+                                          type="number"
+                                          value={inst.dt_row_limit}
+                                          onChange={(e) => {
+                                            const allInst = instancesMap.get(s.id) ?? [];
+                                            const newArr = [...allInst];
+                                            newArr[actualIdx] = { ...newArr[actualIdx], dt_row_limit: Number(e.target.value) || 1000 };
+                                            setInstancesMap((prev) => { const n = new Map(prev); n.set(s.id, newArr); return n; });
+                                          }}
+                                          className="text-xs"
+                                        />
+                                      </div>
+                                      <div className="space-y-1">
+                                        <Label className="text-xs">Itens por página</Label>
+                                        <Input
+                                          type="number"
+                                          value={inst.dt_page_size}
+                                          onChange={(e) => {
+                                            const allInst = instancesMap.get(s.id) ?? [];
+                                            const newArr = [...allInst];
+                                            newArr[actualIdx] = { ...newArr[actualIdx], dt_page_size: Number(e.target.value) || 25 };
+                                            setInstancesMap((prev) => { const n = new Map(prev); n.set(s.id, newArr); return n; });
+                                          }}
+                                          className="text-xs"
+                                        />
+                                      </div>
+                                      <div className="space-y-1 flex items-end gap-2">
+                                        <label className="flex items-center gap-2 text-xs">
+                                          <input
+                                            type="checkbox"
+                                            checked={inst.dt_allow_export}
+                                            onChange={(e) => {
+                                              const allInst = instancesMap.get(s.id) ?? [];
+                                              const newArr = [...allInst];
+                                              newArr[actualIdx] = { ...newArr[actualIdx], dt_allow_export: e.target.checked };
+                                              setInstancesMap((prev) => { const n = new Map(prev); n.set(s.id, newArr); return n; });
+                                            }}
+                                            className="accent-primary"
+                                          />
+                                          Permitir exportação CSV
+                                        </label>
+                                      </div>
+                                    </div>
+
+                                    {/* Columns editor */}
+                                    <div className="space-y-2">
+                                      <div className="flex items-center justify-between">
+                                        <Label className="text-xs font-medium">Colunas</Label>
+                                        <Button
+                                          type="button"
+                                          variant="outline"
+                                          size="sm"
+                                          className="h-6 text-xs"
+                                          onClick={() => {
+                                            const allInst = instancesMap.get(s.id) ?? [];
+                                            const newArr = [...allInst];
+                                            const cols = [...(newArr[actualIdx].dt_columns || [])];
+                                            cols.push({ key: `col_${cols.length + 1}`, label: `Coluna ${cols.length + 1}`, type: "text", filterable: false, sortable: true });
+                                            newArr[actualIdx] = { ...newArr[actualIdx], dt_columns: cols };
+                                            setInstancesMap((prev) => { const n = new Map(prev); n.set(s.id, newArr); return n; });
+                                          }}
+                                        >
+                                          <Plus className="h-3 w-3 mr-1" /> Coluna
+                                        </Button>
+                                      </div>
+
+                                      {(inst.dt_columns || []).map((col, colIdx) => (
+                                        <div key={colIdx} className="flex items-center gap-2 bg-muted/30 rounded p-2">
+                                          <Input
+                                            placeholder="Chave (key)"
+                                            value={col.key}
+                                            onChange={(e) => {
+                                              const allInst = instancesMap.get(s.id) ?? [];
+                                              const newArr = [...allInst];
+                                              const cols = [...newArr[actualIdx].dt_columns];
+                                              cols[colIdx] = { ...cols[colIdx], key: e.target.value };
+                                              newArr[actualIdx] = { ...newArr[actualIdx], dt_columns: cols };
+                                              setInstancesMap((prev) => { const n = new Map(prev); n.set(s.id, newArr); return n; });
+                                            }}
+                                            className="text-xs w-[120px]"
+                                          />
+                                          <Input
+                                            placeholder="Label"
+                                            value={col.label}
+                                            onChange={(e) => {
+                                              const allInst = instancesMap.get(s.id) ?? [];
+                                              const newArr = [...allInst];
+                                              const cols = [...newArr[actualIdx].dt_columns];
+                                              cols[colIdx] = { ...cols[colIdx], label: e.target.value };
+                                              newArr[actualIdx] = { ...newArr[actualIdx], dt_columns: cols };
+                                              setInstancesMap((prev) => { const n = new Map(prev); n.set(s.id, newArr); return n; });
+                                            }}
+                                            className="text-xs w-[120px]"
+                                          />
+                                          <Select
+                                            value={col.type}
+                                            onValueChange={(v) => {
+                                              const allInst = instancesMap.get(s.id) ?? [];
+                                              const newArr = [...allInst];
+                                              const cols = [...newArr[actualIdx].dt_columns];
+                                              cols[colIdx] = { ...cols[colIdx], type: v as ColumnDef["type"] };
+                                              newArr[actualIdx] = { ...newArr[actualIdx], dt_columns: cols };
+                                              setInstancesMap((prev) => { const n = new Map(prev); n.set(s.id, newArr); return n; });
+                                            }}
+                                          >
+                                            <SelectTrigger className="text-xs w-[100px] h-8">
+                                              <SelectValue />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                              <SelectItem value="text">Texto</SelectItem>
+                                              <SelectItem value="number">Número</SelectItem>
+                                              <SelectItem value="date">Data</SelectItem>
+                                              <SelectItem value="boolean">Boolean</SelectItem>
+                                            </SelectContent>
+                                          </Select>
+                                          <label className="flex items-center gap-1 text-xs whitespace-nowrap">
+                                            <input
+                                              type="checkbox"
+                                              checked={col.filterable ?? false}
+                                              onChange={(e) => {
+                                                const allInst = instancesMap.get(s.id) ?? [];
+                                                const newArr = [...allInst];
+                                                const cols = [...newArr[actualIdx].dt_columns];
+                                                cols[colIdx] = { ...cols[colIdx], filterable: e.target.checked };
+                                                newArr[actualIdx] = { ...newArr[actualIdx], dt_columns: cols };
+                                                setInstancesMap((prev) => { const n = new Map(prev); n.set(s.id, newArr); return n; });
+                                              }}
+                                              className="accent-primary"
+                                            />
+                                            Filtro
+                                          </label>
+                                          <Button
+                                            type="button"
+                                            variant="ghost"
+                                            size="icon"
+                                            className="h-6 w-6 text-destructive shrink-0"
+                                            onClick={() => {
+                                              const allInst = instancesMap.get(s.id) ?? [];
+                                              const newArr = [...allInst];
+                                              const cols = [...newArr[actualIdx].dt_columns];
+                                              cols.splice(colIdx, 1);
+                                              newArr[actualIdx] = { ...newArr[actualIdx], dt_columns: cols };
+                                              setInstancesMap((prev) => { const n = new Map(prev); n.set(s.id, newArr); return n; });
+                                            }}
+                                          >
+                                            <Trash2 className="h-3 w-3" />
+                                          </Button>
+                                        </div>
+                                      ))}
+                                    </div>
+
+                                    {/* Link to data management */}
+                                    {inst.dbId && inst.dt_source === "manual" && (
+                                      <Button
+                                        type="button"
+                                        variant="outline"
+                                        size="sm"
+                                        className="text-xs"
+                                        onClick={() => navigate(`/portal/admin/data-tables/${inst.dbId}`)}
+                                      >
+                                        <ExternalLink className="h-3 w-3 mr-1" /> Gerenciar Dados
+                                      </Button>
+                                    )}
+                                  </div>
                                 </div>
                               )}
                             </div>

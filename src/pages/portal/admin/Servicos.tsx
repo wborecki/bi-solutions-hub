@@ -20,13 +20,14 @@ type Service = {
   slug: string;
   description: string;
   icon: string;
-  type: "bi_embed" | "looker_embed" | "document" | "custom";
+  type: "bi_embed" | "looker_embed" | "data_table" | "document" | "custom";
   created_at: string;
 };
 
 const SERVICE_TYPES = [
   { value: "bi_embed", label: "Power BI (Embed)" },
   { value: "looker_embed", label: "Looker Studio (Embed)" },
+  { value: "data_table", label: "Tabela de Dados" },
   { value: "document", label: "Documento" },
   { value: "custom", label: "Personalizado" },
 ];

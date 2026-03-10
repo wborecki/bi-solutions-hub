@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { Plus, Trash2, Settings } from "lucide-react";
+import { Plus, Trash2, Settings, ShieldCheck } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import type { Tables } from "@/integrations/supabase/types";
 
@@ -109,8 +109,11 @@ export default function Empresas() {
                     <p className="text-xs text-muted-foreground">{c.slug}</p>
                   </div>
                   <div className="flex gap-1">
-                    <Button variant="ghost" size="icon" onClick={() => navigate(`/portal/admin/empresas/${c.id}/servicos`)}>
+                    <Button variant="ghost" size="icon" title="Serviços" onClick={() => navigate(`/portal/admin/empresas/${c.id}/servicos`)}>
                       <Settings className="h-4 w-4" />
+                    </Button>
+                    <Button variant="ghost" size="icon" title="Regras de RLS" onClick={() => navigate(`/portal/admin/empresas/${c.id}/rls-rules`)}>
+                      <ShieldCheck className="h-4 w-4" />
                     </Button>
                     <Button variant="ghost" size="icon" onClick={() => handleDelete(c.id)}>
                       <Trash2 className="h-4 w-4 text-destructive" />

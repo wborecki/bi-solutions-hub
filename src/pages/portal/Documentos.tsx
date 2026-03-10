@@ -35,6 +35,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Progress } from "@/components/ui/progress";
 import type { Tables } from "@/integrations/supabase/types";
 
 const getFileIcon = (mime: string) => {
@@ -59,6 +60,7 @@ export default function Documentos() {
   const [currentPath, setCurrentPath] = useState("");
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState<{ current: number; total: number; fileName: string; percent: number } | null>(null);
   const [newFolder, setNewFolder] = useState("");
   const [showFolderInput, setShowFolderInput] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -160,18 +162,69 @@ export default function Documentos() {
     }
 
     setUploading(true);
-    for (const file of Array.from(files)) {
-      const storagePath = `${uploadCompanyId}/${currentPath ? currentPath + "/" : ""}${Date.now()}_${file.name}`;
-      const { error: uploadError } = await supabase.storage
-        .from("documents")
-        .upload(storagePath, file);
+    const fileList = Array.from(files);
+    let successCount = 0;
 
-      if (uploadError) {
-        toast({ title: "Erro no upload", description: file.name, variant: "destructive" });
+    for (let i = 0; i < fileList.length; i++) {
+      const file = fileList[i];
+      setUploadProgress({ current: i + 1, total: fileList.length, fileName: file.name, percent: 0 });
+
+      const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+      const storagePath = `${uploadCompanyId}/${currentPath ? currentPath + "/" : ""}${Date.now()}_${safeName}`;
+
+      // Upload with progress tracking via XHR
+      const uploadResult = await new Promise<{ error: string | null }>(async (resolve) => {
+        const { data: sessionData } = await supabase.auth.getSession();
+        const token = sessionData.session?.access_token;
+        if (!token) {
+          resolve({ error: "Sessão expirada. Faça login novamente." });
+          return;
+        }
+
+        const xhr = new XMLHttpRequest();
+        const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+        const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+        const encodedPath = storagePath.split("/").map(encodeURIComponent).join("/");
+        const url = `${supabaseUrl}/storage/v1/object/documents/${encodedPath}`;
+
+        xhr.upload.addEventListener("progress", (evt) => {
+          if (evt.lengthComputable) {
+            const percent = Math.round((evt.loaded / evt.total) * 100);
+            setUploadProgress((prev) => prev ? { ...prev, percent } : null);
+          }
+        });
+
+        xhr.addEventListener("load", () => {
+          if (xhr.status >= 200 && xhr.status < 300) {
+            resolve({ error: null });
+          } else {
+            let msg = `HTTP ${xhr.status}`;
+            try { msg = JSON.parse(xhr.responseText)?.message || msg; } catch {}
+            resolve({ error: msg });
+          }
+        });
+
+        xhr.addEventListener("error", () => resolve({ error: "Erro de rede" }));
+        xhr.addEventListener("abort", () => resolve({ error: "Upload cancelado" }));
+
+        xhr.open("POST", url);
+        xhr.setRequestHeader("Authorization", `Bearer ${token}`);
+        xhr.setRequestHeader("apikey", supabaseKey);
+        xhr.setRequestHeader("x-upsert", "false");
+        xhr.send(file);
+      });
+
+      if (uploadResult.error) {
+        console.error("Storage upload error:", uploadResult.error);
+        toast({
+          title: "Erro no upload",
+          description: uploadResult.error || `Falha ao enviar ${file.name}`,
+          variant: "destructive",
+        });
         continue;
       }
 
-      await supabase.from("documents").insert({
+      const { error: insertError } = await supabase.from("documents").insert({
         company_id: uploadCompanyId,
         uploaded_by: user.id,
         folder_path: currentPath,
@@ -180,9 +233,25 @@ export default function Documentos() {
         file_size: file.size,
         mime_type: file.type || "application/octet-stream",
       });
+
+      if (insertError) {
+        console.error("DB insert error:", insertError);
+        toast({
+          title: "Erro ao registrar documento",
+          description: insertError.message,
+          variant: "destructive",
+        });
+        continue;
+      }
+
+      successCount++;
     }
+
     setUploading(false);
-    toast({ title: "Upload concluído!" });
+    setUploadProgress(null);
+    if (successCount > 0) {
+      toast({ title: `${successCount} arquivo${successCount > 1 ? "s" : ""} enviado${successCount > 1 ? "s" : ""}!` });
+    }
     fetchDocs();
     e.target.value = "";
   };
@@ -218,23 +287,37 @@ export default function Documentos() {
     <PortalLayout>
       <div className="space-y-6">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <h1 className="font-display text-2xl font-bold text-foreground">Documentos</h1>
-          <div className="flex flex-wrap gap-2">
-            <Button variant="outline" size="sm" onClick={() => setShowFolderInput(!showFolderInput)}>
-              <FolderPlus className="h-4 w-4 mr-2" />
-              Nova Pasta
-            </Button>
-            <label>
-              <Button variant="default" size="sm" asChild>
-                <span>
-                  <Upload className="h-4 w-4 mr-2" />
-                  {uploading ? "Enviando..." : "Upload"}
-                </span>
+        <div className="space-y-2">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <h1 className="font-display text-2xl font-bold text-foreground">Documentos</h1>
+            <div className="flex flex-wrap gap-2">
+              <Button variant="outline" size="sm" onClick={() => setShowFolderInput(!showFolderInput)}>
+                <FolderPlus className="h-4 w-4 mr-2" />
+                Nova Pasta
               </Button>
-              <input type="file" className="hidden" multiple onChange={handleUpload} disabled={uploading} />
-            </label>
+              <label>
+                <Button variant="default" size="sm" asChild>
+                  <span>
+                    <Upload className="h-4 w-4 mr-2" />
+                    {uploading ? "Enviando..." : "Upload"}
+                  </span>
+                </Button>
+                <input type="file" className="hidden" multiple onChange={handleUpload} disabled={uploading} />
+              </label>
+            </div>
           </div>
+          {uploadProgress && (
+            <div className="flex items-center gap-3">
+              <Progress value={uploadProgress.percent} className="h-1.5 flex-1" />
+              <span className="text-xs text-muted-foreground whitespace-nowrap">
+                {uploadProgress.fileName.length > 20
+                  ? uploadProgress.fileName.slice(0, 20) + "…"
+                  : uploadProgress.fileName}
+                {uploadProgress.total > 1 && ` (${uploadProgress.current}/${uploadProgress.total})`}
+                {" · "}{uploadProgress.percent}%
+              </span>
+            </div>
+          )}
         </div>
 
         {/* Filters bar */}

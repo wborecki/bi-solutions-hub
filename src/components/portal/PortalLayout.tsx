@@ -13,7 +13,6 @@ import {
   SidebarMenuItem,
   SidebarProvider,
   SidebarTrigger,
-  useSidebar,
 } from "@/components/ui/sidebar";
 import {
   LayoutDashboard,
@@ -24,10 +23,10 @@ import {
   Users,
   LogOut,
   BarChart3,
+  ShieldCheck,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import logoSbi from "@/assets/logo-solutionsinbi-3-sidebar.png";
-import iconSbi from "@/assets/icone-solutionsinbi.png";
+import logoSbi from "@/assets/logo-sbi.png";
 
 const clientMenu = [
   { title: "Dashboard", url: "/portal", icon: LayoutDashboard },
@@ -43,11 +42,14 @@ const adminMenu = [
   { title: "Usuários", url: "/portal/admin/usuarios", icon: Users },
 ];
 
+const clientAdminMenu = [
+  { title: "Usuários", url: "/portal/empresa/usuarios", icon: Users },
+  { title: "Perfis de Acesso (RLS)", url: "/portal/empresa/perfis-rls", icon: ShieldCheck },
+];
+
 function PortalSidebar() {
-  const { isAdmin, signOut, profile } = useAuth();
+  const { isAdmin, isClientAdmin, signOut, profile } = useAuth();
   const location = useLocation();
-  const { state } = useSidebar();
-  const collapsed = state === "collapsed";
 
   const isActive = (path: string) =>
     path === "/portal"
@@ -57,12 +59,8 @@ function PortalSidebar() {
   return (
     <Sidebar collapsible="icon">
       <SidebarContent>
-        <div className="px-4 py-1 flex items-center gap-3">
-          {collapsed ? (
-            <img src={iconSbi} alt="SBI" className="h-8 w-8 object-cover rounded-md shrink-0" />
-          ) : (
-            <img src={logoSbi} alt="SBI" className="h-24 w-auto object-contain shrink-0" />
-          )}
+        <div className="p-4 flex items-center gap-3">
+          <img src={logoSbi} alt="SBI" className="h-8 w-auto shrink-0" />
         </div>
 
         <SidebarGroup>
@@ -82,6 +80,26 @@ function PortalSidebar() {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
+
+        {(isClientAdmin || isAdmin) && (
+          <SidebarGroup>
+            <SidebarGroupLabel>Gestão da Empresa</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {clientAdminMenu.map((item) => (
+                  <SidebarMenuItem key={item.url}>
+                    <SidebarMenuButton asChild isActive={isActive(item.url)}>
+                      <NavLink to={item.url}>
+                        <item.icon className="h-4 w-4" />
+                        <span>{item.title}</span>
+                      </NavLink>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        )}
 
         {isAdmin && (
           <SidebarGroup>
@@ -103,20 +121,19 @@ function PortalSidebar() {
           </SidebarGroup>
         )}
 
-        <div className="mt-auto p-2">
-          {!collapsed && (
-            <p className="text-xs text-muted-foreground truncate px-2 mb-1">
-              {profile?.full_name || profile?.email}
-            </p>
-          )}
-          <SidebarMenu>
-            <SidebarMenuItem>
-              <SidebarMenuButton onClick={signOut} tooltip="Sair">
-                <LogOut className="h-4 w-4" />
-                <span>Sair</span>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          </SidebarMenu>
+        <div className="mt-auto p-4 space-y-2">
+          <p className="text-xs text-muted-foreground truncate">
+            {profile?.full_name || profile?.email}
+          </p>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="w-full justify-start text-muted-foreground"
+            onClick={signOut}
+          >
+            <LogOut className="h-4 w-4 mr-2" />
+            Sair
+          </Button>
         </div>
       </SidebarContent>
     </Sidebar>

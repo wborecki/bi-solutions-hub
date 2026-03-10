@@ -65,6 +65,67 @@ export type Database = {
         }
         Relationships: []
       }
+      data_table_cache: {
+        Row: {
+          company_service_id: string
+          cached_at: string
+          row_count: number
+          error: string | null
+          refreshing: boolean
+        }
+        Insert: {
+          company_service_id: string
+          cached_at?: string
+          row_count?: number
+          error?: string | null
+          refreshing?: boolean
+        }
+        Update: {
+          company_service_id?: string
+          cached_at?: string
+          row_count?: number
+          error?: string | null
+          refreshing?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "data_table_cache_company_service_id_fkey"
+            columns: ["company_service_id"]
+            isOneToOne: true
+            referencedRelation: "company_services"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      data_table_rows: {
+        Row: {
+          id: string
+          company_service_id: string
+          data: Json
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          company_service_id: string
+          data?: Json
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          company_service_id?: string
+          data?: Json
+          created_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "data_table_rows_company_service_id_fkey"
+            columns: ["company_service_id"]
+            isOneToOne: false
+            referencedRelation: "company_services"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       company_services: {
         Row: {
           company_id: string
@@ -162,6 +223,7 @@ export type Database = {
           avatar_url: string | null
           company_id: string | null
           created_at: string
+          custom_data: string | null
           email: string
           full_name: string
           id: string
@@ -170,6 +232,7 @@ export type Database = {
           avatar_url?: string | null
           company_id?: string | null
           created_at?: string
+          custom_data?: string | null
           email: string
           full_name: string
           id: string
@@ -178,6 +241,7 @@ export type Database = {
           avatar_url?: string | null
           company_id?: string | null
           created_at?: string
+          custom_data?: string | null
           email?: string
           full_name?: string
           id?: string
@@ -188,6 +252,80 @@ export type Database = {
             columns: ["company_id"]
             isOneToOne: false
             referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      rls_profile_filters: {
+        Row: {
+          created_at: string
+          field_name: string
+          field_value: string
+          id: string
+          rls_profile_id: string
+        }
+        Insert: {
+          created_at?: string
+          field_name: string
+          field_value: string
+          id?: string
+          rls_profile_id: string
+        }
+        Update: {
+          created_at?: string
+          field_name?: string
+          field_value?: string
+          id?: string
+          rls_profile_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "rls_profile_filters_rls_profile_id_fkey"
+            columns: ["rls_profile_id"]
+            isOneToOne: false
+            referencedRelation: "rls_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      rls_profiles: {
+        Row: {
+          company_id: string
+          company_service_id: string | null
+          created_at: string
+          description: string
+          id: string
+          name: string
+        }
+        Insert: {
+          company_id: string
+          company_service_id?: string | null
+          created_at?: string
+          description?: string
+          id?: string
+          name: string
+        }
+        Update: {
+          company_id?: string
+          company_service_id?: string | null
+          created_at?: string
+          description?: string
+          id?: string
+          name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "rls_profiles_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "rls_profiles_company_service_id_fkey"
+            columns: ["company_service_id"]
+            isOneToOne: false
+            referencedRelation: "company_services"
             referencedColumns: ["id"]
           },
         ]
@@ -298,6 +436,85 @@ export type Database = {
           },
         ]
       }
+      rls_rules: {
+        Row: {
+          id: string
+          company_id: string
+          name: string
+          description: string
+          pbi_role: string | null
+          pbi_custom_data: string | null
+          pbi_username: string | null
+          looker_filters: Json | null
+          report_type: string | null
+          company_service_id: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          company_id: string
+          name: string
+          description?: string
+          pbi_role?: string | null
+          pbi_custom_data?: string | null
+          pbi_username?: string | null
+          looker_filters?: Json | null
+          report_type?: string | null
+          company_service_id?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          company_id?: string
+          name?: string
+          description?: string
+          pbi_role?: string | null
+          pbi_custom_data?: string | null
+          pbi_username?: string | null
+          looker_filters?: Json | null
+          report_type?: string | null
+          company_service_id?: string | null
+          created_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "rls_rules_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_rls_rules: {
+        Row: {
+          id: string
+          user_id: string
+          rls_rule_id: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          rls_rule_id: string
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          rls_rule_id?: string
+          created_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_rls_rules_rls_rule_id_fkey"
+            columns: ["rls_rule_id"]
+            isOneToOne: false
+            referencedRelation: "rls_rules"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           id: string
@@ -322,6 +539,14 @@ export type Database = {
     }
     Functions: {
       get_user_company_id: { Args: { _user_id: string }; Returns: string }
+      get_user_rls_for_company: {
+        Args: { _user_id: string; _company_id: string }
+        Returns: { pbi_role: string | null; pbi_custom_data: string | null; pbi_username: string | null; looker_filters: Json | null; report_type: string | null }[]
+      }
+      get_user_rls_for_service: {
+        Args: { _user_id: string; _company_service_id: string }
+        Returns: { pbi_role: string | null; pbi_custom_data: string | null; pbi_username: string | null; looker_filters: Json | null; report_type: string | null }[]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -329,10 +554,14 @@ export type Database = {
         }
         Returns: boolean
       }
+      is_company_admin: {
+        Args: { _company_id: string; _user_id: string }
+        Returns: boolean
+      }
     }
     Enums: {
-      app_role: "admin" | "client"
-      service_type: "bi_embed" | "looker_embed" | "document" | "custom"
+      app_role: "admin" | "client" | "client_admin"
+      service_type: "bi_embed" | "looker_embed" | "document" | "custom" | "data_table"
       ticket_priority: "baixa" | "media" | "alta" | "urgente"
       ticket_status: "aberto" | "em_andamento" | "resolvido" | "fechado"
     }
@@ -462,7 +691,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_role: ["admin", "client"],
+      app_role: ["admin", "client", "company_admin"],
       service_type: ["bi_embed", "looker_embed", "document", "custom"],
       ticket_priority: ["baixa", "media", "alta", "urgente"],
       ticket_status: ["aberto", "em_andamento", "resolvido", "fechado"],

@@ -7,7 +7,7 @@ import biaRobot from "@/assets/bia-v1.webp";
 const apps = [
   {
     id: "analista",
-    title: "Bia Analista de Processo",
+    title: "Bia Analista Jurídica",
     description: "Análise automática de processos judiciais com inteligência artificial, jurimetria e predição de resultados.",
     icon: Sparkles,
   },

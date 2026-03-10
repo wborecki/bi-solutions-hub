@@ -113,12 +113,14 @@ export default function PortalServicos() {
               const svc = cs.services;
               const Icon = ICON_MAP[svc.icon] ?? BarChart3;
               const hasEmbed = (svc.type === "bi_embed" || svc.type === "looker_embed") && cs.embed_url;
+              const isDataTable = svc.type === "data_table";
+              const isClickable = hasEmbed || isDataTable;
 
               return (
                 <Card
                   key={cs.id}
-                  className={`transition-colors ${hasEmbed ? "cursor-pointer hover:border-primary/50" : ""}`}
-                  onClick={() => hasEmbed && navigate(`/portal/servicos/${cs.id}`)}
+                  className={`transition-colors ${isClickable ? "cursor-pointer hover:border-primary/50" : ""}`}
+                  onClick={() => isClickable && navigate(`/portal/servicos/${cs.id}`)}
                 >
                   <CardContent className="p-6 flex flex-col items-center text-center gap-3">
                     <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center">
@@ -128,6 +130,7 @@ export default function PortalServicos() {
                     {isAdmin && cs.companies?.name && <Badge variant="outline">{cs.companies.name}</Badge>}
                     {svc.description && <p className="text-xs text-muted-foreground line-clamp-2">{svc.description}</p>}
                     {hasEmbed && <span className="text-xs text-primary font-medium">Abrir relatório →</span>}
+                    {isDataTable && <span className="text-xs text-primary font-medium">Abrir tabela →</span>}
                   </CardContent>
                 </Card>
               );

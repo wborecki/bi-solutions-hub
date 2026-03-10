@@ -3,7 +3,7 @@ import { Session, User } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
 import type { Tables } from "@/integrations/supabase/types";
 
-type AppRole = "admin" | "client";
+type AppRole = "admin" | "client" | "client_admin";
 
 interface AuthContextType {
   session: Session | null;
@@ -11,6 +11,7 @@ interface AuthContextType {
   profile: Tables<"profiles"> | null;
   role: AppRole | null;
   isAdmin: boolean;
+  isClientAdmin: boolean;
   loading: boolean;
   signIn: (email: string, password: string) => Promise<{ error: Error | null }>;
   signOut: () => Promise<void>;
@@ -110,6 +111,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         profile,
         role,
         isAdmin: role === "admin",
+        isClientAdmin: role === "client_admin",
         loading,
         signIn,
         signOut,

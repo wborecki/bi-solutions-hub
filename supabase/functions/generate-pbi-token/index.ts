@@ -12,7 +12,6 @@ Deno.serve(async (req) => {
   }
 
   try {
-    // Authenticate user
     const authHeader = req.headers.get("Authorization");
     if (!authHeader?.startsWith("Bearer ")) {
       return new Response(JSON.stringify({ error: "Unauthorized" }), {
@@ -27,19 +26,17 @@ Deno.serve(async (req) => {
       { global: { headers: { Authorization: authHeader } } }
     );
 
-    const token = authHeader.replace("Bearer ", "");
-    const { data: claimsData, error: claimsError } = await supabase.auth.getClaims(token);
-    if (claimsError || !claimsData?.claims) {
+    const { data: { user: authUser }, error: userError } = await supabase.auth.getUser();
+    if (userError || !authUser) {
       return new Response(JSON.stringify({ error: "Unauthorized" }), {
         status: 401,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
 
-    const userEmail = claimsData.claims.email as string;
-    const userId = claimsData.claims.sub as string;
+    const userEmail = authUser.email as string;
+    const userId = authUser.id;
 
-    // Get request body
     const { company_service_id } = await req.json();
     if (!company_service_id) {
       return new Response(JSON.stringify({ error: "company_service_id required" }), {
@@ -48,7 +45,7 @@ Deno.serve(async (req) => {
       });
     }
 
-    // Fetch the company_service config (uses RLS — user must have access)
+    // Fetch company_service config
     const { data: cs, error: csError } = await supabase
       .from("company_services")
       .select("id, embed_url, config, services(name, type)")
@@ -66,13 +63,63 @@ Deno.serve(async (req) => {
     const workspaceId = config?.workspace_id as string;
     const reportId = config?.report_id as string;
     const datasetId = config?.dataset_id as string;
-    const rlsRole = (config?.rls_role as string) || "Reader";
 
     if (!workspaceId || !reportId || !datasetId) {
       return new Response(
         JSON.stringify({ error: "Power BI config incomplete (workspace_id, report_id, dataset_id required)" }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
+    }
+
+    // Check if user has RLS rules assigned for this company
+    const supabaseAdmin = createClient(
+      Deno.env.get("SUPABASE_URL")!,
+      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
+    );
+
+    // Get company_id from the service
+    const { data: csInfo } = await supabaseAdmin
+      .from("company_services")
+      .select("company_id")
+      .eq("id", company_service_id)
+      .single();
+
+    // Fetch user's profile custom_data
+    const { data: profileData } = await supabaseAdmin
+      .from("profiles")
+      .select("custom_data")
+      .eq("id", userId)
+      .single();
+    const userProfileCustomData = profileData?.custom_data ?? "";
+
+    let userRlsRoles: string[] = [];
+    let userCustomData: string | null = null;
+    let userPbiUsername: string | null = null;
+
+    // Use get_user_rls_for_service to get rules for this specific service
+    const { data: rlsData } = await supabaseAdmin.rpc("get_user_rls_for_service", {
+      _user_id: userId,
+      _company_service_id: company_service_id,
+    });
+    if (rlsData && rlsData.length > 0) {
+      userRlsRoles = rlsData
+        .filter((r: { pbi_role: string | null }) => r.pbi_role)
+        .map((r: { pbi_role: string }) => r.pbi_role);
+      // Get first custom data and username found
+      const firstWithCustom = rlsData.find((r: { pbi_custom_data: string | null }) => r.pbi_custom_data);
+      if (firstWithCustom) {
+        let cd = firstWithCustom.pbi_custom_data as string;
+        cd = cd.replace(/\{custom_data\}/gi, userProfileCustomData);
+        cd = cd.replace(/\{email\}/gi, userEmail);
+        userCustomData = cd;
+      }
+      const firstWithUsername = rlsData.find((r: { pbi_username: string | null }) => r.pbi_username);
+      if (firstWithUsername) {
+        let uname = firstWithUsername.pbi_username as string;
+        uname = uname.replace(/\{email\}/gi, userEmail);
+        uname = uname.replace(/\{custom_data\}/gi, userProfileCustomData);
+        userPbiUsername = uname;
+      }
     }
 
     // Get Azure AD token
@@ -105,18 +152,24 @@ Deno.serve(async (req) => {
 
     const azureToken = azureData.access_token;
 
-    // Generate Power BI embed token with RLS identity
+    // Generate Power BI embed token — with or without RLS identity
     const embedUrl = `https://api.powerbi.com/v1.0/myorg/groups/${workspaceId}/reports/${reportId}/GenerateToken`;
-    const embedBody = {
-      accessLevel: "View",
-      identities: [
-        {
-          username: userEmail,
-          roles: [rlsRole],
-          datasets: [datasetId],
-        },
-      ],
-    };
+    const embedBody: Record<string, unknown> = { accessLevel: "View" };
+
+    // Only apply RLS identities if user has rules assigned
+    if (userRlsRoles.length > 0) {
+      const identity: Record<string, unknown> = {
+        username: userPbiUsername || userEmail,
+        roles: userRlsRoles,
+        datasets: [datasetId],
+      };
+      if (userCustomData) {
+        identity.customData = userCustomData;
+      }
+      embedBody.identities = [identity];
+    }
+
+    console.log("RLS identity:", JSON.stringify(embedBody));
 
     const embedRes = await fetch(embedUrl, {
       method: "POST",

@@ -2,3 +2,6 @@ project_id = "owwvzsvmteuxawxpiesh"
 
 [functions.generate-pbi-token]
 verify_jwt = false
+
+[functions.query-client-db]
+verify_jwt = false

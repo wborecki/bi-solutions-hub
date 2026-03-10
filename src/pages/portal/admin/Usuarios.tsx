@@ -37,6 +37,7 @@ export default function Usuarios() {
   const [editName, setEditName] = useState("");
   const [editCompany, setEditCompany] = useState("");
   const [editRole, setEditRole] = useState("");
+  const [editCustomData, setEditCustomData] = useState("");
   const [editSaving, setEditSaving] = useState(false);
 
   // Delete state
@@ -59,7 +60,7 @@ export default function Usuarios() {
       (profilesData ?? []).map((p) => ({
         ...p,
         role: roleMap.get(p.id) ?? "sem role",
-        company_name: p.company_id ? companyMap.get(p.company_id) ?? "-" : "-",
+        company_name: p.company_id ? companyMap.get(p.company_id) ?? "—" : "—",
       }))
     );
     setLoading(false);
@@ -102,6 +103,7 @@ export default function Usuarios() {
     setEditName(p.full_name);
     setEditCompany(p.company_id ?? "");
     setEditRole(p.role ?? "client");
+    setEditCustomData(p.custom_data ?? "");
   };
 
   const handleEdit = async () => {
@@ -109,7 +111,7 @@ export default function Usuarios() {
     setEditSaving(true);
 
     await Promise.all([
-      supabase.from("profiles").update({ full_name: editName, company_id: editCompany || null }).eq("id", editUser.id),
+      supabase.from("profiles").update({ full_name: editName, company_id: editCompany || null, custom_data: editCustomData.trim() || null }).eq("id", editUser.id),
       supabase.from("user_roles").update({ role: editRole as "admin" | "client" }).eq("user_id", editUser.id),
     ]);
 
@@ -185,6 +187,7 @@ export default function Usuarios() {
                       <SelectTrigger><SelectValue /></SelectTrigger>
                       <SelectContent>
                         <SelectItem value="client">Cliente</SelectItem>
+                        <SelectItem value="client_admin">Admin Empresa</SelectItem>
                         <SelectItem value="admin">Administrador</SelectItem>
                       </SelectContent>
                     </Select>
@@ -248,12 +251,12 @@ export default function Usuarios() {
                 <TableBody>
                   {filtered.map((p) => (
                     <TableRow key={p.id}>
-                      <TableCell className="font-medium">{p.full_name || "-"}</TableCell>
+                      <TableCell className="font-medium">{p.full_name || "—"}</TableCell>
                       <TableCell className="text-muted-foreground">{p.email}</TableCell>
                       <TableCell>{p.company_name}</TableCell>
                       <TableCell>
-                        <Badge variant={p.role === "admin" ? "default" : "secondary"}>
-                          {p.role === "admin" ? "Admin" : "Cliente"}
+                        <Badge variant={p.role === "admin" ? "default" : p.role === "client_admin" ? "outline" : "secondary"}>
+                          {p.role === "admin" ? "Admin" : p.role === "client_admin" ? "Admin Empresa" : "Cliente"}
                         </Badge>
                       </TableCell>
                       <TableCell className="text-right">
@@ -308,9 +311,17 @@ export default function Usuarios() {
                 <SelectTrigger><SelectValue /></SelectTrigger>
                 <SelectContent>
                   <SelectItem value="client">Cliente</SelectItem>
+                  <SelectItem value="client_admin">Admin Empresa</SelectItem>
                   <SelectItem value="admin">Administrador</SelectItem>
                 </SelectContent>
               </Select>
+            </div>
+            <div className="space-y-2">
+              <Label>Custom Data</Label>
+              <Input value={editCustomData} onChange={(e) => setEditCustomData(e.target.value)} placeholder="Dado customizado do usuário (usado em {custom_data})" />
+              <p className="text-xs text-muted-foreground">
+                Valor individual do usuário. Usado como placeholder <code className="bg-muted px-1 rounded">{'{custom_data}'}</code> nas regras de RLS.
+              </p>
             </div>
           </div>
           <DialogFooter>
