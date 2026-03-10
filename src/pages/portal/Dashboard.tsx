@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
-import { PortalLayout } from "@/components/portal/PortalLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
@@ -43,7 +42,7 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <PortalLayout>
+    <>
       <div className="space-y-6">
         <div>
           <h1 className="font-display text-2xl font-bold text-foreground">
@@ -104,6 +103,6 @@ export default function Dashboard() {
           </Button>
         </div>
       </div>
-    </PortalLayout>
+    </>
   );
 }

@@ -10,6 +10,7 @@ import { Layout } from "./components/layout/Layout";
 import { AuthProvider } from "./contexts/AuthContext";
 import { CartProvider } from "./contexts/CartContext";
 import { ProtectedRoute } from "./components/portal/ProtectedRoute";
+import { PortalLayout } from "./components/portal/PortalLayout";
 
 // Public site pages - all lazy loaded
 const Index = lazy(() => import("./pages/Index"));
@@ -122,22 +123,26 @@ const AppRoutes = () => {
       <Route path="/portal/login" element={<Suspense fallback={<Loading />}><PortalLogin /></Suspense>} />
       <Route path="/portal/reset-password" element={<Suspense fallback={<Loading />}><ResetPassword /></Suspense>} />
 
-      {/* Portal - protected */}
-      <Route path="/portal" element={<ProtectedRoute><Suspense fallback={<Loading />}><PortalDashboard /></Suspense></ProtectedRoute>} />
-      <Route path="/portal/chamados" element={<ProtectedRoute><Suspense fallback={<Loading />}><Chamados /></Suspense></ProtectedRoute>} />
-      <Route path="/portal/chamados/:id" element={<ProtectedRoute><Suspense fallback={<Loading />}><ChamadoDetalhe /></Suspense></ProtectedRoute>} />
-      <Route path="/portal/documentos" element={<ProtectedRoute><Suspense fallback={<Loading />}><Documentos /></Suspense></ProtectedRoute>} />
-      <Route path="/portal/perfil" element={<ProtectedRoute><Suspense fallback={<Loading />}><Perfil /></Suspense></ProtectedRoute>} />
-      <Route path="/portal/servicos" element={<ProtectedRoute><Suspense fallback={<Loading />}><PortalServicos /></Suspense></ProtectedRoute>} />
-      <Route path="/portal/servicos/:id" element={<ProtectedRoute><Suspense fallback={<Loading />}><ServicoDetalhe /></Suspense></ProtectedRoute>} />
+      {/* Portal - protected (layout route keeps sidebar mounted) */}
+      <Route element={<ProtectedRoute><PortalLayout /></ProtectedRoute>}>
+        <Route path="/portal" element={<Suspense fallback={<Loading />}><PortalDashboard /></Suspense>} />
+        <Route path="/portal/chamados" element={<Suspense fallback={<Loading />}><Chamados /></Suspense>} />
+        <Route path="/portal/chamados/:id" element={<Suspense fallback={<Loading />}><ChamadoDetalhe /></Suspense>} />
+        <Route path="/portal/documentos" element={<Suspense fallback={<Loading />}><Documentos /></Suspense>} />
+        <Route path="/portal/perfil" element={<Suspense fallback={<Loading />}><Perfil /></Suspense>} />
+        <Route path="/portal/servicos" element={<Suspense fallback={<Loading />}><PortalServicos /></Suspense>} />
+        <Route path="/portal/servicos/:id" element={<Suspense fallback={<Loading />}><ServicoDetalhe /></Suspense>} />
+      </Route>
 
-      {/* Admin */}
-      <Route path="/portal/admin/servicos" element={<ProtectedRoute adminOnly><Suspense fallback={<Loading />}><AdminServicos /></Suspense></ProtectedRoute>} />
-      <Route path="/portal/admin/empresas" element={<ProtectedRoute adminOnly><Suspense fallback={<Loading />}><AdminEmpresas /></Suspense></ProtectedRoute>} />
-      <Route path="/portal/admin/empresas/:id/servicos" element={<ProtectedRoute adminOnly><Suspense fallback={<Loading />}><EmpresaServicos /></Suspense></ProtectedRoute>} />
-      <Route path="/portal/admin/empresas/:id/rls-rules" element={<ProtectedRoute adminOnly><Suspense fallback={<Loading />}><RegrasRls /></Suspense></ProtectedRoute>} />
-      <Route path="/portal/admin/data-tables/:id" element={<ProtectedRoute adminOnly><Suspense fallback={<Loading />}><DataTableManager /></Suspense></ProtectedRoute>} />
-      <Route path="/portal/admin/usuarios" element={<ProtectedRoute adminOnly><Suspense fallback={<Loading />}><AdminUsuarios /></Suspense></ProtectedRoute>} />
+      {/* Admin (layout route keeps sidebar mounted) */}
+      <Route element={<ProtectedRoute adminOnly><PortalLayout /></ProtectedRoute>}>
+        <Route path="/portal/admin/servicos" element={<Suspense fallback={<Loading />}><AdminServicos /></Suspense>} />
+        <Route path="/portal/admin/empresas" element={<Suspense fallback={<Loading />}><AdminEmpresas /></Suspense>} />
+        <Route path="/portal/admin/empresas/:id/servicos" element={<Suspense fallback={<Loading />}><EmpresaServicos /></Suspense>} />
+        <Route path="/portal/admin/empresas/:id/rls-rules" element={<Suspense fallback={<Loading />}><RegrasRls /></Suspense>} />
+        <Route path="/portal/admin/data-tables/:id" element={<Suspense fallback={<Loading />}><DataTableManager /></Suspense>} />
+        <Route path="/portal/admin/usuarios" element={<Suspense fallback={<Loading />}><AdminUsuarios /></Suspense>} />
+      </Route>
 
       <Route path="*" element={<Suspense fallback={<SiteLoading />}><NotFound /></Suspense>} />
     </Routes>

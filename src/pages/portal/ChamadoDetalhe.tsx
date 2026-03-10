@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
-import { PortalLayout } from "@/components/portal/PortalLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -104,24 +103,24 @@ export default function ChamadoDetalhe() {
 
   if (loading) {
     return (
-      <PortalLayout>
+      <>
         <div className="flex justify-center py-12">
           <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
         </div>
-      </PortalLayout>
+      </>
     );
   }
 
   if (!ticket) {
     return (
-      <PortalLayout>
+      <>
         <p className="text-muted-foreground">Chamado não encontrado.</p>
-      </PortalLayout>
+      </>
     );
   }
 
   return (
-    <PortalLayout>
+    <>
       <div className="space-y-6 max-w-3xl">
         <Button variant="ghost" size="sm" onClick={() => navigate("/portal/chamados")}>
           <ArrowLeft className="h-4 w-4 mr-2" />
@@ -199,6 +198,6 @@ export default function ChamadoDetalhe() {
           </form>
         )}
       </div>
-    </PortalLayout>
+    </>
   );
 }

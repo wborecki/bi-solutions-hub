@@ -1,7 +1,6 @@
 import { useEffect, useState, useMemo } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
-import { PortalLayout } from "@/components/portal/PortalLayout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useNavigate } from "react-router-dom";
@@ -78,7 +77,7 @@ export default function PortalServicos() {
   }, [items, filterCompany]);
 
   return (
-    <PortalLayout>
+    <>
       <div className="space-y-6">
         <div className="flex items-center justify-between flex-wrap gap-3">
           <h1 className="font-display text-2xl font-bold text-foreground">Serviços</h1>
@@ -138,6 +137,6 @@ export default function PortalServicos() {
           </div>
         )}
       </div>
-    </PortalLayout>
+    </>
   );
 }

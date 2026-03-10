@@ -1,7 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { PortalLayout } from "@/components/portal/PortalLayout";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, Loader2, ShieldCheck, ShieldAlert, Table2, RefreshCw, Maximize2, Minimize2 } from "lucide-react";
 import { DataTableView } from "@/components/portal/DataTableView";
@@ -126,21 +125,21 @@ export default function ServicoDetalhe() {
 
   if (loading) {
     return (
-      <PortalLayout>
+      <>
         <div className="flex justify-center py-12">
           <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
         </div>
-      </PortalLayout>
+      </>
     );
   }
 
   if (!data) {
     return (
-      <PortalLayout>
+      <>
         <div className="text-center py-12 text-muted-foreground">
           Serviço não encontrado.
         </div>
-      </PortalLayout>
+      </>
     );
   }
 
@@ -198,7 +197,7 @@ export default function ServicoDetalhe() {
   const isReport = serviceType === "bi_embed" || serviceType === "looker_embed";
 
   return (
-    <PortalLayout>
+    <>
       {/* Fullscreen overlay */}
       {fullscreen && (
         <div className="fixed inset-0 z-50 bg-background flex flex-col">
@@ -418,6 +417,6 @@ export default function ServicoDetalhe() {
           />
         )}
       </div>
-    </PortalLayout>
+    </>
   );
 }

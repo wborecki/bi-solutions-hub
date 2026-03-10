@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { NavLink } from "@/components/NavLink";
-import { useLocation } from "react-router-dom";
+import { useLocation, Outlet } from "react-router-dom";
 import {
   Sidebar,
   SidebarContent,
@@ -131,7 +131,7 @@ function PortalSidebar() {
   );
 }
 
-export function PortalLayout({ children }: { children: ReactNode }) {
+export function PortalLayout({ children }: { children?: ReactNode }) {
   return (
     <SidebarProvider>
       <div className="min-h-screen flex w-full">
@@ -141,7 +141,7 @@ export function PortalLayout({ children }: { children: ReactNode }) {
             <SidebarTrigger className="mr-4" />
             <h2 className="font-display font-semibold text-foreground">Portal do Cliente</h2>
           </header>
-          <main className="flex-1 p-6 bg-muted/30">{children}</main>
+          <main className="flex-1 p-6 bg-muted/30">{children ?? <Outlet />}</main>
         </div>
       </div>
     </SidebarProvider>
