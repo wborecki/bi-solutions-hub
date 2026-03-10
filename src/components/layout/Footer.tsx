@@ -45,6 +45,7 @@ export function Footer() {
             <ul className="space-y-2.5">
               {[
                 { label: "Soluções", href: "/solucoes" },
+                { label: "Loja", href: "/loja" },
                 { label: "Sobre", href: "/sobre" },
                 { label: "Blog", href: "/blog" },
                 { label: "Contato", href: "/contato" },

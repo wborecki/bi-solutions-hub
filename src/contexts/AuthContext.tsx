@@ -46,31 +46,36 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setRole(data?.role ?? null);
   };
 
+  const loadUserData = async (userId: string) => {
+    await Promise.all([fetchProfile(userId), fetchRole(userId)]);
+  };
+
   useEffect(() => {
+    let initialized = false;
+
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (_event, session) => {
+      (_event, session) => {
         setSession(session);
         setUser(session?.user ?? null);
-        if (session?.user) {
-          // Use setTimeout to avoid Supabase deadlock
-          setTimeout(() => {
-            fetchProfile(session.user.id);
-            fetchRole(session.user.id);
-          }, 0);
-        } else {
+        if (!session?.user) {
           setProfile(null);
           setRole(null);
+          setLoading(false);
+          return;
         }
-        setLoading(false);
+        if (initialized) {
+          // Only refetch on subsequent auth changes (sign in/out), not initial
+          loadUserData(session.user.id).finally(() => setLoading(false));
+        }
       }
     );
 
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
+      initialized = true;
       setSession(session);
       setUser(session?.user ?? null);
       if (session?.user) {
-        fetchProfile(session.user.id);
-        fetchRole(session.user.id);
+        await loadUserData(session.user.id);
       }
       setLoading(false);
     });

@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect } from "react";
+import { lazy, Suspense, useEffect, useRef } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -8,6 +8,7 @@ import { ScrollToTop } from "./components/ScrollToTop";
 import { Analytics } from "./components/Analytics";
 import { Layout } from "./components/layout/Layout";
 import { AuthProvider } from "./contexts/AuthContext";
+import { CartProvider } from "./contexts/CartContext";
 import { ProtectedRoute } from "./components/portal/ProtectedRoute";
 
 // Public site pages - all lazy loaded
@@ -22,7 +23,12 @@ const Contato = lazy(() => import("./pages/Contato"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const Terms = lazy(() => import("./pages/Terms"));
 const NotFound = lazy(() => import("./pages/NotFound"));
-const BiaPreview = lazy(() => import("./pages/BiaPreview"));
+
+// Store pages
+const Loja = lazy(() => import("./pages/Loja"));
+const ProdutoDetalhe = lazy(() => import("./pages/ProdutoDetalhe"));
+const Carrinho = lazy(() => import("./pages/Carrinho"));
+const Checkout = lazy(() => import("./pages/Checkout"));
 
 // Portal pages - lazy loaded (only downloaded when user visits portal)
 const PortalLogin = lazy(() => import("./pages/portal/Login"));
@@ -39,7 +45,6 @@ const EmpresaServicos = lazy(() => import("./pages/portal/admin/EmpresaServicos"
 const DataTableManager = lazy(() => import("./pages/portal/admin/DataTableManager"));
 const PortalServicos = lazy(() => import("./pages/portal/Servicos"));
 const ServicoDetalhe = lazy(() => import("./pages/portal/ServicoDetalhe"));
-const EmpresaUsuarios = lazy(() => import("./pages/portal/EmpresaUsuarios"));
 const RegrasRls = lazy(() => import("./pages/portal/admin/RegrasRls"));
 
 // Preload site pages only when user is on the public site (not portal)
@@ -60,14 +65,16 @@ function usePreloadPages() {
 // Preload portal pages once user enters the portal
 function usePreloadPortalPages() {
   const { pathname } = useLocation();
+  const preloaded = useRef(false);
   useEffect(() => {
-    if (!pathname.startsWith("/portal")) return;
+    if (preloaded.current || !pathname.startsWith("/portal")) return;
+    preloaded.current = true;
     import("./pages/portal/Dashboard");
     import("./pages/portal/Chamados");
     import("./pages/portal/Servicos");
     import("./pages/portal/Documentos");
     import("./pages/portal/Perfil");
-  }, []); // only once on mount
+  }, [pathname]);
 }
 
 const queryClient = new QueryClient();
@@ -104,7 +111,12 @@ const AppRoutes = () => {
       <Route path="/contato" element={<Suspense fallback={<SiteLoading />}><Contato /></Suspense>} />
       <Route path="/privacy" element={<Suspense fallback={<SiteLoading />}><Privacy /></Suspense>} />
       <Route path="/terms" element={<Suspense fallback={<SiteLoading />}><Terms /></Suspense>} />
-      <Route path="/bia-preview" element={<Suspense fallback={<SiteLoading />}><BiaPreview /></Suspense>} />
+
+      {/* Store */}
+      <Route path="/loja" element={<Suspense fallback={<SiteLoading />}><Loja /></Suspense>} />
+      <Route path="/loja/:slug" element={<Suspense fallback={<SiteLoading />}><ProdutoDetalhe /></Suspense>} />
+      <Route path="/loja/carrinho" element={<Suspense fallback={<SiteLoading />}><Carrinho /></Suspense>} />
+      <Route path="/loja/checkout" element={<Suspense fallback={<SiteLoading />}><Checkout /></Suspense>} />
 
       {/* Portal - public */}
       <Route path="/portal/login" element={<Suspense fallback={<Loading />}><PortalLogin /></Suspense>} />
@@ -118,10 +130,6 @@ const AppRoutes = () => {
       <Route path="/portal/perfil" element={<ProtectedRoute><Suspense fallback={<Loading />}><Perfil /></Suspense></ProtectedRoute>} />
       <Route path="/portal/servicos" element={<ProtectedRoute><Suspense fallback={<Loading />}><PortalServicos /></Suspense></ProtectedRoute>} />
       <Route path="/portal/servicos/:id" element={<ProtectedRoute><Suspense fallback={<Loading />}><ServicoDetalhe /></Suspense></ProtectedRoute>} />
-
-      {/* Client admin / Company admin */}
-      <Route path="/portal/empresa/usuarios" element={<ProtectedRoute clientAdminAllowed><Suspense fallback={<Loading />}><EmpresaUsuarios /></Suspense></ProtectedRoute>} />
-      <Route path="/portal/empresa/perfis-rls" element={<ProtectedRoute clientAdminAllowed><Suspense fallback={<Loading />}><RegrasRls /></Suspense></ProtectedRoute>} />
 
       {/* Admin */}
       <Route path="/portal/admin/servicos" element={<ProtectedRoute adminOnly><Suspense fallback={<Loading />}><AdminServicos /></Suspense></ProtectedRoute>} />
@@ -145,7 +153,9 @@ const App = () => (
         <Analytics />
         <ScrollToTop />
         <AuthProvider>
-          <AppRoutes />
+          <CartProvider>
+            <AppRoutes />
+          </CartProvider>
         </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
