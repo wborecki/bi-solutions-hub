@@ -3,6 +3,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
 import {
   Table,
   TableBody,
@@ -11,7 +13,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { ArrowUpDown, ArrowUp, ArrowDown, Search, Download, ChevronLeft, ChevronRight, RefreshCw, Clock, ExternalLink } from "lucide-react";
+import { ArrowUpDown, ArrowUp, ArrowDown, Search, Download, ChevronLeft, ChevronRight, RefreshCw, Clock, ExternalLink, CalendarIcon, X } from "lucide-react";
+import { cn } from "@/lib/utils";
 import type { Json } from "@/integrations/supabase/types";
 
 export type ColumnDef = {
@@ -71,6 +74,7 @@ export function DataTableView({ companyServiceId, config }: DataTableViewProps) 
 
   // Filters
   const [filters, setFilters] = useState<Record<string, string>>({});
+  const [dateFilters, setDateFilters] = useState<Record<string, { from?: Date; to?: Date }>>({});
   const [searchTerm, setSearchTerm] = useState("");
 
   const columns = config.columns || [];
@@ -116,32 +120,36 @@ export function DataTableView({ companyServiceId, config }: DataTableViewProps) 
     const cachedAt = cache?.cached_at ? new Date(cache.cached_at).getTime() : 0;
     const isStale = Date.now() - cachedAt >= ttlMs;
 
-    if ((isStale || force) && !cache?.refreshing) {
+    // If force (user clicked), ignore cache.refreshing flag (may be stuck)
+    if ((isStale || force) && (force || !cache?.refreshing)) {
       setRefreshing(true);
       setRefreshError(null);
 
-      const { data: result, error: fnError } = await supabase.functions.invoke(
-        "query-client-db",
-        { body: { company_service_id: companyServiceId, force } }
-      );
+      try {
+        const { data: result, error: fnError } = await supabase.functions.invoke(
+          "query-client-db",
+          { body: { company_service_id: companyServiceId, force } }
+        );
 
-      setRefreshing(false);
-
-      if (fnError) {
-        setRefreshError(fnError.message || "Erro ao atualizar dados");
-      } else if (result?.status === "error") {
-        setRefreshError(result.error || "Erro na conexão com banco externo");
-      } else if (result?.status === "refreshed") {
-        setCacheInfo({
-          cached_at: result.cached_at,
-          row_count: result.row_count,
-          error: null,
-          refreshing: false,
-        });
-        // Re-fetch rows with fresh data
-        fetchRows();
-        return; // Skip the fetchRows below
+        if (fnError) {
+          setRefreshError(fnError.message || "Erro ao atualizar dados");
+        } else if (result?.status === "error") {
+          setRefreshError(result.error || "Erro na conexão com banco externo");
+        } else if (result?.status === "refreshed") {
+          setCacheInfo({
+            cached_at: result.cached_at,
+            row_count: result.row_count,
+            error: null,
+            refreshing: false,
+          });
+          fetchRows();
+          setRefreshing(false);
+          return;
+        }
+      } catch (err: unknown) {
+        setRefreshError(err instanceof Error ? err.message : "Erro inesperado ao atualizar");
       }
+      setRefreshing(false);
     }
   }, [companyServiceId, config.cache_ttl_minutes, isExternalDb, fetchRows]);
 
@@ -171,16 +179,35 @@ export function DataTableView({ companyServiceId, config }: DataTableViewProps) 
       );
     }
 
-    // Column filters
+    // Column filters (exact match from picklist)
     for (const [key, value] of Object.entries(filters)) {
       if (!value) continue;
-      const col = columns.find((c) => c.key === key);
-      if (!col) continue;
-      const term = value.toLowerCase();
       result = result.filter((row) => {
         const val = row.data[key];
         if (val == null) return false;
-        return String(val).toLowerCase().includes(term);
+        return String(val) === value;
+      });
+    }
+
+    // Date range filters
+    for (const [key, range] of Object.entries(dateFilters)) {
+      if (!range.from && !range.to) continue;
+      result = result.filter((row) => {
+        const val = row.data[key];
+        if (val == null) return false;
+        const d = new Date(String(val));
+        if (isNaN(d.getTime())) return false;
+        if (range.from) {
+          const fromStart = new Date(range.from);
+          fromStart.setHours(0, 0, 0, 0);
+          if (d < fromStart) return false;
+        }
+        if (range.to) {
+          const toEnd = new Date(range.to);
+          toEnd.setHours(23, 59, 59, 999);
+          if (d > toEnd) return false;
+        }
+        return true;
       });
     }
 
@@ -207,7 +234,7 @@ export function DataTableView({ companyServiceId, config }: DataTableViewProps) 
     }
 
     return result;
-  }, [rows, searchTerm, filters, sortKey, sortDir, columns]);
+  }, [rows, searchTerm, filters, dateFilters, sortKey, sortDir, columns]);
 
   const toggleSort = (key: string) => {
     if (sortKey === key) {
@@ -245,11 +272,27 @@ export function DataTableView({ companyServiceId, config }: DataTableViewProps) 
       }
     }
     if (type === "date") {
-      try {
-        return new Date(String(value)).toLocaleDateString("pt-BR");
-      } catch {
-        return String(value);
+      const raw = String(value).trim();
+      if (!raw) return "—";
+      let d = new Date(raw);
+      // Handle dd/mm/yyyy or dd-mm-yyyy (common in BR/PT databases)
+      if (isNaN(d.getTime())) {
+        const parts = raw.split(/[\/\-\.]/);
+        if (parts.length === 3) {
+          const [a, b, c] = parts.map(Number);
+          // dd/mm/yyyy
+          if (a <= 31 && b <= 12 && c >= 100) {
+            d = new Date(c, b - 1, a);
+          // yyyy/mm/dd
+          } else if (a >= 100 && b <= 12 && c <= 31) {
+            d = new Date(a, b - 1, c);
+          }
+        }
       }
+      if (!isNaN(d.getTime())) {
+        return d.toLocaleDateString("pt-BR");
+      }
+      return raw;
     }
     if (type === "number") {
       const num = Number(value);
@@ -288,21 +331,29 @@ export function DataTableView({ companyServiceId, config }: DataTableViewProps) 
   const totalPages = Math.ceil(totalCount / pageSize);
   const filterableCols = columns.filter((c) => c.filterable);
 
+  // Compute unique values for each filterable column (from loaded rows)
+  const filterOptions = useMemo(() => {
+    const map: Record<string, string[]> = {};
+    for (const col of filterableCols) {
+      const unique = new Set<string>();
+      for (const row of rows) {
+        const val = row.data[col.key];
+        if (val != null && String(val).trim() !== "") unique.add(String(val));
+      }
+      map[col.key] = Array.from(unique).sort((a, b) => a.localeCompare(b, "pt-BR"));
+    }
+    return map;
+  }, [rows, filterableCols]);
+
   return (
     <div className="space-y-4">
       {/* Cache info bar (external_db) */}
       {isExternalDb && (
         <div className="flex flex-wrap items-center gap-3 text-xs">
-          {cacheInfo?.cached_at && (
+          {cacheInfo?.cached_at && !refreshing && (
             <span className="flex items-center gap-1 text-muted-foreground bg-muted px-2 py-1 rounded">
               <Clock className="h-3 w-3" />
               Atualizado {formatTimeAgo(cacheInfo.cached_at)}
-            </span>
-          )}
-          {refreshing && (
-            <span className="flex items-center gap-1 text-blue-600 dark:text-blue-400">
-              <RefreshCw className="h-3 w-3 animate-spin" />
-              Sincronizando com banco externo...
             </span>
           )}
           {refreshError && (
@@ -318,38 +369,114 @@ export function DataTableView({ companyServiceId, config }: DataTableViewProps) 
             onClick={() => checkAndRefresh(true)}
           >
             <RefreshCw className={`h-3 w-3 mr-1 ${refreshing ? "animate-spin" : ""}`} />
-            Atualizar agora
+            {refreshing ? "Sincronizando..." : "Atualizar agora"}
           </Button>
         </div>
       )}
 
       {/* Toolbar */}
-      <div className="flex flex-wrap items-center gap-3">
-        <div className="relative flex-1 min-w-[200px] max-w-sm">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Buscar em todos os campos..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-9"
-          />
+      <div className="flex flex-wrap items-end gap-3">
+        <div className="flex flex-col gap-1">
+          <span className="text-xs font-medium text-muted-foreground">&nbsp;</span>
+          <div className="relative min-w-[200px] max-w-sm">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              placeholder="Buscar em todos os campos..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-9"
+            />
+          </div>
         </div>
 
-        {filterableCols.map((col) => (
-          <Input
-            key={col.key}
-            placeholder={`Filtrar ${col.label}...`}
-            value={filters[col.key] || ""}
-            onChange={(e) => setFilters((prev) => ({ ...prev, [col.key]: e.target.value }))}
-            className="w-[180px]"
-          />
-        ))}
+        {filterableCols.map((col) =>
+          col.type === "date" ? (
+            <div key={col.key} className="flex flex-col gap-1">
+              <span className="text-xs font-medium text-muted-foreground">{col.label}</span>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className={cn(
+                      "w-[220px] justify-start text-left text-sm font-normal h-9",
+                      !dateFilters[col.key]?.from && "text-muted-foreground"
+                    )}
+                  >
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {dateFilters[col.key]?.from
+                      ? dateFilters[col.key]?.to
+                        ? `${dateFilters[col.key].from!.toLocaleDateString("pt-BR")} - ${dateFilters[col.key].to!.toLocaleDateString("pt-BR")}`
+                        : dateFilters[col.key].from!.toLocaleDateString("pt-BR")
+                      : `Selecionar...`}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <div className="p-2 flex items-center justify-between border-b">
+                    <span className="text-xs font-medium">{col.label}</span>
+                    {(dateFilters[col.key]?.from || dateFilters[col.key]?.to) && (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-6 px-2 text-xs"
+                        onClick={() => setDateFilters((prev) => { const n = { ...prev }; delete n[col.key]; return n; })}
+                      >
+                        <X className="h-3 w-3 mr-1" /> Limpar
+                      </Button>
+                    )}
+                  </div>
+                  <Calendar
+                    mode="range"
+                    selected={
+                      dateFilters[col.key]?.from
+                        ? { from: dateFilters[col.key].from!, to: dateFilters[col.key].to }
+                        : undefined
+                    }
+                    onSelect={(range) => {
+                      if (!range) {
+                        setDateFilters((prev) => { const n = { ...prev }; delete n[col.key]; return n; });
+                      } else {
+                        setDateFilters((prev) => ({ ...prev, [col.key]: { from: range.from, to: range.to } }));
+                      }
+                    }}
+                    locale={undefined}
+                    numberOfMonths={1}
+                  />
+                </PopoverContent>
+              </Popover>
+            </div>
+          ) : (
+            <div key={col.key} className="flex flex-col gap-1">
+              <span className="text-xs font-medium text-muted-foreground">{col.label}</span>
+              <Select
+                value={filters[col.key] || "__all__"}
+                onValueChange={(v) => setFilters((prev) => ({ ...prev, [col.key]: v === "__all__" ? "" : v }))}
+              >
+                <SelectTrigger className="w-[180px] text-sm">
+                  <SelectValue placeholder="Selecionar..." />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="__all__">Todos</SelectItem>
+                  {(filterOptions[col.key] ?? []).map((opt) => (
+                    <SelectItem key={opt} value={opt}>
+                      {col.type === "boolean"
+                        ? opt === "true" || opt === "1" || opt.toLowerCase() === "sim" ? "Sim" : "Não"
+                        : opt}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          )
+        )}
 
         {config.allow_export && (
-          <Button variant="outline" size="sm" onClick={exportCsv}>
-            <Download className="h-4 w-4 mr-2" />
-            Exportar CSV
-          </Button>
+          <div className="flex flex-col gap-1">
+            <span className="text-xs font-medium text-muted-foreground">&nbsp;</span>
+            <Button variant="outline" size="sm" onClick={exportCsv} className="h-9">
+              <Download className="h-4 w-4 mr-2" />
+              Exportar CSV
+            </Button>
+          </div>
         )}
       </div>
 
@@ -367,7 +494,7 @@ export function DataTableView({ companyServiceId, config }: DataTableViewProps) 
       </div>
 
       {/* Table */}
-      <div className="rounded-lg border bg-background">
+      <div className="rounded-lg border bg-background overflow-auto max-h-[calc(100vh-280px)]">
         <Table>
           <TableHeader>
             <TableRow>

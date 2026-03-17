@@ -526,8 +526,8 @@ export default function EmpresaServicos() {
                                         </div>
                                         <div className="space-y-1">
                                           <Label className="text-xs">Query SQL</Label>
-                                          <Input
-                                            placeholder="SELECT * FROM advogados_ativos WHERE status = 'ativo'"
+                                          <textarea
+                                            placeholder={"SELECT *\nFROM advogados_ativos\nWHERE status = 'ativo'\nLIMIT 1000"}
                                             value={inst.dt_db_query}
                                             onChange={(e) => {
                                               const allInst = instancesMap.get(s.id) ?? [];
@@ -535,7 +535,9 @@ export default function EmpresaServicos() {
                                               newArr[actualIdx] = { ...newArr[actualIdx], dt_db_query: e.target.value };
                                               setInstancesMap((prev) => { const n = new Map(prev); n.set(s.id, newArr); return n; });
                                             }}
-                                            className="text-xs font-mono"
+                                            rows={6}
+                                            className="w-full rounded-md border border-input bg-zinc-950 text-green-400 px-3 py-2 text-xs font-mono ring-offset-background placeholder:text-zinc-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 resize-y"
+                                            spellCheck={false}
                                           />
                                         </div>
                                         <div className="flex items-center gap-4">
