@@ -22,13 +22,13 @@ import {
   DialogTitle,
   DialogFooter,
 } from "@/components/ui/dialog";
-import { ArrowLeft, Plus, Trash2, Upload, Pencil, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowLeft, Plus, Trash2, Upload, Pencil, ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
 import type { Json } from "@/integrations/supabase/types";
 
 type ColumnDef = {
   key: string;
   label: string;
-  type: "text" | "number" | "date" | "boolean";
+  type: "text" | "number" | "date" | "boolean" | "link";
 };
 
 type DataRow = {
@@ -345,7 +345,24 @@ export default function DataTableManager() {
                     <TableRow key={row.id}>
                       {columns.map((col) => (
                         <TableCell key={col.key} className="max-w-[300px] truncate">
-                          {row.data[col.key] != null ? String(row.data[col.key]) : "—"}
+                          {row.data[col.key] != null
+                            ? col.type === "link"
+                              ? (() => {
+                                  const url = String(row.data[col.key]).trim();
+                                  try {
+                                    const parsed = new URL(url);
+                                    if (parsed.protocol !== "http:" && parsed.protocol !== "https:") return url;
+                                    return (
+                                      <a href={parsed.href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-primary hover:underline">
+                                        <ExternalLink className="h-3.5 w-3.5" /> Link
+                                      </a>
+                                    );
+                                  } catch {
+                                    return url;
+                                  }
+                                })()
+                              : String(row.data[col.key])
+                            : "—"}
                         </TableCell>
                       ))}
                       <TableCell>

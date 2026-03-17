@@ -15,7 +15,7 @@ type Service = { id: string; name: string; slug: string; type: string };
 type ColumnDef = {
   key: string;
   label: string;
-  type: "text" | "number" | "date" | "boolean";
+  type: "text" | "number" | "date" | "boolean" | "link";
   filterable?: boolean;
   sortable?: boolean;
 };
@@ -687,6 +687,7 @@ export default function EmpresaServicos() {
                                               <SelectItem value="number">Número</SelectItem>
                                               <SelectItem value="date">Data</SelectItem>
                                               <SelectItem value="boolean">Boolean</SelectItem>
+                                              <SelectItem value="link">Link</SelectItem>
                                             </SelectContent>
                                           </Select>
                                           <label className="flex items-center gap-1 text-xs whitespace-nowrap">

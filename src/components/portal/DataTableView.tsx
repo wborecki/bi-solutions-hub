@@ -11,13 +11,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { ArrowUpDown, ArrowUp, ArrowDown, Search, Download, ChevronLeft, ChevronRight, RefreshCw, Clock } from "lucide-react";
+import { ArrowUpDown, ArrowUp, ArrowDown, Search, Download, ChevronLeft, ChevronRight, RefreshCw, Clock, ExternalLink } from "lucide-react";
 import type { Json } from "@/integrations/supabase/types";
 
 export type ColumnDef = {
   key: string;
   label: string;
-  type: "text" | "number" | "date" | "boolean";
+  type: "text" | "number" | "date" | "boolean" | "link";
   filterable?: boolean;
   sortable?: boolean;
 };
@@ -223,6 +223,27 @@ export function DataTableView({ companyServiceId, config }: DataTableViewProps) 
   const formatValue = (value: unknown, type: string) => {
     if (value == null) return "—";
     if (type === "boolean") return value ? "Sim" : "Não";
+    if (type === "link") {
+      const url = String(value).trim();
+      if (!url) return "—";
+      try {
+        const parsed = new URL(url);
+        if (parsed.protocol !== "http:" && parsed.protocol !== "https:") return "—";
+        return (
+          <a
+            href={parsed.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 text-primary hover:underline"
+          >
+            <ExternalLink className="h-3.5 w-3.5" />
+            Link
+          </a>
+        );
+      } catch {
+        return String(value);
+      }
+    }
     if (type === "date") {
       try {
         return new Date(String(value)).toLocaleDateString("pt-BR");
