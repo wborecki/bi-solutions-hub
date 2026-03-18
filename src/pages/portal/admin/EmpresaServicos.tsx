@@ -36,6 +36,8 @@ type InstanceEntry = {
   dt_row_limit: number;
   dt_page_size: number;
   dt_allow_export: boolean;
+  dt_default_sort_key: string;
+  dt_default_sort_dir: "asc" | "desc";
   // external_db fields
   dt_source: "manual" | "external_db";
   dt_db_host: string;
@@ -63,6 +65,8 @@ const emptyInstance = (serviceName: string, index: number): InstanceEntry => ({
   dt_row_limit: 5000,
   dt_page_size: 25,
   dt_allow_export: false,
+  dt_default_sort_key: "",
+  dt_default_sort_dir: "desc",
   dt_source: "external_db",
   dt_db_host: "",
   dt_db_port: 5432,
@@ -116,6 +120,8 @@ export default function EmpresaServicos() {
           dt_row_limit: typeof cfg?.row_limit === "number" ? cfg.row_limit : 5000,
           dt_page_size: typeof cfg?.page_size === "number" ? cfg.page_size : 25,
           dt_allow_export: !!cfg?.allow_export,
+          dt_default_sort_key: (cfg?.default_sort_key as string) || "",
+          dt_default_sort_dir: (cfg?.default_sort_dir as string) === "asc" ? "asc" : "desc",
           dt_source: (cfg?.source as string) === "external_db" ? "external_db" : "manual",
           dt_db_host: (cfg?.db_host as string) || "",
           dt_db_port: typeof cfg?.db_port === "number" ? cfg.db_port : 5432,
@@ -203,6 +209,10 @@ export default function EmpresaServicos() {
           config.row_limit = inst.dt_row_limit;
           config.page_size = inst.dt_page_size;
           config.allow_export = inst.dt_allow_export;
+          if (inst.dt_default_sort_key) {
+            config.default_sort_key = inst.dt_default_sort_key;
+            config.default_sort_dir = inst.dt_default_sort_dir;
+          }
           config.source = inst.dt_source;
           if (inst.dt_source === "external_db") {
             config.db_host = inst.dt_db_host;
@@ -646,6 +656,54 @@ export default function EmpresaServicos() {
                                         </label>
                                       </div>
                                     </div>
+
+                                    {/* Default sort */}
+                                    {inst.dt_columns.length > 0 && (
+                                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                                        <div className="space-y-1">
+                                          <Label className="text-xs">Ordenação padrão (coluna)</Label>
+                                          <Select
+                                            value={inst.dt_default_sort_key || "_none"}
+                                            onValueChange={(v) => {
+                                              const allInst = instancesMap.get(s.id) ?? [];
+                                              const newArr = [...allInst];
+                                              newArr[actualIdx] = { ...newArr[actualIdx], dt_default_sort_key: v === "_none" ? "" : v };
+                                              setInstancesMap((prev) => { const n = new Map(prev); n.set(s.id, newArr); return n; });
+                                            }}
+                                          >
+                                            <SelectTrigger className="text-xs h-8">
+                                              <SelectValue placeholder="Sem ordenação padrão" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                              <SelectItem value="_none">Sem ordenação padrão</SelectItem>
+                                              {inst.dt_columns.filter(c => c.sortable !== false).map(c => (
+                                                <SelectItem key={c.key} value={c.key}>{c.label || c.key}</SelectItem>
+                                              ))}
+                                            </SelectContent>
+                                          </Select>
+                                        </div>
+                                        <div className="space-y-1">
+                                          <Label className="text-xs">Direção</Label>
+                                          <Select
+                                            value={inst.dt_default_sort_dir}
+                                            onValueChange={(v) => {
+                                              const allInst = instancesMap.get(s.id) ?? [];
+                                              const newArr = [...allInst];
+                                              newArr[actualIdx] = { ...newArr[actualIdx], dt_default_sort_dir: v as "asc" | "desc" };
+                                              setInstancesMap((prev) => { const n = new Map(prev); n.set(s.id, newArr); return n; });
+                                            }}
+                                          >
+                                            <SelectTrigger className="text-xs h-8">
+                                              <SelectValue />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                              <SelectItem value="asc">Crescente (A→Z, 1→9)</SelectItem>
+                                              <SelectItem value="desc">Decrescente (Z→A, 9→1)</SelectItem>
+                                            </SelectContent>
+                                          </Select>
+                                        </div>
+                                      </div>
+                                    )}
 
                                     {/* Columns editor */}
                                     <div className="space-y-2">

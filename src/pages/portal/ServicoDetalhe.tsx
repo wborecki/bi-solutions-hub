@@ -413,6 +413,8 @@ export default function ServicoDetalhe() {
               allow_export: !!config?.allow_export,
               source: config?.source === "external_db" ? "external_db" : "manual",
               cache_ttl_minutes: typeof config?.cache_ttl_minutes === "number" ? config.cache_ttl_minutes : 15,
+              default_sort_key: (config?.default_sort_key as string) || undefined,
+              default_sort_dir: (config?.default_sort_dir as string) === "asc" ? "asc" : (config?.default_sort_key ? "desc" : undefined),
             }}
           />
         )}

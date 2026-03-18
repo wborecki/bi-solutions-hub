@@ -32,6 +32,8 @@ type DataTableConfig = {
   allow_export?: boolean;
   source?: "manual" | "external_db";
   cache_ttl_minutes?: number;
+  default_sort_key?: string;
+  default_sort_dir?: "asc" | "desc";
 };
 
 type DataRow = {
@@ -69,8 +71,8 @@ export function DataTableView({ companyServiceId, config }: DataTableViewProps) 
   const [page, setPage] = useState(0);
 
   // Sorting
-  const [sortKey, setSortKey] = useState<string | null>(null);
-  const [sortDir, setSortDir] = useState<SortDir>(null);
+  const [sortKey, setSortKey] = useState<string | null>(config.default_sort_key || null);
+  const [sortDir, setSortDir] = useState<SortDir>(config.default_sort_key ? (config.default_sort_dir || "desc") : null);
 
   // Filters
   const [filters, setFilters] = useState<Record<string, string>>({});
