@@ -59,7 +59,6 @@ interface DataTableViewProps {
 export function DataTableView({ companyServiceId, config }: DataTableViewProps) {
   const [rows, setRows] = useState<DataRow[]>([]);
   const [loading, setLoading] = useState(true);
-  const [totalCount, setTotalCount] = useState(0);
 
   // Cache state (for external_db mode)
   const [cacheInfo, setCacheInfo] = useState<CacheInfo | null>(null);
@@ -85,22 +84,20 @@ export function DataTableView({ companyServiceId, config }: DataTableViewProps) 
 
   const fetchRows = useCallback(async () => {
     setLoading(true);
-    const from = page * pageSize;
-    const to = Math.min(from + pageSize - 1, rowLimit - 1);
 
-    const { data, count, error } = await supabase
+    // Fetch all rows up to rowLimit (Supabase max range is 0-based)
+    const { data, error } = await supabase
       .from("data_table_rows")
-      .select("id, data, created_at", { count: "exact" })
+      .select("id, data, created_at")
       .eq("company_service_id", companyServiceId)
-      .range(from, to)
-      .order("created_at", { ascending: false });
+      .order("created_at", { ascending: false })
+      .limit(rowLimit);
 
     if (!error) {
       setRows((data ?? []) as unknown as DataRow[]);
-      setTotalCount(Math.min(count ?? 0, rowLimit));
     }
     setLoading(false);
-  }, [companyServiceId, page, pageSize, rowLimit]);
+  }, [companyServiceId, rowLimit]);
 
   // Check cache and trigger refresh if needed (external_db mode)
   const checkAndRefresh = useCallback(async (force = false) => {
@@ -330,7 +327,20 @@ export function DataTableView({ companyServiceId, config }: DataTableViewProps) 
     URL.revokeObjectURL(url);
   };
 
-  const totalPages = Math.ceil(totalCount / pageSize);
+  const totalFiltered = processedRows.length;
+  const totalPages = Math.ceil(totalFiltered / pageSize);
+
+  // Paginate processedRows client-side
+  const pagedRows = useMemo(() => {
+    const from = page * pageSize;
+    return processedRows.slice(from, from + pageSize);
+  }, [processedRows, page, pageSize]);
+
+  // Reset page when filters/sort change
+  useEffect(() => {
+    setPage(0);
+  }, [searchTerm, filters, dateFilters, sortKey, sortDir]);
+
   const filterableCols = columns.filter((c) => c.filterable);
 
   // Compute unique values for each filterable column (from loaded rows)
@@ -485,8 +495,8 @@ export function DataTableView({ companyServiceId, config }: DataTableViewProps) 
       {/* Info */}
       <div className="flex items-center justify-between text-xs text-muted-foreground">
         <span>
-          {processedRows.length} de {totalCount} registro(s)
-          {totalCount >= rowLimit && ` (limite: ${rowLimit.toLocaleString("pt-BR")})`}
+          {totalFiltered} de {rows.length} registro(s)
+          {rows.length >= rowLimit && ` (limite: ${rowLimit.toLocaleString("pt-BR")})`}
         </span>
         {totalPages > 1 && (
           <span>
@@ -533,14 +543,14 @@ export function DataTableView({ companyServiceId, config }: DataTableViewProps) 
                   </div>
                 </TableCell>
               </TableRow>
-            ) : processedRows.length === 0 ? (
+            ) : pagedRows.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={columns.length} className="text-center py-8 text-muted-foreground">
                   Nenhum registro encontrado.
                 </TableCell>
               </TableRow>
             ) : (
-              processedRows.map((row) => (
+              pagedRows.map((row) => (
                 <TableRow key={row.id}>
                   {columns.map((col) => (
                     <TableCell key={col.key}>
