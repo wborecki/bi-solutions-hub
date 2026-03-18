@@ -176,6 +176,8 @@ export default function EmpresaServicos() {
     if (!companyId) return;
     setSaving(true);
 
+    let hasError = false;
+
     for (const [serviceId, instances] of instancesMap.entries()) {
       const svc = services.find((s) => s.id === serviceId);
 
@@ -210,16 +212,18 @@ export default function EmpresaServicos() {
         }
 
         if (inst._deleted && inst.dbId) {
-          await supabase.from("company_services").delete().eq("id", inst.dbId);
+          const { error } = await supabase.from("company_services").delete().eq("id", inst.dbId);
+          if (error) { console.error("Delete error:", error); hasError = true; toast({ title: "Erro ao excluir", description: error.message, variant: "destructive" }); }
         } else if (inst.dbId) {
-          await supabase.from("company_services").update({
+          const { error } = await supabase.from("company_services").update({
             name: inst.name,
             embed_url: inst.embed_url,
             is_active: inst.is_active,
             config: config as unknown as Json,
           }).eq("id", inst.dbId);
+          if (error) { console.error("Update error:", error); hasError = true; toast({ title: "Erro ao atualizar", description: error.message, variant: "destructive" }); }
         } else if (!inst._deleted) {
-          await supabase.from("company_services").insert({
+          const { error } = await supabase.from("company_services").insert({
             company_id: companyId,
             service_id: serviceId,
             name: inst.name,
@@ -227,14 +231,16 @@ export default function EmpresaServicos() {
             is_active: inst.is_active,
             config: config as unknown as Json,
           });
+          if (error) { console.error("Insert error:", error); hasError = true; toast({ title: "Erro ao criar serviço", description: error.message, variant: "destructive" }); }
         }
       }
     }
 
     setSaving(false);
-    toast({ title: "Serviços da empresa atualizados!" });
-    // Refresh
-    window.location.reload();
+    if (!hasError) {
+      toast({ title: "Serviços da empresa atualizados!" });
+      window.location.reload();
+    }
   };
 
   if (loading) {

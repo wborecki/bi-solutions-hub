@@ -494,8 +494,8 @@ export function DataTableView({ companyServiceId, config }: DataTableViewProps) 
       </div>
 
       {/* Table */}
-      <div className="rounded-lg border bg-background overflow-auto max-h-[calc(100vh-280px)]">
-        <Table>
+      <div className="rounded-lg border bg-background overflow-x-auto">
+        <Table className="min-w-[800px]">
           <TableHeader>
             <TableRow>
               {columns.map((col) => (
