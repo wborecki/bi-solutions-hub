@@ -7,8 +7,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowLeft, Save, ShieldCheck, ShieldAlert, Plus, Trash2, Table2, ExternalLink, DatabaseZap } from "lucide-react";
+import { ArrowLeft, Save, ShieldCheck, ShieldAlert, Plus, Trash2, Table2, ExternalLink, DatabaseZap, ChevronDown } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
 type Service = { id: string; name: string; slug: string; type: string };
 
@@ -282,22 +283,29 @@ export default function EmpresaServicos() {
               const showEmbed = isPbi || isLooker;
 
               return (
-                <Card key={s.id}>
-                  <CardContent className="p-4 space-y-3">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="font-medium text-foreground">{s.name}</p>
-                        <p className="text-xs text-muted-foreground">{s.type} · {instances.length} instância(s)</p>
+                <Collapsible key={s.id} defaultOpen={instances.length <= 2}>
+                  <Card>
+                    <CardContent className="p-4 space-y-3">
+                      <div className="flex items-center justify-between">
+                        <CollapsibleTrigger asChild>
+                          <button type="button" className="flex items-center gap-2 text-left group">
+                            <ChevronDown className="h-4 w-4 text-muted-foreground transition-transform group-data-[state=open]:rotate-0 group-data-[state=closed]:-rotate-90" />
+                            <div>
+                              <p className="font-medium text-foreground">{s.name}</p>
+                              <p className="text-xs text-muted-foreground">{s.type} · {instances.length} instância(s)</p>
+                            </div>
+                          </button>
+                        </CollapsibleTrigger>
+                        {(showEmbed || isDataTable) && (
+                          <Button variant="outline" size="sm" onClick={() => addInstance(s.id)}>
+                            <Plus className="h-3.5 w-3.5 mr-1" /> {isDataTable ? "Adicionar tabela" : "Adicionar relatório"}
+                          </Button>
+                        )}
                       </div>
-                      {(showEmbed || isDataTable) && (
-                        <Button variant="outline" size="sm" onClick={() => addInstance(s.id)}>
-                          <Plus className="h-3.5 w-3.5 mr-1" /> {isDataTable ? "Adicionar tabela" : "Adicionar relatório"}
-                        </Button>
-                      )}
-                    </div>
 
-                    {instances.length > 0 && (
-                      <div className="space-y-3 ml-2 border-l-2 border-muted pl-4">
+                      <CollapsibleContent>
+                      {instances.length > 0 && (
+                        <div className="space-y-3 ml-2 border-l-2 border-muted pl-4 pt-2">
                         {instances.map((inst, idx) => {
                           const hasPbiRls = isPbi && inst.workspace_id && inst.report_id && inst.dataset_id;
                           // Find the real index in the full array (including deleted)
@@ -752,10 +760,12 @@ export default function EmpresaServicos() {
                             </div>
                           );
                         })}
-                      </div>
-                    )}
-                  </CardContent>
-                </Card>
+                        </div>
+                      )}
+                      </CollapsibleContent>
+                    </CardContent>
+                  </Card>
+                </Collapsible>
               );
             })}
           </div>
