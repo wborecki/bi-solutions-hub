@@ -46,6 +46,7 @@ type InstanceEntry = {
   dt_db_query: string;
   dt_db_ssl: boolean;
   dt_cache_ttl_minutes: number;
+  admin_only: boolean;
   _deleted?: boolean;
 };
 
@@ -71,6 +72,7 @@ const emptyInstance = (serviceName: string, index: number): InstanceEntry => ({
   dt_db_query: "",
   dt_db_ssl: true,
   dt_cache_ttl_minutes: 15,
+  admin_only: false,
 });
 
 export default function EmpresaServicos() {
@@ -123,6 +125,7 @@ export default function EmpresaServicos() {
           dt_db_query: (cfg?.db_query as string) || "",
           dt_db_ssl: cfg?.db_ssl !== false,
           dt_cache_ttl_minutes: typeof cfg?.cache_ttl_minutes === "number" ? cfg.cache_ttl_minutes : 15,
+          admin_only: !!cfg?.admin_only,
         };
         const arr = map.get(cs.service_id) ?? [];
         arr.push(entry);
@@ -185,6 +188,7 @@ export default function EmpresaServicos() {
       for (const inst of instances) {
         // Build config
         const config: Record<string, Json> = {};
+        if (inst.admin_only) config.admin_only = true;
         if (svc?.type === "bi_embed") {
           if (inst.workspace_id) config.workspace_id = inst.workspace_id;
           if (inst.report_id) config.report_id = inst.report_id;
@@ -342,6 +346,15 @@ export default function EmpresaServicos() {
                                     onChange={(e) => updateField(s.id, actualIdx, "is_active", e.target.checked)}
                                     className="accent-primary"
                                   />
+                                  <label className="flex items-center gap-1 text-xs text-muted-foreground whitespace-nowrap border-l pl-2 ml-1">
+                                    <input
+                                      type="checkbox"
+                                      checked={inst.admin_only}
+                                      onChange={(e) => updateField(s.id, actualIdx, "admin_only", e.target.checked)}
+                                      className="accent-amber-500"
+                                    />
+                                    Só Admin
+                                  </label>
                                   <Button
                                     variant="ghost"
                                     size="icon"

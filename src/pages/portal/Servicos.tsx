@@ -45,7 +45,7 @@ export default function PortalServicos() {
 
       const csPromise = supabase
           .from("company_services")
-          .select("id, name, service_id, embed_url, is_active, company_id, companies(name), services(id, name, slug, description, icon, type)")
+          .select("id, name, service_id, embed_url, is_active, company_id, config, companies(name), services(id, name, slug, description, icon, type)")
           .eq("is_active", true);
 
       const [csRes, companiesRes] = await Promise.all([
@@ -57,6 +57,11 @@ export default function PortalServicos() {
 
       if (!isAdmin) {
         data = data.filter(d => d.company_id === profile!.company_id);
+        // Hide admin-only services from regular clients
+        data = data.filter(d => {
+          const cfg = (d as any).config;
+          return !cfg?.admin_only;
+        });
       }
 
       setItems(data);
