@@ -51,6 +51,28 @@ type CacheInfo = {
 
 type SortDir = "asc" | "desc" | null;
 
+/** Parse a date string treating it as a local date (no timezone shift).
+ *  Handles ISO (2026-03-18T00:00:00.000Z), yyyy-mm-dd, dd/mm/yyyy, dd-mm-yyyy. */
+function parseLocalDate(raw: string): Date | null {
+  const s = raw.trim();
+  if (!s) return null;
+
+  // ISO or yyyy-mm-dd — extract date parts to avoid UTC shift
+  const isoMatch = s.match(/^(\d{4})[-/](\d{1,2})[-/](\d{1,2})/);
+  if (isoMatch) {
+    return new Date(Number(isoMatch[1]), Number(isoMatch[2]) - 1, Number(isoMatch[3]));
+  }
+
+  // dd/mm/yyyy or dd-mm-yyyy or dd.mm.yyyy
+  const brMatch = s.match(/^(\d{1,2})[-/.](\d{1,2})[-/.](\d{4})/);
+  if (brMatch) {
+    return new Date(Number(brMatch[3]), Number(brMatch[2]) - 1, Number(brMatch[1]));
+  }
+
+  const d = new Date(s);
+  return isNaN(d.getTime()) ? null : d;
+}
+
 interface DataTableViewProps {
   companyServiceId: string;
   config: DataTableConfig;
@@ -194,8 +216,8 @@ export function DataTableView({ companyServiceId, config }: DataTableViewProps) 
       result = result.filter((row) => {
         const val = row.data[key];
         if (val == null) return false;
-        const d = new Date(String(val));
-        if (isNaN(d.getTime())) return false;
+        const d = parseLocalDate(String(val));
+        if (!d) return false;
         if (range.from) {
           const fromStart = new Date(range.from);
           fromStart.setHours(0, 0, 0, 0);
@@ -224,7 +246,9 @@ export function DataTableView({ companyServiceId, config }: DataTableViewProps) 
         if (col?.type === "number") {
           cmp = Number(aVal) - Number(bVal);
         } else if (col?.type === "date") {
-          cmp = new Date(String(aVal)).getTime() - new Date(String(bVal)).getTime();
+          const da = parseLocalDate(String(aVal));
+          const db = parseLocalDate(String(bVal));
+          cmp = (da?.getTime() ?? 0) - (db?.getTime() ?? 0);
         } else {
           cmp = String(aVal).localeCompare(String(bVal), "pt-BR");
         }
@@ -273,22 +297,8 @@ export function DataTableView({ companyServiceId, config }: DataTableViewProps) 
     if (type === "date") {
       const raw = String(value).trim();
       if (!raw) return "—";
-      let d = new Date(raw);
-      // Handle dd/mm/yyyy or dd-mm-yyyy (common in BR/PT databases)
-      if (isNaN(d.getTime())) {
-        const parts = raw.split(/[\/\-\.]/);
-        if (parts.length === 3) {
-          const [a, b, c] = parts.map(Number);
-          // dd/mm/yyyy
-          if (a <= 31 && b <= 12 && c >= 100) {
-            d = new Date(c, b - 1, a);
-          // yyyy/mm/dd
-          } else if (a >= 100 && b <= 12 && c <= 31) {
-            d = new Date(a, b - 1, c);
-          }
-        }
-      }
-      if (!isNaN(d.getTime())) {
+      const d = parseLocalDate(raw);
+      if (d) {
         return d.toLocaleDateString("pt-BR");
       }
       return raw;
