@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowLeft, Save, ShieldCheck, ShieldAlert, Plus, Trash2, Table2, ExternalLink, DatabaseZap, ChevronDown } from "lucide-react";
+import { ArrowLeft, Save, ShieldCheck, ShieldAlert, Plus, Trash2, Table2, ExternalLink, DatabaseZap, ChevronDown, MessageSquare } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
@@ -19,6 +19,7 @@ type ColumnDef = {
   type: "text" | "number" | "date" | "boolean" | "link";
   filterable?: boolean;
   sortable?: boolean;
+  hidden?: boolean;
 };
 
 type InstanceEntry = {
@@ -48,6 +49,12 @@ type InstanceEntry = {
   dt_db_query: string;
   dt_db_ssl: boolean;
   dt_cache_ttl_minutes: number;
+  // observations fields
+  dt_allow_observations: boolean;
+  dt_observations_target: "local" | "external_db";
+  dt_observations_table: string;
+  dt_observations_column: string;
+  dt_primary_key: string;
   admin_only: boolean;
   _deleted?: boolean;
 };
@@ -76,6 +83,11 @@ const emptyInstance = (serviceName: string, index: number): InstanceEntry => ({
   dt_db_query: "",
   dt_db_ssl: true,
   dt_cache_ttl_minutes: 15,
+  dt_allow_observations: false,
+  dt_observations_target: "local",
+  dt_observations_table: "",
+  dt_observations_column: "",
+  dt_primary_key: "",
   admin_only: false,
 });
 
@@ -131,6 +143,11 @@ export default function EmpresaServicos() {
           dt_db_query: (cfg?.db_query as string) || "",
           dt_db_ssl: cfg?.db_ssl !== false,
           dt_cache_ttl_minutes: typeof cfg?.cache_ttl_minutes === "number" ? cfg.cache_ttl_minutes : 15,
+          dt_allow_observations: !!cfg?.allow_observations,
+          dt_observations_target: (cfg?.observations_target as string) === "external_db" ? "external_db" : "local",
+          dt_observations_table: (cfg?.observations_table as string) || "",
+          dt_observations_column: (cfg?.observations_column as string) || "",
+          dt_primary_key: (cfg?.primary_key as string) || "",
           admin_only: !!cfg?.admin_only,
         };
         const arr = map.get(cs.service_id) ?? [];
@@ -223,6 +240,15 @@ export default function EmpresaServicos() {
             config.db_query = inst.dt_db_query;
             config.db_ssl = inst.dt_db_ssl;
             config.cache_ttl_minutes = inst.dt_cache_ttl_minutes;
+          }
+          config.allow_observations = inst.dt_allow_observations;
+          if (inst.dt_allow_observations) {
+            config.observations_target = inst.dt_observations_target;
+            if (inst.dt_observations_target === "external_db") {
+              config.observations_table = inst.dt_observations_table;
+              config.observations_column = inst.dt_observations_column;
+              config.primary_key = inst.dt_primary_key;
+            }
           }
         }
 
@@ -793,6 +819,22 @@ export default function EmpresaServicos() {
                                             />
                                             Filtro
                                           </label>
+                                          <label className="flex items-center gap-1 text-xs whitespace-nowrap">
+                                            <input
+                                              type="checkbox"
+                                              checked={col.hidden ?? false}
+                                              onChange={(e) => {
+                                                const allInst = instancesMap.get(s.id) ?? [];
+                                                const newArr = [...allInst];
+                                                const cols = [...newArr[actualIdx].dt_columns];
+                                                cols[colIdx] = { ...cols[colIdx], hidden: e.target.checked };
+                                                newArr[actualIdx] = { ...newArr[actualIdx], dt_columns: cols };
+                                                setInstancesMap((prev) => { const n = new Map(prev); n.set(s.id, newArr); return n; });
+                                              }}
+                                              className="accent-amber-500"
+                                            />
+                                            Oculto
+                                          </label>
                                           <Button
                                             type="button"
                                             variant="ghost"
@@ -811,6 +853,101 @@ export default function EmpresaServicos() {
                                           </Button>
                                         </div>
                                       ))}
+                                    </div>
+
+                                    {/* Observations config */}
+                                    <div className="border rounded-lg p-3 space-y-2 bg-amber-50/50 dark:bg-amber-950/20">
+                                      <div className="flex items-center justify-between">
+                                        <p className="text-xs font-medium flex items-center gap-1">
+                                          <MessageSquare className="h-3 w-3" /> Observações
+                                        </p>
+                                        <label className="flex items-center gap-2 text-xs">
+                                          <input
+                                            type="checkbox"
+                                            checked={inst.dt_allow_observations}
+                                            onChange={(e) => {
+                                              const allInst = instancesMap.get(s.id) ?? [];
+                                              const newArr = [...allInst];
+                                              newArr[actualIdx] = { ...newArr[actualIdx], dt_allow_observations: e.target.checked };
+                                              setInstancesMap((prev) => { const n = new Map(prev); n.set(s.id, newArr); return n; });
+                                            }}
+                                            className="accent-primary"
+                                          />
+                                          Permitir observações
+                                        </label>
+                                      </div>
+
+                                      {inst.dt_allow_observations && (
+                                        <div className="space-y-2 pt-1">
+                                          <div className="space-y-1">
+                                            <Label className="text-xs">Destino das observações</Label>
+                                            <Select
+                                              value={inst.dt_observations_target}
+                                              onValueChange={(v) => {
+                                                const allInst = instancesMap.get(s.id) ?? [];
+                                                const newArr = [...allInst];
+                                                newArr[actualIdx] = { ...newArr[actualIdx], dt_observations_target: v as "local" | "external_db" };
+                                                setInstancesMap((prev) => { const n = new Map(prev); n.set(s.id, newArr); return n; });
+                                              }}
+                                            >
+                                              <SelectTrigger className="text-xs w-[320px] h-8">
+                                                <SelectValue />
+                                              </SelectTrigger>
+                                              <SelectContent>
+                                                <SelectItem value="local">Local (salvo no Supabase)</SelectItem>
+                                                <SelectItem value="external_db">Banco externo do cliente (PostgreSQL)</SelectItem>
+                                              </SelectContent>
+                                            </Select>
+                                          </div>
+
+                                          {inst.dt_observations_target === "external_db" && (
+                                            <div className="grid grid-cols-1 md:grid-cols-3 gap-2 border rounded p-2 bg-background/50">
+                                              <div className="space-y-1">
+                                                <Label className="text-xs">Tabela destino</Label>
+                                                <Input
+                                                  placeholder="nome_da_tabela"
+                                                  value={inst.dt_observations_table}
+                                                  onChange={(e) => {
+                                                    const allInst = instancesMap.get(s.id) ?? [];
+                                                    const newArr = [...allInst];
+                                                    newArr[actualIdx] = { ...newArr[actualIdx], dt_observations_table: e.target.value };
+                                                    setInstancesMap((prev) => { const n = new Map(prev); n.set(s.id, newArr); return n; });
+                                                  }}
+                                                  className="text-xs"
+                                                />
+                                              </div>
+                                              <div className="space-y-1">
+                                                <Label className="text-xs">Coluna de observação</Label>
+                                                <Input
+                                                  placeholder="observacao"
+                                                  value={inst.dt_observations_column}
+                                                  onChange={(e) => {
+                                                    const allInst = instancesMap.get(s.id) ?? [];
+                                                    const newArr = [...allInst];
+                                                    newArr[actualIdx] = { ...newArr[actualIdx], dt_observations_column: e.target.value };
+                                                    setInstancesMap((prev) => { const n = new Map(prev); n.set(s.id, newArr); return n; });
+                                                  }}
+                                                  className="text-xs"
+                                                />
+                                              </div>
+                                              <div className="space-y-1">
+                                                <Label className="text-xs">Chave primária</Label>
+                                                <Input
+                                                  placeholder="id"
+                                                  value={inst.dt_primary_key}
+                                                  onChange={(e) => {
+                                                    const allInst = instancesMap.get(s.id) ?? [];
+                                                    const newArr = [...allInst];
+                                                    newArr[actualIdx] = { ...newArr[actualIdx], dt_primary_key: e.target.value };
+                                                    setInstancesMap((prev) => { const n = new Map(prev); n.set(s.id, newArr); return n; });
+                                                  }}
+                                                  className="text-xs"
+                                                />
+                                              </div>
+                                            </div>
+                                          )}
+                                        </div>
+                                      )}
                                     </div>
 
                                     {/* Link to data management */}

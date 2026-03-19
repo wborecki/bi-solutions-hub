@@ -411,6 +411,8 @@ export default function ServicoDetalhe() {
               row_limit: typeof config?.row_limit === "number" ? config.row_limit : 5000,
               page_size: typeof config?.page_size === "number" ? config.page_size : 25,
               allow_export: !!config?.allow_export,
+              allow_observations: config?.allow_observations !== false,
+              observations_target: config?.observations_target === "external_db" ? "external_db" : "local",
               source: config?.source === "external_db" ? "external_db" : "manual",
               cache_ttl_minutes: typeof config?.cache_ttl_minutes === "number" ? config.cache_ttl_minutes : 15,
               default_sort_key: (config?.default_sort_key as string) || undefined,

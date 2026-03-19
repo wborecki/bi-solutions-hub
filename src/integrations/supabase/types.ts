@@ -102,18 +102,21 @@ export type Database = {
           id: string
           company_service_id: string
           data: Json
+          observations: string | null
           created_at: string
         }
         Insert: {
           id?: string
           company_service_id: string
           data?: Json
+          observations?: string | null
           created_at?: string
         }
         Update: {
           id?: string
           company_service_id?: string
           data?: Json
+          observations?: string | null
           created_at?: string
         }
         Relationships: [

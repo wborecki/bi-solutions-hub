@@ -29,6 +29,7 @@ type ColumnDef = {
   key: string;
   label: string;
   type: "text" | "number" | "date" | "boolean" | "link";
+  hidden?: boolean;
 };
 
 type DataRow = {

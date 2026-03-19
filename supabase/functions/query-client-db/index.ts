@@ -155,6 +155,9 @@ Deno.serve(async (req) => {
       // Get column definitions from config
       const columns = (config.columns as { key: string }[]) ?? [];
       const colKeys = columns.map((c) => c.key);
+      const obsColumn = config.observations_column as string | undefined;
+      const obsFromExternalDb = config.observations_target === "external_db" && obsColumn;
+      const pkColumn = config.primary_key as string | undefined;
 
       // Build insert payloads — only extract configured columns
       const insertRows = rows.map((row) => {
@@ -162,11 +165,56 @@ Deno.serve(async (req) => {
         for (const key of colKeys) {
           data[key] = row[key] ?? null;
         }
+        // Always include primary key in data even if not in visible columns
+        if (pkColumn && !(pkColumn in data)) {
+          data[pkColumn] = row[pkColumn] ?? null;
+        }
+        // If observations come from external DB, also include that column in data
+        if (obsFromExternalDb) {
+          data[obsColumn] = row[obsColumn] ?? null;
+        }
         return {
           company_service_id: companyServiceId,
           data,
+          // Extract observations from external DB column into dedicated field
+          observations: obsFromExternalDb
+            ? (row[obsColumn] != null ? String(row[obsColumn]) : null)
+            : null,
         };
       });
+
+      // ── Preserve observations during sync ──────────────────────────
+      // For external_db mode: try to read from query results, but also
+      // keep existing observations from local cache as fallback (in case
+      // the user's SQL query doesn't include the observations column).
+      // For local mode: preserve observations matched by data content.
+
+      // Always fetch existing observations keyed by PK value (for external_db)
+      // or by data JSON (for local mode)
+      const obsMapByPk = new Map<string, string>();
+      const obsMapByData = new Map<string, string>();
+
+      const { data: oldRowsWithNotes } = await adminClient
+        .from("data_table_rows")
+        .select("data, observations")
+        .eq("company_service_id", companyServiceId)
+        .not("observations", "is", null)
+        .neq("observations", "");
+
+      if (oldRowsWithNotes?.length) {
+        for (const r of oldRowsWithNotes) {
+          if (r.observations) {
+            // Key by PK value (for external_db mode)
+            if (pkColumn) {
+              const rd = r.data as Record<string, unknown>;
+              const pk = rd[pkColumn];
+              if (pk != null) obsMapByPk.set(String(pk), r.observations);
+            }
+            // Key by full data JSON (for local mode)
+            obsMapByData.set(JSON.stringify(r.data), r.observations);
+          }
+        }
+      }
 
       // Atomic-ish swap: insert new, then delete old
       // 1. Insert new rows
@@ -189,6 +237,41 @@ Deno.serve(async (req) => {
         .delete()
         .eq("company_service_id", companyServiceId)
         .lt("created_at", insertedAt);
+
+      // 3. Restore observations on matching new rows
+      if (obsMapByPk.size > 0 || obsMapByData.size > 0) {
+        const { data: newRows } = await adminClient
+          .from("data_table_rows")
+          .select("id, data, observations")
+          .eq("company_service_id", companyServiceId)
+          .gte("created_at", insertedAt);
+
+        if (newRows?.length) {
+          for (const nr of newRows) {
+            // If observations already came from external DB query, skip
+            if (nr.observations) continue;
+
+            let obs: string | undefined;
+            // Try PK-based match first (more reliable for external_db)
+            if (pkColumn) {
+              const rd = nr.data as Record<string, unknown>;
+              const pk = rd[pkColumn];
+              if (pk != null) obs = obsMapByPk.get(String(pk));
+            }
+            // Fallback: data JSON match (for local mode)
+            if (!obs) {
+              obs = obsMapByData.get(JSON.stringify(nr.data));
+            }
+
+            if (obs) {
+              await adminClient
+                .from("data_table_rows")
+                .update({ observations: obs })
+                .eq("id", nr.id);
+            }
+          }
+        }
+      }
 
       // ── Update cache metadata ──────────────────────────────
       await adminClient.from("data_table_cache").upsert({

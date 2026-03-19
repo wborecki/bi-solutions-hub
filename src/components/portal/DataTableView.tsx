@@ -13,8 +13,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { ArrowUpDown, ArrowUp, ArrowDown, Search, Download, ChevronLeft, ChevronRight, RefreshCw, Clock, ExternalLink, CalendarIcon, X } from "lucide-react";
+import { ArrowUpDown, ArrowUp, ArrowDown, Search, Download, ChevronLeft, ChevronRight, RefreshCw, Clock, ExternalLink, CalendarIcon, X, MessageSquare, Check, Loader2, GripVertical } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Textarea } from "@/components/ui/textarea";
 import type { Json } from "@/integrations/supabase/types";
 
 export type ColumnDef = {
@@ -23,6 +24,7 @@ export type ColumnDef = {
   type: "text" | "number" | "date" | "boolean" | "link";
   filterable?: boolean;
   sortable?: boolean;
+  hidden?: boolean;
 };
 
 type DataTableConfig = {
@@ -30,6 +32,8 @@ type DataTableConfig = {
   row_limit?: number;
   page_size?: number;
   allow_export?: boolean;
+  allow_observations?: boolean;
+  observations_target?: "local" | "external_db";
   source?: "manual" | "external_db";
   cache_ttl_minutes?: number;
   default_sort_key?: string;
@@ -39,6 +43,7 @@ type DataTableConfig = {
 type DataRow = {
   id: string;
   data: Record<string, unknown>;
+  observations: string | null;
   created_at: string;
 };
 
@@ -103,6 +108,90 @@ export function DataTableView({ companyServiceId, config }: DataTableViewProps) 
   const columns = config.columns || [];
   const rowLimit = config.row_limit || 10000;
   const isExternalDb = config.source === "external_db";
+  const showObservations = config.allow_observations !== false;
+  const obsTarget = config.observations_target || "local";
+
+  // Column reorder state — persisted in localStorage per service
+  const storageKey = `dt-col-order-${companyServiceId}`;
+
+  const [columnOrder, setColumnOrder] = useState<string[]>(() => {
+    try {
+      const saved = localStorage.getItem(storageKey);
+      if (saved) {
+        const parsed = JSON.parse(saved) as string[];
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      }
+    } catch { /* ignore */ }
+    return columns.map((c) => c.key);
+  });
+  const [dragColKey, setDragColKey] = useState<string | null>(null);
+  const [dragOverColKey, setDragOverColKey] = useState<string | null>(null);
+
+  // Keep columnOrder in sync if config.columns change
+  useEffect(() => {
+    setColumnOrder((prev) => {
+      const configKeys = columns.map((c) => c.key);
+      const ordered = prev.filter((k) => configKeys.includes(k));
+      const newKeys = configKeys.filter((k) => !ordered.includes(k));
+      const next = [...ordered, ...newKeys];
+      // Only update if actually changed
+      if (next.length === prev.length && next.every((k, i) => k === prev[i])) return prev;
+      return next;
+    });
+  }, [columns]);
+
+  // Persist column order to localStorage whenever it changes
+  useEffect(() => {
+    try {
+      localStorage.setItem(storageKey, JSON.stringify(columnOrder));
+    } catch { /* quota exceeded — ignore */ }
+  }, [columnOrder, storageKey]);
+
+  // Columns in display order (excluding hidden)
+  const orderedColumns = useMemo(() => {
+    const colMap = new Map(columns.map((c) => [c.key, c]));
+    return columnOrder
+      .map((key) => colMap.get(key))
+      .filter((c): c is ColumnDef => c != null && !c.hidden);
+  }, [columns, columnOrder]);
+
+  const handleColumnDragStart = useCallback((key: string) => {
+    setDragColKey(key);
+  }, []);
+
+  const handleColumnDragOver = useCallback((e: React.DragEvent, key: string) => {
+    e.preventDefault();
+    setDragOverColKey(key);
+  }, []);
+
+  const handleColumnDrop = useCallback((targetKey: string) => {
+    if (!dragColKey || dragColKey === targetKey) {
+      setDragColKey(null);
+      setDragOverColKey(null);
+      return;
+    }
+    setColumnOrder((prev) => {
+      const arr = [...prev];
+      const fromIdx = arr.indexOf(dragColKey);
+      const toIdx = arr.indexOf(targetKey);
+      if (fromIdx === -1 || toIdx === -1) return prev;
+      arr.splice(fromIdx, 1);
+      arr.splice(toIdx, 0, dragColKey);
+      return arr;
+    });
+    setDragColKey(null);
+    setDragOverColKey(null);
+  }, [dragColKey]);
+
+  const handleColumnDragEnd = useCallback(() => {
+    setDragColKey(null);
+    setDragOverColKey(null);
+  }, []);
+
+  // Observations editing state
+  const [editingRowId, setEditingRowId] = useState<string | null>(null);
+  const [editingText, setEditingText] = useState("");
+  const [savingRowId, setSavingRowId] = useState<string | null>(null);
 
   const fetchRows = useCallback(async () => {
     setLoading(true);
@@ -110,7 +199,7 @@ export function DataTableView({ companyServiceId, config }: DataTableViewProps) 
     // Fetch all rows up to rowLimit (Supabase max range is 0-based)
     const { data, error } = await supabase
       .from("data_table_rows")
-      .select("id, data, created_at")
+      .select("id, data, observations, created_at")
       .eq("company_service_id", companyServiceId)
       .order("created_at", { ascending: false })
       .limit(rowLimit);
@@ -313,20 +402,28 @@ export function DataTableView({ companyServiceId, config }: DataTableViewProps) 
 
   const exportCsv = () => {
     if (!config.allow_export) return;
-    const header = columns.map((c) => c.label).join(",");
-    const csvRows = processedRows.map((row) =>
-      columns
-        .map((col) => {
-          const val = row.data[col.key];
-          const str = val == null ? "" : String(val);
-          // Escape CSV special characters
-          if (str.includes(",") || str.includes('"') || str.includes("\n")) {
-            return `"${str.replace(/"/g, '""')}"`;
-          }
-          return str;
-        })
-        .join(",")
-    );
+    const headers = orderedColumns.map((c) => c.label);
+    if (showObservations) headers.push("Observações");
+    const header = headers.join(",");
+    const csvRows = processedRows.map((row) => {
+      const cells = orderedColumns.map((col) => {
+        const val = row.data[col.key];
+        const str = val == null ? "" : String(val);
+        if (str.includes(",") || str.includes('"') || str.includes("\n")) {
+          return `"${str.replace(/"/g, '""')}"`;
+        }
+        return str;
+      });
+      if (showObservations) {
+        const obs = row.observations || "";
+        if (obs.includes(",") || obs.includes('"') || obs.includes("\n")) {
+          cells.push(`"${obs.replace(/"/g, '""')}"`);
+        } else {
+          cells.push(obs);
+        }
+      }
+      return cells.join(",");
+    });
     const csv = [header, ...csvRows].join("\n");
     const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
@@ -352,6 +449,43 @@ export function DataTableView({ companyServiceId, config }: DataTableViewProps) 
   }, [searchTerm, filters, dateFilters, sortKey, sortDir]);
 
   const filterableCols = columns.filter((c) => c.filterable);
+
+  // Save observation for a row
+  const saveObservation = useCallback(async (rowId: string, text: string) => {
+    setSavingRowId(rowId);
+
+    // Always save locally first (fast, optimistic)
+    const { error: localErr } = await supabase
+      .from("data_table_rows")
+      .update({ observations: text || null })
+      .eq("id", rowId);
+
+    if (!localErr) {
+      // Update UI immediately
+      setRows((prev) =>
+        prev.map((r) => (r.id === rowId ? { ...r, observations: text || null } : r))
+      );
+    }
+
+    setSavingRowId(null);
+    setEditingRowId(null);
+
+    // If external_db mode, also write-back in background (don't block UI)
+    if (obsTarget === "external_db" && isExternalDb) {
+      supabase.functions.invoke("update-client-db", {
+        body: {
+          company_service_id: companyServiceId,
+          row_id: rowId,
+          observation: text || "",
+        },
+      }).catch((err) => console.error("External DB write-back failed:", err));
+    }
+  }, [companyServiceId, obsTarget, isExternalDb]);
+
+  const startEditing = useCallback((rowId: string, current: string | null) => {
+    setEditingRowId(rowId);
+    setEditingText(current || "");
+  }, []);
 
   // Compute unique values for each filterable column (from loaded rows)
   const filterOptions = useMemo(() => {
@@ -520,33 +654,56 @@ export function DataTableView({ companyServiceId, config }: DataTableViewProps) 
         <Table className="min-w-[800px]">
           <TableHeader>
             <TableRow>
-              {columns.map((col) => (
-                <TableHead key={col.key}>
-                  {col.sortable !== false ? (
-                    <button
-                      className="flex items-center gap-1 hover:text-foreground transition-colors"
-                      onClick={() => toggleSort(col.key)}
-                    >
-                      {col.label}
-                      {sortKey === col.key && sortDir === "asc" ? (
-                        <ArrowUp className="h-3.5 w-3.5" />
-                      ) : sortKey === col.key && sortDir === "desc" ? (
-                        <ArrowDown className="h-3.5 w-3.5" />
-                      ) : (
-                        <ArrowUpDown className="h-3.5 w-3.5 opacity-40" />
-                      )}
-                    </button>
-                  ) : (
-                    col.label
+              {orderedColumns.map((col) => (
+                <TableHead
+                  key={col.key}
+                  draggable
+                  onDragStart={() => handleColumnDragStart(col.key)}
+                  onDragOver={(e) => handleColumnDragOver(e, col.key)}
+                  onDrop={() => handleColumnDrop(col.key)}
+                  onDragEnd={handleColumnDragEnd}
+                  className={cn(
+                    "select-none transition-colors",
+                    dragColKey === col.key && "opacity-50",
+                    dragOverColKey === col.key && dragColKey !== col.key && "bg-muted/80 border-l-2 border-primary"
                   )}
+                >
+                  <div className="flex items-center gap-1">
+                    <GripVertical className="h-3.5 w-3.5 text-muted-foreground/50 shrink-0 cursor-grab active:cursor-grabbing" />
+                    {col.sortable !== false ? (
+                      <button
+                        className="flex items-center gap-1 hover:text-foreground transition-colors"
+                        onClick={() => toggleSort(col.key)}
+                      >
+                        {col.label}
+                        {sortKey === col.key && sortDir === "asc" ? (
+                          <ArrowUp className="h-3.5 w-3.5" />
+                        ) : sortKey === col.key && sortDir === "desc" ? (
+                          <ArrowDown className="h-3.5 w-3.5" />
+                        ) : (
+                          <ArrowUpDown className="h-3.5 w-3.5 opacity-40" />
+                        )}
+                      </button>
+                    ) : (
+                      col.label
+                    )}
+                  </div>
                 </TableHead>
               ))}
+              {showObservations && (
+                <TableHead className="min-w-[200px]">
+                  <span className="flex items-center gap-1">
+                    <MessageSquare className="h-3.5 w-3.5" />
+                    Observações
+                  </span>
+                </TableHead>
+              )}
             </TableRow>
           </TableHeader>
           <TableBody>
             {loading ? (
               <TableRow>
-                <TableCell colSpan={columns.length} className="text-center py-8">
+                <TableCell colSpan={orderedColumns.length + (showObservations ? 1 : 0)} className="text-center py-8">
                   <div className="flex items-center justify-center gap-2">
                     <div className="w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin" />
                     <span className="text-muted-foreground">Carregando...</span>
@@ -555,18 +712,80 @@ export function DataTableView({ companyServiceId, config }: DataTableViewProps) 
               </TableRow>
             ) : pagedRows.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={columns.length} className="text-center py-8 text-muted-foreground">
+                <TableCell colSpan={orderedColumns.length + (showObservations ? 1 : 0)} className="text-center py-8 text-muted-foreground">
                   Nenhum registro encontrado.
                 </TableCell>
               </TableRow>
             ) : (
               pagedRows.map((row) => (
                 <TableRow key={row.id}>
-                  {columns.map((col) => (
+                  {orderedColumns.map((col) => (
                     <TableCell key={col.key}>
                       {formatValue(row.data[col.key], col.type)}
                     </TableCell>
                   ))}
+                  {showObservations && (
+                    <TableCell className="min-w-[200px] max-w-[320px]">
+                      {editingRowId === row.id ? (
+                        <div className="flex flex-col gap-1">
+                          <Textarea
+                            value={editingText}
+                            onChange={(e) => setEditingText(e.target.value)}
+                            onKeyDown={(e) => {
+                              if (e.key === "Enter" && !e.shiftKey) {
+                                e.preventDefault();
+                                saveObservation(row.id, editingText);
+                              }
+                              if (e.key === "Escape") {
+                                setEditingRowId(null);
+                              }
+                            }}
+                            className="min-h-[60px] text-sm"
+                            placeholder="Digite sua observação..."
+                            autoFocus
+                            disabled={savingRowId === row.id}
+                          />
+                          <div className="flex gap-1 justify-end">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-6 px-2 text-xs"
+                              onClick={() => setEditingRowId(null)}
+                              disabled={savingRowId === row.id}
+                            >
+                              Cancelar
+                            </Button>
+                            <Button
+                              variant="default"
+                              size="sm"
+                              className="h-6 px-2 text-xs"
+                              onClick={() => saveObservation(row.id, editingText)}
+                              disabled={savingRowId === row.id}
+                            >
+                              {savingRowId === row.id ? (
+                                <Loader2 className="h-3 w-3 animate-spin" />
+                              ) : (
+                                <Check className="h-3 w-3" />
+                              )}
+                              <span className="ml-1">Salvar</span>
+                            </Button>
+                          </div>
+                        </div>
+                      ) : (
+                        <button
+                          className={cn(
+                            "w-full text-left px-2 py-1 rounded text-sm transition-colors",
+                            "hover:bg-muted/60 cursor-pointer",
+                            row.observations ? "text-foreground" : "text-muted-foreground italic"
+                          )}
+                          onClick={() => startEditing(row.id, row.observations)}
+                          title="Clique para editar"
+                        >
+                          {row.observations || "Clique para adicionar..."}
+                        </button>
+                      )}
+                    </TableCell>
+                  )}
                 </TableRow>
               ))
             )}
