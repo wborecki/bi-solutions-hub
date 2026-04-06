@@ -114,6 +114,8 @@ export function DataTableView({ companyServiceId, config }: DataTableViewProps) 
   // Column reorder state — persisted in localStorage per service
   const storageKey = `dt-col-order-${companyServiceId}`;
 
+  const OBS_KEY = "__observations";
+
   const [columnOrder, setColumnOrder] = useState<string[]>(() => {
     try {
       const saved = localStorage.getItem(storageKey);
@@ -122,7 +124,9 @@ export function DataTableView({ companyServiceId, config }: DataTableViewProps) 
         if (Array.isArray(parsed) && parsed.length > 0) return parsed;
       }
     } catch { /* ignore */ }
-    return columns.map((c) => c.key);
+    const keys = columns.map((c) => c.key);
+    if (showObservations) keys.push(OBS_KEY);
+    return keys;
   });
   const [dragColKey, setDragColKey] = useState<string | null>(null);
   const [dragOverColKey, setDragOverColKey] = useState<string | null>(null);
@@ -131,14 +135,15 @@ export function DataTableView({ companyServiceId, config }: DataTableViewProps) 
   useEffect(() => {
     setColumnOrder((prev) => {
       const configKeys = columns.map((c) => c.key);
-      const ordered = prev.filter((k) => configKeys.includes(k));
-      const newKeys = configKeys.filter((k) => !ordered.includes(k));
+      const allKeys = showObservations ? [...configKeys, OBS_KEY] : configKeys;
+      const validSet = new Set(allKeys);
+      const ordered = prev.filter((k) => validSet.has(k));
+      const newKeys = allKeys.filter((k) => !ordered.includes(k));
       const next = [...ordered, ...newKeys];
-      // Only update if actually changed
       if (next.length === prev.length && next.every((k, i) => k === prev[i])) return prev;
       return next;
     });
-  }, [columns]);
+  }, [columns, showObservations]);
 
   // Persist column order to localStorage whenever it changes
   useEffect(() => {
@@ -151,9 +156,17 @@ export function DataTableView({ companyServiceId, config }: DataTableViewProps) 
   const orderedColumns = useMemo(() => {
     const colMap = new Map(columns.map((c) => [c.key, c]));
     return columnOrder
-      .map((key) => colMap.get(key))
-      .filter((c): c is ColumnDef => c != null && !c.hidden);
-  }, [columns, columnOrder]);
+      .filter((key) => {
+        if (key === OBS_KEY) return showObservations;
+        const c = colMap.get(key);
+        return c != null && !c.hidden;
+      });
+  }, [columns, columnOrder, showObservations]);
+
+  const getColDef = useCallback((key: string): ColumnDef | null => {
+    if (key === OBS_KEY) return null;
+    return columns.find((c) => c.key === key) ?? null;
+  }, [columns]);
 
   const handleColumnDragStart = useCallback((key: string) => {
     setDragColKey(key);
@@ -414,26 +427,26 @@ export function DataTableView({ companyServiceId, config }: DataTableViewProps) 
 
   const exportCsv = () => {
     if (!config.allow_export) return;
-    const headers = orderedColumns.map((c) => c.label);
-    if (showObservations) headers.push("Observações");
+    const headers = orderedColumns.map((key) =>
+      key === OBS_KEY ? "Observações" : (getColDef(key)?.label ?? key)
+    );
     const header = headers.join(",");
     const csvRows = processedRows.map((row) => {
-      const cells = orderedColumns.map((col) => {
-        const val = row.data[col.key];
+      const cells = orderedColumns.map((key) => {
+        if (key === OBS_KEY) {
+          const obs = row.observations || "";
+          if (obs.includes(",") || obs.includes('"') || obs.includes("\n")) {
+            return `"${obs.replace(/"/g, '""')}"`;
+          }
+          return obs;
+        }
+        const val = row.data[key];
         const str = val == null ? "" : String(val);
         if (str.includes(",") || str.includes('"') || str.includes("\n")) {
           return `"${str.replace(/"/g, '""')}"`;
         }
         return str;
       });
-      if (showObservations) {
-        const obs = row.observations || "";
-        if (obs.includes(",") || obs.includes('"') || obs.includes("\n")) {
-          cells.push(`"${obs.replace(/"/g, '""')}"`);
-        } else {
-          cells.push(obs);
-        }
-      }
       return cells.join(",");
     });
     const csv = [header, ...csvRows].join("\n");
@@ -666,63 +679,68 @@ export function DataTableView({ companyServiceId, config }: DataTableViewProps) 
         <Table className="min-w-[800px]">
           <TableHeader>
             <TableRow>
-              {orderedColumns.map((col) => (
+              {orderedColumns.map((key) => {
+                const col = getColDef(key);
+                const isObs = key === OBS_KEY;
+                return (
                 <TableHead
-                  key={col.key}
+                  key={key}
                   draggable
-                  onDragStart={() => handleColumnDragStart(col.key)}
-                  onDragOver={(e) => handleColumnDragOver(e, col.key)}
-                  onDrop={() => handleColumnDrop(col.key)}
+                  onDragStart={() => handleColumnDragStart(key)}
+                  onDragOver={(e) => handleColumnDragOver(e, key)}
+                  onDrop={() => handleColumnDrop(key)}
                   onDragEnd={handleColumnDragEnd}
                   className={cn(
                     "select-none transition-colors",
-                    dragColKey === col.key && "opacity-50",
-                    dragOverColKey === col.key && dragColKey !== col.key && "bg-muted/80 border-l-2 border-primary"
+                    isObs && "min-w-[200px]",
+                    dragColKey === key && "opacity-50",
+                    dragOverColKey === key && dragColKey !== key && "bg-muted/80 border-l-2 border-primary"
                   )}
                 >
                   <div className="flex items-center gap-1">
                     <GripVertical className="h-3.5 w-3.5 text-muted-foreground/50 shrink-0 cursor-grab active:cursor-grabbing" />
-                    {col.sortable !== false ? (
+                    {isObs ? (
                       <button
                         className="flex items-center gap-1 hover:text-foreground transition-colors"
-                        onClick={() => toggleSort(col.key)}
+                        onClick={() => toggleSort(OBS_KEY)}
                       >
-                        {col.label}
-                        {sortKey === col.key && sortDir === "asc" ? (
+                        <MessageSquare className="h-3.5 w-3.5" />
+                        Observações
+                        {sortKey === OBS_KEY && sortDir === "asc" ? (
                           <ArrowUp className="h-3.5 w-3.5" />
-                        ) : sortKey === col.key && sortDir === "desc" ? (
+                        ) : sortKey === OBS_KEY && sortDir === "desc" ? (
+                          <ArrowDown className="h-3.5 w-3.5" />
+                        ) : (
+                          <ArrowUpDown className="h-3.5 w-3.5 opacity-40" />
+                        )}
+                      </button>
+                    ) : col?.sortable !== false ? (
+                      <button
+                        className="flex items-center gap-1 hover:text-foreground transition-colors"
+                        onClick={() => toggleSort(key)}
+                      >
+                        {col?.label ?? key}
+                        {sortKey === key && sortDir === "asc" ? (
+                          <ArrowUp className="h-3.5 w-3.5" />
+                        ) : sortKey === key && sortDir === "desc" ? (
                           <ArrowDown className="h-3.5 w-3.5" />
                         ) : (
                           <ArrowUpDown className="h-3.5 w-3.5 opacity-40" />
                         )}
                       </button>
                     ) : (
-                      col.label
+                      col?.label ?? key
                     )}
                   </div>
                 </TableHead>
-              ))}
-              {showObservations && (
-                <TableHead className="min-w-[200px]">
-                  <button
-                    type="button"
-                    className="flex items-center gap-1 hover:text-primary transition-colors w-full"
-                    onClick={() => toggleSort("__observations")}
-                  >
-                    <MessageSquare className="h-3.5 w-3.5" />
-                    Observações
-                    {sortKey === "__observations" && (
-                      <ArrowUpDown className="h-3 w-3 ml-0.5" />
-                    )}
-                  </button>
-                </TableHead>
-              )}
+                );
+              })}
             </TableRow>
           </TableHeader>
           <TableBody>
             {loading ? (
               <TableRow>
-                <TableCell colSpan={orderedColumns.length + (showObservations ? 1 : 0)} className="text-center py-8">
+                <TableCell colSpan={orderedColumns.length} className="text-center py-8">
                   <div className="flex items-center justify-center gap-2">
                     <div className="w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin" />
                     <span className="text-muted-foreground">Carregando...</span>
@@ -731,80 +749,85 @@ export function DataTableView({ companyServiceId, config }: DataTableViewProps) 
               </TableRow>
             ) : pagedRows.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={orderedColumns.length + (showObservations ? 1 : 0)} className="text-center py-8 text-muted-foreground">
+                <TableCell colSpan={orderedColumns.length} className="text-center py-8 text-muted-foreground">
                   Nenhum registro encontrado.
                 </TableCell>
               </TableRow>
             ) : (
               pagedRows.map((row) => (
                 <TableRow key={row.id}>
-                  {orderedColumns.map((col) => (
-                    <TableCell key={col.key}>
-                      {formatValue(row.data[col.key], col.type)}
-                    </TableCell>
-                  ))}
-                  {showObservations && (
-                    <TableCell className="min-w-[200px] max-w-[320px]">
-                      {editingRowId === row.id ? (
-                        <div className="flex flex-col gap-1">
-                          <Textarea
-                            value={editingText}
-                            onChange={(e) => setEditingText(e.target.value)}
-                            onKeyDown={(e) => {
-                              if (e.key === "Enter" && !e.shiftKey) {
-                                e.preventDefault();
-                                saveObservation(row.id, editingText);
-                              }
-                              if (e.key === "Escape") {
-                                setEditingRowId(null);
-                              }
-                            }}
-                            className="min-h-[60px] text-sm"
-                            placeholder="Digite sua observação..."
-                            autoFocus
-                            disabled={savingRowId === row.id}
-                          />
-                          <div className="flex gap-1 justify-end">
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              className="h-6 px-2 text-xs"
-                              onClick={() => setEditingRowId(null)}
-                              disabled={savingRowId === row.id}
-                            >
-                              Cancelar
-                            </Button>
-                            <Button
-                              variant="default"
-                              size="sm"
-                              className="h-6 px-2 text-xs"
-                              onClick={() => saveObservation(row.id, editingText)}
-                              disabled={savingRowId === row.id}
-                            >
-                              {savingRowId === row.id ? (
-                                <Loader2 className="h-3 w-3 animate-spin" />
-                              ) : (
-                                <Check className="h-3 w-3" />
+                  {orderedColumns.map((key) => {
+                    if (key === OBS_KEY) {
+                      return (
+                        <TableCell key={key} className="min-w-[200px] max-w-[320px]">
+                          {editingRowId === row.id ? (
+                            <div className="flex flex-col gap-1">
+                              <Textarea
+                                value={editingText}
+                                onChange={(e) => setEditingText(e.target.value)}
+                                onKeyDown={(e) => {
+                                  if (e.key === "Enter" && !e.shiftKey) {
+                                    e.preventDefault();
+                                    saveObservation(row.id, editingText);
+                                  }
+                                  if (e.key === "Escape") {
+                                    setEditingRowId(null);
+                                  }
+                                }}
+                                className="min-h-[60px] text-sm"
+                                placeholder="Digite sua observação..."
+                                autoFocus
+                                disabled={savingRowId === row.id}
+                              />
+                              <div className="flex gap-1 justify-end">
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  className="h-6 px-2 text-xs"
+                                  onClick={() => setEditingRowId(null)}
+                                  disabled={savingRowId === row.id}
+                                >
+                                  Cancelar
+                                </Button>
+                                <Button
+                                  variant="default"
+                                  size="sm"
+                                  className="h-6 px-2 text-xs"
+                                  onClick={() => saveObservation(row.id, editingText)}
+                                  disabled={savingRowId === row.id}
+                                >
+                                  {savingRowId === row.id ? (
+                                    <Loader2 className="h-3 w-3 animate-spin" />
+                                  ) : (
+                                    <Check className="h-3 w-3" />
+                                  )}
+                                  <span className="ml-1">Salvar</span>
+                                </Button>
+                              </div>
+                            </div>
+                          ) : (
+                            <button
+                              className={cn(
+                                "w-full text-left px-2 py-1 rounded text-sm transition-colors",
+                                "hover:bg-muted/60 cursor-pointer",
+                                row.observations ? "text-foreground" : "text-muted-foreground italic"
                               )}
-                              <span className="ml-1">Salvar</span>
-                            </Button>
-                          </div>
-                        </div>
-                      ) : (
-                        <button
-                          className={cn(
-                            "w-full text-left px-2 py-1 rounded text-sm transition-colors",
-                            "hover:bg-muted/60 cursor-pointer",
-                            row.observations ? "text-foreground" : "text-muted-foreground italic"
+                              onClick={() => startEditing(row.id, row.observations)}
+                              title="Clique para editar"
+                            >
+                              {row.observations || "Clique para adicionar..."}
+                            </button>
                           )}
-                          onClick={() => startEditing(row.id, row.observations)}
-                          title="Clique para editar"
-                        >
-                          {row.observations || "Clique para adicionar..."}
-                        </button>
-                      )}
-                    </TableCell>
-                  )}
+                        </TableCell>
+                      );
+                    }
+                    const col = getColDef(key);
+                    return (
+                      <TableCell key={key}>
+                        {formatValue(row.data[key], col?.type || "text")}
+                      </TableCell>
+                    );
+                  })}
                 </TableRow>
               ))
             )}
