@@ -323,26 +323,38 @@ export function DataTableView({ companyServiceId, config }: DataTableViewProps) 
 
     // Sorting
     if (sortKey && sortDir) {
-      const col = columns.find((c) => c.key === sortKey);
-      result.sort((a, b) => {
-        const aVal = a.data[sortKey];
-        const bVal = b.data[sortKey];
-        if (aVal == null && bVal == null) return 0;
-        if (aVal == null) return 1;
-        if (bVal == null) return -1;
+      if (sortKey === "__observations") {
+        result.sort((a, b) => {
+          const aVal = a.observations || "";
+          const bVal = b.observations || "";
+          if (!aVal && !bVal) return 0;
+          if (!aVal) return 1;
+          if (!bVal) return -1;
+          const cmp = aVal.localeCompare(bVal, "pt-BR");
+          return sortDir === "desc" ? -cmp : cmp;
+        });
+      } else {
+        const col = columns.find((c) => c.key === sortKey);
+        result.sort((a, b) => {
+          const aVal = a.data[sortKey];
+          const bVal = b.data[sortKey];
+          if (aVal == null && bVal == null) return 0;
+          if (aVal == null) return 1;
+          if (bVal == null) return -1;
 
-        let cmp: number;
-        if (col?.type === "number") {
-          cmp = Number(aVal) - Number(bVal);
-        } else if (col?.type === "date") {
-          const da = parseLocalDate(String(aVal));
-          const db = parseLocalDate(String(bVal));
-          cmp = (da?.getTime() ?? 0) - (db?.getTime() ?? 0);
-        } else {
-          cmp = String(aVal).localeCompare(String(bVal), "pt-BR");
-        }
-        return sortDir === "desc" ? -cmp : cmp;
-      });
+          let cmp: number;
+          if (col?.type === "number") {
+            cmp = Number(aVal) - Number(bVal);
+          } else if (col?.type === "date") {
+            const da = parseLocalDate(String(aVal));
+            const db = parseLocalDate(String(bVal));
+            cmp = (da?.getTime() ?? 0) - (db?.getTime() ?? 0);
+          } else {
+            cmp = String(aVal).localeCompare(String(bVal), "pt-BR");
+          }
+          return sortDir === "desc" ? -cmp : cmp;
+        });
+      }
     }
 
     return result;
@@ -692,10 +704,17 @@ export function DataTableView({ companyServiceId, config }: DataTableViewProps) 
               ))}
               {showObservations && (
                 <TableHead className="min-w-[200px]">
-                  <span className="flex items-center gap-1">
+                  <button
+                    type="button"
+                    className="flex items-center gap-1 hover:text-primary transition-colors w-full"
+                    onClick={() => toggleSort("__observations")}
+                  >
                     <MessageSquare className="h-3.5 w-3.5" />
                     Observações
-                  </span>
+                    {sortKey === "__observations" && (
+                      <ArrowUpDown className="h-3 w-3 ml-0.5" />
+                    )}
+                  </button>
                 </TableHead>
               )}
             </TableRow>
