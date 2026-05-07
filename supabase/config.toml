@@ -1,4 +1,4 @@
-project_id = "owwvzsvmteuxawxpiesh"
+project_id = "zdlbontngfjsfmzdpmak"
 
 [functions.generate-pbi-token]
 verify_jwt = false
