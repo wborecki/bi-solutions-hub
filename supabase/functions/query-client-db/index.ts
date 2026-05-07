@@ -305,11 +305,11 @@ Deno.serve(async (req) => {
         refreshing: false,
       });
 
-      return json({ status: "error", error: msg }, 500);
+      return json({ status: "error", error: msg });
     }
   } catch (err: unknown) {
     const msg = err instanceof Error ? err.message : String(err);
     console.error("Edge function error:", msg);
-    return json({ error: "Internal server error" }, 500);
+    return json({ status: "error", error: `Erro interno: ${msg}` });
   }
 });

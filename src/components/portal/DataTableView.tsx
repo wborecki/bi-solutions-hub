@@ -255,7 +255,19 @@ export function DataTableView({ companyServiceId, config }: DataTableViewProps) 
         );
 
         if (fnError) {
-          setRefreshError(fnError.message || "Erro ao atualizar dados");
+          // Try to extract actual error from response body (FunctionsHttpError)
+          let errorMsg = "Erro ao chamar função de sincronização";
+          try {
+            const ctx = (fnError as { context?: Response }).context;
+            if (ctx) {
+              const body = await ctx.clone().json();
+              if (body?.error) errorMsg = body.error;
+              else if (body?.message) errorMsg = body.message;
+            }
+          } catch {
+            errorMsg = fnError.message || errorMsg;
+          }
+          setRefreshError(errorMsg);
         } else if (result?.status === "error") {
           setRefreshError(result.error || "Erro na conexão com banco externo");
         } else if (result?.status === "refreshed") {
@@ -538,8 +550,12 @@ export function DataTableView({ companyServiceId, config }: DataTableViewProps) 
             </span>
           )}
           {refreshError && (
-            <span className="text-destructive bg-destructive/10 px-2 py-1 rounded">
-              Erro: {refreshError}
+            <span
+              className="text-destructive bg-destructive/10 border border-destructive/20 px-3 py-1.5 rounded flex items-center gap-1.5 max-w-md"
+              title={refreshError}
+            >
+              <span className="font-semibold shrink-0">Erro:</span>
+              <span className="truncate">{refreshError}</span>
             </span>
           )}
           <Button
